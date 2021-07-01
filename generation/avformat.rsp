@@ -19,10 +19,10 @@ packages/ffmpeg.runtime.win-x64/include/libavformat
 --libraryPath
 avformat-58.dll
 --methodClassName
-AVFormatMethods
+FFmpeg.AVFormat
 --namespace
-FFmpegSharp
+FFmpegSharp.Interop
 --output
-sources/FFmpegSharp
+sources/FFmpegSharp.Interop
 --test-output
-tests/FFmpegSharp.UnitTests
+tests/FFmpegSharp.Interop.UnitTests

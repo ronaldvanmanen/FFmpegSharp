@@ -17,10 +17,10 @@ packages/ffmpeg.runtime.win-x64/include/libswscale
 --libraryPath
 swscale-5.dll
 --methodClassName
-SwsMethods
+FFmpeg.SWScale
 --namespace
-FFmpegSharp
+FFmpegSharp.Interop
 --output
-sources/FFmpegSharp
+sources/FFmpegSharp.Interop
 --test-output
-tests/FFmpegSharp.UnitTests
+tests/FFmpegSharp.Interop.UnitTests

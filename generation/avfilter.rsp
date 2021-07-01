@@ -18,10 +18,10 @@ packages/ffmpeg.runtime.win-x64/include/libavfilter
 --libraryPath
 avfilter-7.dll
 --methodClassName
-AVFilterMethods
+FFmpeg.AVFilter
 --namespace
-FFmpegSharp
+FFmpegSharp.Interop
 --output
-sources/FFmpegSharp
+sources/FFmpegSharp.Interop
 --test-output
-tests/FFmpegSharp.UnitTests
+tests/FFmpegSharp.Interop.UnitTests

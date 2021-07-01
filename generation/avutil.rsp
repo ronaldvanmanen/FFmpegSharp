@@ -64,12 +64,12 @@ packages/ffmpeg.runtime.win-x64/include/libavutil
 --libraryPath
 avutil-56.dll
 --methodClassName
-AVUtilMethods
+FFmpeg.AVUtil
 --namespace
-FFmpegSharp
+FFmpegSharp.Interop
 --output
-sources/FFmpegSharp
+sources/FFmpegSharp.Interop
 --remap
 _default_val_e__Union=AVOptionDefaultValue
 --test-output
-tests/FFmpegSharp.UnitTests
+tests/FFmpegSharp.Interop.UnitTests

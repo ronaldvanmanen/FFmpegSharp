@@ -23,10 +23,10 @@ packages/ffmpeg.runtime.win-x64/include/libavcodec
 --libraryPath
 avcodec-58.dll
 --methodClassName
-AVCodecMethods
+FFmpeg.AVCodec
 --namespace
-FFmpegSharp
+FFmpegSharp.Interop
 --output
-sources/FFmpegSharp
+sources/FFmpegSharp.Interop
 --test-output
-tests/FFmpegSharp.UnitTests
+tests/FFmpegSharp.Interop.UnitTests

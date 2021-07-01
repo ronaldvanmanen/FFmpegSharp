@@ -16,13 +16,13 @@ packages/ffmpeg.runtime.win-x64/include/libavdevice
 --libraryPath
 avdevice-58.dll
 --methodClassName
-AVDeviceMethods
+FFmpeg.AVDevice
 --namespace
-FFmpegSharp
+FFmpegSharp.Interop
 --output
-sources/FFmpegSharp
+sources/FFmpegSharp.Interop
 --test-output
-tests/FFmpegSharp.UnitTests
+tests/FFmpegSharp.Interop.UnitTests
 --with-type
 AVAppToDevMessageType=uint
 --with-type

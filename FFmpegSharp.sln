@@ -9,13 +9,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFmpegSharp", "sources\FFmp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{267891C3-BA27-4D4B-8905-8AF9CD7AE981}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFmpegSharp.UnitTests", "tests\FFmpegSharp.UnitTests\FFmpegSharp.UnitTests.csproj", "{A31210FD-7E75-45B2-AB6B-9E0C981EBC50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFmpegSharp.UnitTests", "tests\FFmpegSharp.UnitTests\FFmpegSharp.UnitTests.csproj", "{A31210FD-7E75-45B2-AB6B-9E0C981EBC50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFplaySharp", "samples\FFplaySharp\FFplaySharp.csproj", "{33DDB0C1-ABE7-460A-9935-3EED30A9E4D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFplaySharp", "samples\FFplaySharp\FFplaySharp.csproj", "{33DDB0C1-ABE7-460A-9935-3EED30A9E4D8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{6DA76A17-0BCB-41D6-AF5B-4501E3E35BCC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{64D0A5D2-9CAA-4496-9E49-13C64C9039ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFmpegSharp.Interop", "sources\FFmpegSharp.Interop\FFmpegSharp.Interop.csproj", "{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFmpegSharp.Interop.UnitTests", "tests\FFmpegSharp.Interop.UnitTests\FFmpegSharp.Interop.UnitTests.csproj", "{FBD47572-3A0F-4CF8-8D3C-EACE1AEF59C7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "generation", "generation", "{93FE71AD-EF75-4A94-8A58-B7CF474332AC}"
 	ProjectSection(SolutionItems) = preProject
 		generation\avcodec.rsp = generation\avcodec.rsp
 		generation\avdevice.rsp = generation\avdevice.rsp
@@ -58,6 +63,22 @@ Global
 		{33DDB0C1-ABE7-460A-9935-3EED30A9E4D8}.Release|x64.Build.0 = Release|x64
 		{33DDB0C1-ABE7-460A-9935-3EED30A9E4D8}.Release|x86.ActiveCfg = Release|x86
 		{33DDB0C1-ABE7-460A-9935-3EED30A9E4D8}.Release|x86.Build.0 = Release|x86
+		{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A}.Debug|x64.ActiveCfg = Debug|x64
+		{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A}.Debug|x64.Build.0 = Debug|x64
+		{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A}.Debug|x86.ActiveCfg = Debug|x86
+		{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A}.Debug|x86.Build.0 = Debug|x86
+		{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A}.Release|x64.ActiveCfg = Release|x64
+		{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A}.Release|x64.Build.0 = Release|x64
+		{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A}.Release|x86.ActiveCfg = Release|x86
+		{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A}.Release|x86.Build.0 = Release|x86
+		{FBD47572-3A0F-4CF8-8D3C-EACE1AEF59C7}.Debug|x64.ActiveCfg = Debug|x64
+		{FBD47572-3A0F-4CF8-8D3C-EACE1AEF59C7}.Debug|x64.Build.0 = Debug|x64
+		{FBD47572-3A0F-4CF8-8D3C-EACE1AEF59C7}.Debug|x86.ActiveCfg = Debug|x86
+		{FBD47572-3A0F-4CF8-8D3C-EACE1AEF59C7}.Debug|x86.Build.0 = Debug|x86
+		{FBD47572-3A0F-4CF8-8D3C-EACE1AEF59C7}.Release|x64.ActiveCfg = Release|x64
+		{FBD47572-3A0F-4CF8-8D3C-EACE1AEF59C7}.Release|x64.Build.0 = Release|x64
+		{FBD47572-3A0F-4CF8-8D3C-EACE1AEF59C7}.Release|x86.ActiveCfg = Release|x86
+		{FBD47572-3A0F-4CF8-8D3C-EACE1AEF59C7}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,6 +87,8 @@ Global
 		{AAF523C0-0BAC-47FA-B490-51C4547D55FC} = {39FC87FE-AABB-4285-AEDE-92C45C2EB77D}
 		{A31210FD-7E75-45B2-AB6B-9E0C981EBC50} = {267891C3-BA27-4D4B-8905-8AF9CD7AE981}
 		{33DDB0C1-ABE7-460A-9935-3EED30A9E4D8} = {6DA76A17-0BCB-41D6-AF5B-4501E3E35BCC}
+		{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A} = {39FC87FE-AABB-4285-AEDE-92C45C2EB77D}
+		{FBD47572-3A0F-4CF8-8D3C-EACE1AEF59C7} = {267891C3-BA27-4D4B-8905-8AF9CD7AE981}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2DE946DB-0256-49EC-A290-9C2E96A609D9}
