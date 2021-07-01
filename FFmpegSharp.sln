@@ -15,6 +15,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFplaySharp", "samples\FFpl
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{6DA76A17-0BCB-41D6-AF5B-4501E3E35BCC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{64D0A5D2-9CAA-4496-9E49-13C64C9039ED}"
+	ProjectSection(SolutionItems) = preProject
+		generation\avcodec.rsp = generation\avcodec.rsp
+		generation\avdevice.rsp = generation\avdevice.rsp
+		generation\avfilter.rsp = generation\avfilter.rsp
+		generation\avformat.rsp = generation\avformat.rsp
+		generation\avutil.rsp = generation\avutil.rsp
+		generation\swresample.rsp = generation\swresample.rsp
+		generation\swscale.rsp = generation\swscale.rsp
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
