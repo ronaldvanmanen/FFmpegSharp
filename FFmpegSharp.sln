@@ -4,21 +4,49 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sources", "sources", "{39FC87FE-AABB-4285-AEDE-92C45C2EB77D}"
+	ProjectSection(SolutionItems) = preProject
+		sources\Directory.Build.props = sources\Directory.Build.props
+		sources\Directory.Build.targets = sources\Directory.Build.targets
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFmpegSharp", "sources\FFmpegSharp\FFmpegSharp.csproj", "{AAF523C0-0BAC-47FA-B490-51C4547D55FC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{267891C3-BA27-4D4B-8905-8AF9CD7AE981}"
+	ProjectSection(SolutionItems) = preProject
+		tests\Directory.Build.props = tests\Directory.Build.props
+		tests\Directory.Build.targets = tests\Directory.Build.targets
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFmpegSharp.UnitTests", "tests\FFmpegSharp.UnitTests\FFmpegSharp.UnitTests.csproj", "{A31210FD-7E75-45B2-AB6B-9E0C981EBC50}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFplaySharp", "samples\FFplaySharp\FFplaySharp.csproj", "{33DDB0C1-ABE7-460A-9935-3EED30A9E4D8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{6DA76A17-0BCB-41D6-AF5B-4501E3E35BCC}"
+	ProjectSection(SolutionItems) = preProject
+		samples\Directory.Build.props = samples\Directory.Build.props
+		samples\Directory.Build.targets = samples\Directory.Build.targets
+	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{64D0A5D2-9CAA-4496-9E49-13C64C9039ED}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".root", ".root", "{64D0A5D2-9CAA-4496-9E49-13C64C9039ED}"
+	ProjectSection(SolutionItems) = preProject
+		build.cmd = build.cmd
+		build.sh = build.sh
+		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
+		LICENSE = LICENSE
+		nuget.config = nuget.config
+		pack.cmd = pack.cmd
+		pack.sh = pack.sh
+		README.md = README.md
+		restore.cmd = restore.cmd
+		restore.sh = restore.sh
+		test.cmd = test.cmd
+		test.sh = test.sh
+	EndProjectSection
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFmpegSharp.Interop", "sources\FFmpegSharp.Interop\FFmpegSharp.Interop.csproj", "{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFmpegSharp.Interop.UnitTests", "tests\FFmpegSharp.Interop.UnitTests\FFmpegSharp.Interop.UnitTests.csproj", "{FBD47572-3A0F-4CF8-8D3C-EACE1AEF59C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFmpegSharp.Interop.UnitTests", "tests\FFmpegSharp.Interop.UnitTests\FFmpegSharp.Interop.UnitTests.csproj", "{FBD47572-3A0F-4CF8-8D3C-EACE1AEF59C7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "generation", "generation", "{93FE71AD-EF75-4A94-8A58-B7CF474332AC}"
 	ProjectSection(SolutionItems) = preProject
@@ -31,54 +59,63 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "generation", "generation", 
 		generation\swscale.rsp = generation\swscale.rsp
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{4F1374E9-7C3A-4CD5-BB37-2699BDAB1811}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{85329D61-F0DF-4465-85E1-1BBFB86E6886}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "packages", "packages", "{AB53006F-8383-4A0F-8258-9ABA5F23A935}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ffmpeg", "ffmpeg", "{1698B42D-A389-4852-96EE-C7A4D8852439}"
+	ProjectSection(SolutionItems) = preProject
+		packages\ffmpeg\ffmpeg.nuspec = packages\ffmpeg\ffmpeg.nuspec
+		packages\ffmpeg\LICENSE = packages\ffmpeg\LICENSE
+		packages\ffmpeg\runtime.json = packages\ffmpeg\runtime.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ffmpeg.runtime.win-x64", "ffmpeg.runtime.win-x64", "{79FEC800-EB04-41D2-A559-671EE929AD8C}"
+	ProjectSection(SolutionItems) = preProject
+		packages\ffmpeg.runtime.win-x64\ffmpeg.runtime.win-x64.nuspec = packages\ffmpeg.runtime.win-x64\ffmpeg.runtime.win-x64.nuspec
+		packages\ffmpeg.runtime.win-x64\LICENSE = packages\ffmpeg.runtime.win-x64\LICENSE
+		packages\ffmpeg.runtime.win-x64\README.txt = packages\ffmpeg.runtime.win-x64\README.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{0BC86385-8630-4174-9911-81B469FF14B5}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\build.ps1 = scripts\build.ps1
+		scripts\build.sh = scripts\build.sh
+		scripts\cibuild.cmd = scripts\cibuild.cmd
+		scripts\cibuild.sh = scripts\cibuild.sh
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
-		Release|x64 = Release|x64
-		Release|x86 = Release|x86
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AAF523C0-0BAC-47FA-B490-51C4547D55FC}.Debug|x64.ActiveCfg = Debug|x64
-		{AAF523C0-0BAC-47FA-B490-51C4547D55FC}.Debug|x64.Build.0 = Debug|x64
-		{AAF523C0-0BAC-47FA-B490-51C4547D55FC}.Debug|x86.ActiveCfg = Debug|x86
-		{AAF523C0-0BAC-47FA-B490-51C4547D55FC}.Debug|x86.Build.0 = Debug|x86
-		{AAF523C0-0BAC-47FA-B490-51C4547D55FC}.Release|x64.ActiveCfg = Release|x64
-		{AAF523C0-0BAC-47FA-B490-51C4547D55FC}.Release|x64.Build.0 = Release|x64
-		{AAF523C0-0BAC-47FA-B490-51C4547D55FC}.Release|x86.ActiveCfg = Release|x86
-		{AAF523C0-0BAC-47FA-B490-51C4547D55FC}.Release|x86.Build.0 = Release|x86
-		{A31210FD-7E75-45B2-AB6B-9E0C981EBC50}.Debug|x64.ActiveCfg = Debug|x64
-		{A31210FD-7E75-45B2-AB6B-9E0C981EBC50}.Debug|x64.Build.0 = Debug|x64
-		{A31210FD-7E75-45B2-AB6B-9E0C981EBC50}.Debug|x86.ActiveCfg = Debug|x86
-		{A31210FD-7E75-45B2-AB6B-9E0C981EBC50}.Debug|x86.Build.0 = Debug|x86
-		{A31210FD-7E75-45B2-AB6B-9E0C981EBC50}.Release|x64.ActiveCfg = Release|x64
-		{A31210FD-7E75-45B2-AB6B-9E0C981EBC50}.Release|x64.Build.0 = Release|x64
-		{A31210FD-7E75-45B2-AB6B-9E0C981EBC50}.Release|x86.ActiveCfg = Release|x86
-		{A31210FD-7E75-45B2-AB6B-9E0C981EBC50}.Release|x86.Build.0 = Release|x86
-		{33DDB0C1-ABE7-460A-9935-3EED30A9E4D8}.Debug|x64.ActiveCfg = Debug|x64
-		{33DDB0C1-ABE7-460A-9935-3EED30A9E4D8}.Debug|x64.Build.0 = Debug|x64
-		{33DDB0C1-ABE7-460A-9935-3EED30A9E4D8}.Debug|x86.ActiveCfg = Debug|x86
-		{33DDB0C1-ABE7-460A-9935-3EED30A9E4D8}.Debug|x86.Build.0 = Debug|x86
-		{33DDB0C1-ABE7-460A-9935-3EED30A9E4D8}.Release|x64.ActiveCfg = Release|x64
-		{33DDB0C1-ABE7-460A-9935-3EED30A9E4D8}.Release|x64.Build.0 = Release|x64
-		{33DDB0C1-ABE7-460A-9935-3EED30A9E4D8}.Release|x86.ActiveCfg = Release|x86
-		{33DDB0C1-ABE7-460A-9935-3EED30A9E4D8}.Release|x86.Build.0 = Release|x86
-		{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A}.Debug|x64.ActiveCfg = Debug|x64
-		{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A}.Debug|x64.Build.0 = Debug|x64
-		{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A}.Debug|x86.ActiveCfg = Debug|x86
-		{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A}.Debug|x86.Build.0 = Debug|x86
-		{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A}.Release|x64.ActiveCfg = Release|x64
-		{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A}.Release|x64.Build.0 = Release|x64
-		{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A}.Release|x86.ActiveCfg = Release|x86
-		{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A}.Release|x86.Build.0 = Release|x86
-		{FBD47572-3A0F-4CF8-8D3C-EACE1AEF59C7}.Debug|x64.ActiveCfg = Debug|x64
-		{FBD47572-3A0F-4CF8-8D3C-EACE1AEF59C7}.Debug|x64.Build.0 = Debug|x64
-		{FBD47572-3A0F-4CF8-8D3C-EACE1AEF59C7}.Debug|x86.ActiveCfg = Debug|x86
-		{FBD47572-3A0F-4CF8-8D3C-EACE1AEF59C7}.Debug|x86.Build.0 = Debug|x86
-		{FBD47572-3A0F-4CF8-8D3C-EACE1AEF59C7}.Release|x64.ActiveCfg = Release|x64
-		{FBD47572-3A0F-4CF8-8D3C-EACE1AEF59C7}.Release|x64.Build.0 = Release|x64
-		{FBD47572-3A0F-4CF8-8D3C-EACE1AEF59C7}.Release|x86.ActiveCfg = Release|x86
-		{FBD47572-3A0F-4CF8-8D3C-EACE1AEF59C7}.Release|x86.Build.0 = Release|x86
+		{AAF523C0-0BAC-47FA-B490-51C4547D55FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAF523C0-0BAC-47FA-B490-51C4547D55FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAF523C0-0BAC-47FA-B490-51C4547D55FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAF523C0-0BAC-47FA-B490-51C4547D55FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A31210FD-7E75-45B2-AB6B-9E0C981EBC50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A31210FD-7E75-45B2-AB6B-9E0C981EBC50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A31210FD-7E75-45B2-AB6B-9E0C981EBC50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A31210FD-7E75-45B2-AB6B-9E0C981EBC50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33DDB0C1-ABE7-460A-9935-3EED30A9E4D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33DDB0C1-ABE7-460A-9935-3EED30A9E4D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33DDB0C1-ABE7-460A-9935-3EED30A9E4D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33DDB0C1-ABE7-460A-9935-3EED30A9E4D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBD47572-3A0F-4CF8-8D3C-EACE1AEF59C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBD47572-3A0F-4CF8-8D3C-EACE1AEF59C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBD47572-3A0F-4CF8-8D3C-EACE1AEF59C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBD47572-3A0F-4CF8-8D3C-EACE1AEF59C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -89,6 +126,9 @@ Global
 		{33DDB0C1-ABE7-460A-9935-3EED30A9E4D8} = {6DA76A17-0BCB-41D6-AF5B-4501E3E35BCC}
 		{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A} = {39FC87FE-AABB-4285-AEDE-92C45C2EB77D}
 		{FBD47572-3A0F-4CF8-8D3C-EACE1AEF59C7} = {267891C3-BA27-4D4B-8905-8AF9CD7AE981}
+		{85329D61-F0DF-4465-85E1-1BBFB86E6886} = {4F1374E9-7C3A-4CD5-BB37-2699BDAB1811}
+		{1698B42D-A389-4852-96EE-C7A4D8852439} = {AB53006F-8383-4A0F-8258-9ABA5F23A935}
+		{79FEC800-EB04-41D2-A559-671EE929AD8C} = {AB53006F-8383-4A0F-8258-9ABA5F23A935}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2DE946DB-0256-49EC-A290-9C2E96A609D9}

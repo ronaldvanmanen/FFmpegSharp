@@ -7,9 +7,9 @@ namespace FFmpegSharp.Interop
 {
     public static unsafe partial class FFmpeg
     {
-        public static event DllImportResolver ResolveLibrary;
+        public static event DllImportResolver? ResolveLibrary;
 
-        public static string LibraryDirectory { get; set; }
+        public static string? LibraryDirectory { get; set; }
 
         static FFmpeg()
         {
