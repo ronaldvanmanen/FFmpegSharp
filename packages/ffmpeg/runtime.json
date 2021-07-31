@@ -1,3 +1,14 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:53b5298b0c85996ec39a65b098d5d97a3b8f161df482e0f6265bc22500a49ac6
-size 202
+{
+  "runtimes": {
+    "win-x64": {
+      "ffmpeg": {
+        "ffmpeg.runtime.win-x64": "4.4"
+      }
+    },
+    "win-x86": {
+      "ffmpeg": {
+        "ffmpeg.runtime.win-x86": "4.4"
+      }
+    }
+  }
+}

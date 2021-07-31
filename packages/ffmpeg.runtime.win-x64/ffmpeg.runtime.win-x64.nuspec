@@ -1,3 +1,27 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:04e6bb2a32967c446b527c4c60c7eb55ba9b6a285c2e630fee57dc0c6613d623
-size 1528
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata minClientVersion="2.12">
+    <id>ffmpeg.runtime.win-x64</id>
+    <version>4.4</version>
+    <authors>Ronald van Manen</authors>
+    <owners>Ronald van Manen</owners>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="expression">Zlib</license>
+    <projectUrl>https://github.com/ronaldvanmanen/FFmpegSharp</projectUrl>
+    <description>win x64 native library for FFmpeg.</description>
+    <copyright>Copyright © Ronald van Manen</copyright>
+    <repository type="git" url="https://github.com/ronaldvanmanen/FFmpegSharp" branch="main" />
+  </metadata>
+  <files>
+    <file src="LICENSE" target="LICENSE" />
+    <file src="README.txt" target="READM.txt" />
+    <file src="bin\avcodec-58.dll" target="runtimes\win-x64\native\avcodec-58.dll" />
+    <file src="bin\avdevice-58.dll" target="runtimes\win-x64\native\avdevice-58.dll" />
+    <file src="bin\avfilter-7.dll" target="runtimes\win-x64\native\avfilter-7.dll" />
+    <file src="bin\avformat-58.dll" target="runtimes\win-x64\native\avformat-58.dll" />
+    <file src="bin\avutil-56.dll" target="runtimes\win-x64\native\avutil-56.dll" />
+    <file src="bin\postproc-55.dll" target="runtimes\win-x64\native\postproc-55.dll" />
+    <file src="bin\swresample-3.dll" target="runtimes\win-x64\native\swresample-3.dll" />
+    <file src="bin\swscale-5.dll" target="runtimes\win-x64\native\swscale-5.dll" />
+  </files>
+</package>
