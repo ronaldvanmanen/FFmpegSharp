@@ -1543,6 +1543,28 @@ namespace FFmpegSharp.Interop
         public const int AV_OPT_SERIALIZE_OPT_FLAGS_EXACT = 0x00000002;
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern int av_parse_ratio(AVRational* q, [NativeTypeName("const char *")] sbyte* str, int max, int log_offset, void* log_ctx);
+
+        [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern int av_parse_video_size(int* width_ptr, int* height_ptr, [NativeTypeName("const char *")] sbyte* str);
+
+        [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern int av_parse_video_rate(AVRational* rate, [NativeTypeName("const char *")] sbyte* str);
+
+        [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern int av_parse_color([NativeTypeName("uint8_t *")] byte* rgba_color, [NativeTypeName("const char *")] sbyte* color_string, int slen, void* log_ctx);
+
+        [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [return: NativeTypeName("const char *")]
+        public static extern sbyte* av_get_known_color_name(int color_idx, [NativeTypeName("const uint8_t **")] byte** rgb);
+
+        [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern int av_parse_time([NativeTypeName("int64_t *")] long* timeval, [NativeTypeName("const char *")] sbyte* timestr, int duration);
+
+        [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern int av_find_info_tag([NativeTypeName("char *")] sbyte* arg, int arg_size, [NativeTypeName("const char *")] sbyte* tag1, [NativeTypeName("const char *")] sbyte* info);
+
+        [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern int av_get_bits_per_pixel([NativeTypeName("const AVPixFmtDescriptor *")] AVPixFmtDescriptor* pixdesc);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]

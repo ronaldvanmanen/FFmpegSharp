@@ -52,6 +52,7 @@ log.h
 mathematics.h
 mem.h
 opt.h
+parseutils.h
 pixdesc.h
 pixfmt.h
 rational.h
@@ -59,8 +60,8 @@ samplefmt.h
 time.h
 version.h
 --include-directory
+C:/Program Files (x86)/Windows Kits/10/Include/10.0.18362.0/ucrt
 packages/ffmpeg.runtime.win-x64/include
-packages/ffmpeg.runtime.win-x64/include/libavutil
 --libraryPath
 avutil-56.dll
 --methodClassName
