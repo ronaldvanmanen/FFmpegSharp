@@ -1,0 +1,111 @@
+{
+  "profiles": {
+    "FFplaySharp": {
+      "commandName": "Project"
+    },
+    "FFplaySharp --help": {
+      "commandName": "Project",
+      "commandLineArgs": " --help"
+    },
+    "FFplaySharp --version": {
+      "commandName": "Project",
+      "commandLineArgs": "--version"
+    },
+    "FFplaySharp --license": {
+      "commandName": "Project",
+      "commandLineArgs": "--license"
+    },
+    "FFplaySharp --build-configuration": {
+      "commandName": "Project",
+      "commandLineArgs": "--build-configuration"
+    },
+    "FFplaySharp --formats": {
+      "commandName": "Project",
+      "commandLineArgs": "--formats"
+    },
+    "FFplaySharp --muxers": {
+      "commandName": "Project",
+      "commandLineArgs": "--muxers"
+    },
+    "FFplaySharp --demuxers": {
+      "commandName": "Project",
+      "commandLineArgs": "--demuxers"
+    },
+    "FFplaySharp --devices": {
+      "commandName": "Project",
+      "commandLineArgs": "--devices"
+    },
+    "FFplaySharp --codecs": {
+      "commandName": "Project",
+      "commandLineArgs": "--codecs"
+    },
+    "FFplaySharp --decoders": {
+      "commandName": "Project",
+      "commandLineArgs": "--decoders"
+    },
+    "FFplaySharp --encoders": {
+      "commandName": "Project",
+      "commandLineArgs": "--encoders"
+    },
+    "FFplaySharp --bit-stream-filters": {
+      "commandName": "Project",
+      "commandLineArgs": "--bit-stream-filters"
+    },
+    "FFplaySharp --protocols": {
+      "commandName": "Project",
+      "commandLineArgs": "--protocols"
+    },
+    "FFplaySharp --filters": {
+      "commandName": "Project",
+      "commandLineArgs": "--filters"
+    },
+    "FFplaySharp --pixel-formats": {
+      "commandName": "Project",
+      "commandLineArgs": "--pixel-formats"
+    },
+    "FFplaySharp --channel-layouts": {
+      "commandName": "Project",
+      "commandLineArgs": "--channel-layouts"
+    },
+    "FFplaySharp --sample-formats": {
+      "commandName": "Project",
+      "commandLineArgs": "--sample-formats"
+    },
+    "FFplaySharp --colors": {
+      "commandName": "Project",
+      "commandLineArgs": "--colors"
+    },
+    "FFplaySharp --sources": {
+      "commandName": "Project",
+      "commandLineArgs": "--sources"
+    },
+    "FFplaySharp --sinks": {
+      "commandName": "Project",
+      "commandLineArgs": "--sinks"
+    },
+    "FFplaySharp Wildlife.wmv": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Users\\Public\\Videos\\Wildlife.wmv"
+    },
+    "FFplaySharp big_buck_bunny_720p_h264.mov": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Users\\Public\\Videos\\big_buck_bunny_720p_h264.mov"
+    },
+    "FFplaySharp big_buck_bunny_1080p_h264.mov": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Users\\Public\\Videos\\big_buck_bunny_1080p_h264.mov"
+    },
+    "FFplaySharp LaLaLand_cafe_4K.mkv": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Users\\Public\\Videos\\LaLaLand_cafe_4K.mkv"
+    },
+    "FFplaySharp Lord of the Rings (Disc 1)": {
+      "commandName": "Project",
+      "commandLineArgs": "\\\\diskstation.int.ragnvaldr.com\\video\\Movies\\LOTR_SEE_D1\\title00.mkv"
+    },
+    "FFplaySharp Lord of the Rings (Disc 2)": {
+      "commandName": "Project",
+      "commandLineArgs": "\\\\diskstation.int.ragnvaldr.com\\video\\Movies\\LOTR_SEE_D2\\title00.mkv"
+    }
+  }
+}

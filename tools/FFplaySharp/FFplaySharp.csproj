@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <Platforms>AnyCPU</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SDL2Sharp" Version="2.0.18-beta1-1907180178" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.21308.1" />
+    <PackageReference Include="System.CommandLine.Hosting" Version="0.3.0-alpha.21216.1" />
+    <PackageReference Include="System.IO.Pipelines" Version="6.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\sources\FFmpegSharp.Extensions.Collections\FFmpegSharp.Extensions.Collections.csproj" />
+    <ProjectReference Include="..\..\sources\FFmpegSharp.Extensions.Framework\FFmpegSharp.Extensions.Framework.csproj" />
+    <ProjectReference Include="..\..\sources\FFmpegSharp.Extensions.ObjectPool\FFmpegSharp.Extensions.ObjectPool.csproj" />
+    <ProjectReference Include="..\..\sources\FFmpegSharp\FFmpegSharp.csproj" />
+  </ItemGroup>
+
+</Project>

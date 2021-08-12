@@ -1,8 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Toolkit.HighPerformance" Version="7.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectCapability Include="DynamicDependentFile" />
     <ProjectCapability Include="DynamicFileNesting" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FFmpegSharp.Interop\FFmpegSharp.Interop.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

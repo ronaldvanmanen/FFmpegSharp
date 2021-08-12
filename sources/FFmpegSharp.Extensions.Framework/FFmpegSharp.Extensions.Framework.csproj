@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SDL2Sharp" Version="2.0.18-beta1-1907180178" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FFmpegSharp.Extensions.Collections\FFmpegSharp.Extensions.Collections.csproj" />
+    <ProjectReference Include="..\FFmpegSharp.Extensions.ComponentModel\FFmpegSharp.Extensions.ComponentModel.csproj" />
+    <ProjectReference Include="..\FFmpegSharp.Extensions.ObjectPool\FFmpegSharp.Extensions.ObjectPool.csproj" />
+    <ProjectReference Include="..\FFmpegSharp.Interop\FFmpegSharp.Interop.csproj" />
+    <ProjectReference Include="..\FFmpegSharp\FFmpegSharp.csproj" />
+  </ItemGroup>
+
+</Project>
