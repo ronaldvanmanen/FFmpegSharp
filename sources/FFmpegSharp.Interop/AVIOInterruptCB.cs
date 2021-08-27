@@ -13,14 +13,12 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-
 namespace FFmpegSharp.Interop
 {
     public unsafe partial struct AVIOInterruptCB
     {
         [NativeTypeName("int (*)(void *)")]
-        public IntPtr callback;
+        public delegate* unmanaged[Cdecl]<void*, int> callback;
 
         public void* opaque;
     }

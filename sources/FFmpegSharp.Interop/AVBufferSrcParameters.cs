@@ -29,7 +29,6 @@ namespace FFmpegSharp.Interop
 
         public AVRational frame_rate;
 
-        [NativeTypeName("AVBufferRef *")]
         public AVBufferRef* hw_frames_ctx;
 
         public int sample_rate;

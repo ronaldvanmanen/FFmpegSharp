@@ -28,7 +28,6 @@ namespace FFmpegSharp.Interop
 
         public int all_channel_counts;
 
-        [NativeTypeName("int *")]
         public int* sample_rates;
     }
 }

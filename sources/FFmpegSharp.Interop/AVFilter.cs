@@ -13,8 +13,6 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-
 namespace FFmpegSharp.Interop
 {
     public unsafe partial struct AVFilter
@@ -37,19 +35,19 @@ namespace FFmpegSharp.Interop
         public int flags;
 
         [NativeTypeName("int (*)(AVFilterContext *)")]
-        public IntPtr preinit;
+        public delegate* unmanaged[Cdecl]<AVFilterContext*, int> preinit;
 
         [NativeTypeName("int (*)(AVFilterContext *)")]
-        public IntPtr init;
+        public delegate* unmanaged[Cdecl]<AVFilterContext*, int> init;
 
         [NativeTypeName("int (*)(AVFilterContext *, AVDictionary **)")]
-        public IntPtr init_dict;
+        public delegate* unmanaged[Cdecl]<AVFilterContext*, AVDictionary**, int> init_dict;
 
         [NativeTypeName("void (*)(AVFilterContext *)")]
-        public IntPtr uninit;
+        public delegate* unmanaged[Cdecl]<AVFilterContext*, void> uninit;
 
         [NativeTypeName("int (*)(AVFilterContext *)")]
-        public IntPtr query_formats;
+        public delegate* unmanaged[Cdecl]<AVFilterContext*, int> query_formats;
 
         public int priv_size;
 
@@ -59,12 +57,12 @@ namespace FFmpegSharp.Interop
         public AVFilter* next;
 
         [NativeTypeName("int (*)(AVFilterContext *, const char *, const char *, char *, int, int)")]
-        public IntPtr process_command;
+        public delegate* unmanaged[Cdecl]<AVFilterContext*, sbyte*, sbyte*, sbyte*, int, int, int> process_command;
 
         [NativeTypeName("int (*)(AVFilterContext *, void *)")]
-        public IntPtr init_opaque;
+        public delegate* unmanaged[Cdecl]<AVFilterContext*, void*, int> init_opaque;
 
         [NativeTypeName("int (*)(AVFilterContext *)")]
-        public IntPtr activate;
+        public delegate* unmanaged[Cdecl]<AVFilterContext*, int> activate;
     }
 }

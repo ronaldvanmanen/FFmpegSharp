@@ -48,10 +48,10 @@ namespace FFmpegSharp.Interop
         public static extern AVOutputFormat* av_output_video_device_next(AVOutputFormat* d);
 
         [DllImport("avdevice-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern int avdevice_app_to_dev_control_message([NativeTypeName("struct AVFormatContext *")] AVFormatContext* s, [NativeTypeName("enum AVAppToDevMessageType")] AVAppToDevMessageType type, void* data, [NativeTypeName("size_t")] UIntPtr data_size);
+        public static extern int avdevice_app_to_dev_control_message([NativeTypeName("struct AVFormatContext *")] AVFormatContext* s, [NativeTypeName("enum AVAppToDevMessageType")] AVAppToDevMessageType type, void* data, [NativeTypeName("size_t")] nuint data_size);
 
         [DllImport("avdevice-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern int avdevice_dev_to_app_control_message([NativeTypeName("struct AVFormatContext *")] AVFormatContext* s, [NativeTypeName("enum AVDevToAppMessageType")] AVDevToAppMessageType type, void* data, [NativeTypeName("size_t")] UIntPtr data_size);
+        public static extern int avdevice_dev_to_app_control_message([NativeTypeName("struct AVFormatContext *")] AVFormatContext* s, [NativeTypeName("enum AVDevToAppMessageType")] AVDevToAppMessageType type, void* data, [NativeTypeName("size_t")] nuint data_size);
 
         [DllImport("avdevice-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern int avdevice_capabilities_create(AVDeviceCapabilitiesQuery** caps, AVFormatContext* s, AVDictionary** device_options);

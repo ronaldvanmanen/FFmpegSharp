@@ -13,8 +13,6 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-
 namespace FFmpegSharp.Interop
 {
     public unsafe partial struct AVCodecParser
@@ -25,16 +23,16 @@ namespace FFmpegSharp.Interop
         public int priv_data_size;
 
         [NativeTypeName("int (*)(AVCodecParserContext *)")]
-        public IntPtr parser_init;
+        public delegate* unmanaged[Cdecl]<AVCodecParserContext*, int> parser_init;
 
         [NativeTypeName("int (*)(AVCodecParserContext *, AVCodecContext *, const uint8_t **, int *, const uint8_t *, int)")]
-        public IntPtr parser_parse;
+        public delegate* unmanaged[Cdecl]<AVCodecParserContext*, AVCodecContext*, byte**, int*, byte*, int, int> parser_parse;
 
         [NativeTypeName("void (*)(AVCodecParserContext *)")]
-        public IntPtr parser_close;
+        public delegate* unmanaged[Cdecl]<AVCodecParserContext*, void> parser_close;
 
         [NativeTypeName("int (*)(AVCodecContext *, const uint8_t *, int)")]
-        public IntPtr split;
+        public delegate* unmanaged[Cdecl]<AVCodecContext*, byte*, int, int> split;
 
         [NativeTypeName("struct AVCodecParser *")]
         public AVCodecParser* next;

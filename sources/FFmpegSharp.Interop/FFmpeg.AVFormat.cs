@@ -88,17 +88,17 @@ namespace FFmpegSharp.Interop
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("av_format_control_message")]
-        public static extern IntPtr av_format_get_control_message_cb([NativeTypeName("const AVFormatContext *")] AVFormatContext* s);
+        public static extern delegate* unmanaged[Cdecl]<AVFormatContext*, int, void*, nuint, int> av_format_get_control_message_cb([NativeTypeName("const AVFormatContext *")] AVFormatContext* s);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void av_format_set_control_message_cb(AVFormatContext* s, [NativeTypeName("av_format_control_message")] IntPtr callback);
+        public static extern void av_format_set_control_message_cb(AVFormatContext* s, [NativeTypeName("av_format_control_message")] delegate* unmanaged[Cdecl]<AVFormatContext*, int, void*, nuint, int> callback);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("AVOpenCallback")]
-        public static extern IntPtr av_format_get_open_cb([NativeTypeName("const AVFormatContext *")] AVFormatContext* s);
+        public static extern delegate* unmanaged[Cdecl]<AVFormatContext*, AVIOContext**, sbyte*, int, AVIOInterruptCB*, AVDictionary**, int> av_format_get_open_cb([NativeTypeName("const AVFormatContext *")] AVFormatContext* s);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void av_format_set_open_cb(AVFormatContext* s, [NativeTypeName("AVOpenCallback")] IntPtr callback);
+        public static extern void av_format_set_open_cb(AVFormatContext* s, [NativeTypeName("AVOpenCallback")] delegate* unmanaged[Cdecl]<AVFormatContext*, AVIOContext**, sbyte*, int, AVIOInterruptCB*, AVDictionary**, int> callback);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void av_format_inject_global_side_data(AVFormatContext* s);
@@ -162,7 +162,7 @@ namespace FFmpegSharp.Interop
         public static extern AVStream* avformat_new_stream(AVFormatContext* s, [NativeTypeName("const AVCodec *")] AVCodec* c);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern int av_stream_add_side_data(AVStream* st, [NativeTypeName("enum AVPacketSideDataType")] AVPacketSideDataType type, [NativeTypeName("uint8_t *")] byte* data, [NativeTypeName("size_t")] UIntPtr size);
+        public static extern int av_stream_add_side_data(AVStream* st, [NativeTypeName("enum AVPacketSideDataType")] AVPacketSideDataType type, [NativeTypeName("uint8_t *")] byte* data, [NativeTypeName("size_t")] nuint size);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("uint8_t *")]
@@ -622,7 +622,7 @@ namespace FFmpegSharp.Interop
         public static extern void avio_free_directory_entry(AVIODirEntry** entry);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern AVIOContext* avio_alloc_context([NativeTypeName("unsigned char *")] byte* buffer, int buffer_size, int write_flag, void* opaque, [NativeTypeName("int (*)(void *, uint8_t *, int)")] IntPtr read_packet, [NativeTypeName("int (*)(void *, uint8_t *, int)")] IntPtr write_packet, [NativeTypeName("int64_t (*)(void *, int64_t, int)")] IntPtr seek);
+        public static extern AVIOContext* avio_alloc_context([NativeTypeName("unsigned char *")] byte* buffer, int buffer_size, int write_flag, void* opaque, [NativeTypeName("int (*)(void *, uint8_t *, int)")] delegate* unmanaged[Cdecl]<void*, byte*, int, int> read_packet, [NativeTypeName("int (*)(void *, uint8_t *, int)")] delegate* unmanaged[Cdecl]<void*, byte*, int, int> write_packet, [NativeTypeName("int64_t (*)(void *, int64_t, int)")] delegate* unmanaged[Cdecl]<void*, long, int, long> seek);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void avio_context_free(AVIOContext** s);
@@ -786,7 +786,7 @@ namespace FFmpegSharp.Interop
         public static extern long avio_seek_time(AVIOContext* h, int stream_index, [NativeTypeName("int64_t")] long timestamp, int flags);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern int avio_read_to_bprint(AVIOContext* h, [NativeTypeName("struct AVBPrint *")] AVBPrint* pb, [NativeTypeName("size_t")] UIntPtr max_size);
+        public static extern int avio_read_to_bprint(AVIOContext* h, [NativeTypeName("struct AVBPrint *")] AVBPrint* pb, [NativeTypeName("size_t")] nuint max_size);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern int avio_accept(AVIOContext* s, AVIOContext** c);

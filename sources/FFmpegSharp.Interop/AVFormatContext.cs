@@ -13,8 +13,6 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-
 namespace FFmpegSharp.Interop
 {
     public unsafe partial struct AVFormatContext
@@ -173,7 +171,7 @@ namespace FFmpegSharp.Interop
         public void* opaque;
 
         [NativeTypeName("av_format_control_message")]
-        public IntPtr control_message_cb;
+        public delegate* unmanaged[Cdecl]<AVFormatContext*, int, void*, nuint, int> control_message_cb;
 
         [NativeTypeName("int64_t")]
         public long output_ts_offset;
@@ -185,16 +183,16 @@ namespace FFmpegSharp.Interop
         public AVCodecID data_codec_id;
 
         [NativeTypeName("int (*)(struct AVFormatContext *, AVIOContext **, const char *, int, const AVIOInterruptCB *, AVDictionary **)")]
-        public IntPtr open_cb;
+        public delegate* unmanaged[Cdecl]<AVFormatContext*, AVIOContext**, sbyte*, int, AVIOInterruptCB*, AVDictionary**, int> open_cb;
 
         [NativeTypeName("char *")]
         public sbyte* protocol_whitelist;
 
         [NativeTypeName("int (*)(struct AVFormatContext *, AVIOContext **, const char *, int, AVDictionary **)")]
-        public IntPtr io_open;
+        public delegate* unmanaged[Cdecl]<AVFormatContext*, AVIOContext**, sbyte*, int, AVDictionary**, int> io_open;
 
         [NativeTypeName("void (*)(struct AVFormatContext *, AVIOContext *)")]
-        public IntPtr io_close;
+        public delegate* unmanaged[Cdecl]<AVFormatContext*, AVIOContext*, void> io_close;
 
         [NativeTypeName("char *")]
         public sbyte* protocol_blacklist;

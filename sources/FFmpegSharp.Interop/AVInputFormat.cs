@@ -13,8 +13,6 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-
 namespace FFmpegSharp.Interop
 {
     public unsafe partial struct AVInputFormat
@@ -47,39 +45,39 @@ namespace FFmpegSharp.Interop
         public int priv_data_size;
 
         [NativeTypeName("int (*)(const AVProbeData *)")]
-        public IntPtr read_probe;
+        public delegate* unmanaged[Cdecl]<AVProbeData*, int> read_probe;
 
         [NativeTypeName("int (*)(struct AVFormatContext *)")]
-        public IntPtr read_header;
+        public delegate* unmanaged[Cdecl]<AVFormatContext*, int> read_header;
 
         [NativeTypeName("int (*)(struct AVFormatContext *, AVPacket *)")]
-        public IntPtr read_packet;
+        public delegate* unmanaged[Cdecl]<AVFormatContext*, AVPacket*, int> read_packet;
 
         [NativeTypeName("int (*)(struct AVFormatContext *)")]
-        public IntPtr read_close;
+        public delegate* unmanaged[Cdecl]<AVFormatContext*, int> read_close;
 
         [NativeTypeName("int (*)(struct AVFormatContext *, int, int64_t, int)")]
-        public IntPtr read_seek;
+        public delegate* unmanaged[Cdecl]<AVFormatContext*, int, long, int, int> read_seek;
 
         [NativeTypeName("int64_t (*)(struct AVFormatContext *, int, int64_t *, int64_t)")]
-        public IntPtr read_timestamp;
+        public delegate* unmanaged[Cdecl]<AVFormatContext*, int, long*, long, long> read_timestamp;
 
         [NativeTypeName("int (*)(struct AVFormatContext *)")]
-        public IntPtr read_play;
+        public delegate* unmanaged[Cdecl]<AVFormatContext*, int> read_play;
 
         [NativeTypeName("int (*)(struct AVFormatContext *)")]
-        public IntPtr read_pause;
+        public delegate* unmanaged[Cdecl]<AVFormatContext*, int> read_pause;
 
         [NativeTypeName("int (*)(struct AVFormatContext *, int, int64_t, int64_t, int64_t, int)")]
-        public IntPtr read_seek2;
+        public delegate* unmanaged[Cdecl]<AVFormatContext*, int, long, long, long, int, int> read_seek2;
 
         [NativeTypeName("int (*)(struct AVFormatContext *, struct AVDeviceInfoList *)")]
-        public IntPtr get_device_list;
+        public delegate* unmanaged[Cdecl]<AVFormatContext*, AVDeviceInfoList*, int> get_device_list;
 
         [NativeTypeName("int (*)(struct AVFormatContext *, struct AVDeviceCapabilitiesQuery *)")]
-        public IntPtr create_device_capabilities;
+        public delegate* unmanaged[Cdecl]<AVFormatContext*, AVDeviceCapabilitiesQuery*, int> create_device_capabilities;
 
         [NativeTypeName("int (*)(struct AVFormatContext *, struct AVDeviceCapabilitiesQuery *)")]
-        public IntPtr free_device_capabilities;
+        public delegate* unmanaged[Cdecl]<AVFormatContext*, AVDeviceCapabilitiesQuery*, int> free_device_capabilities;
     }
 }

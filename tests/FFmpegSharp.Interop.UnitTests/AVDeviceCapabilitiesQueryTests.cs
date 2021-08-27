@@ -13,6 +13,7 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.Runtime.InteropServices;
 using Xunit;
 
@@ -39,7 +40,14 @@ namespace FFmpegSharp.Interop.UnitTests
         [Fact]
         public static void SizeOfTest()
         {
-            Assert.Equal(1, sizeof(AVDeviceCapabilitiesQuery));
+            if (Environment.Is64BitProcess)
+            {
+                Assert.Equal(72, sizeof(AVDeviceCapabilitiesQuery));
+            }
+            else
+            {
+                Assert.Equal(64, sizeof(AVDeviceCapabilitiesQuery));
+            }
         }
     }
 }

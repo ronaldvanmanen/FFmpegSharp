@@ -20,7 +20,6 @@ namespace FFmpegSharp.Interop
         [NativeTypeName("char *")]
         public sbyte* name;
 
-        [NativeTypeName("AVFilterContext *")]
         public AVFilterContext* filter_ctx;
 
         public int pad_idx;

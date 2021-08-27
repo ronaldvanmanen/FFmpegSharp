@@ -247,7 +247,7 @@ namespace FFmpegSharp.Interop
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
-        public static extern UIntPtr av_get_codec_tag_string([NativeTypeName("char *")] sbyte* buf, [NativeTypeName("size_t")] UIntPtr buf_size, [NativeTypeName("unsigned int")] uint codec_tag);
+        public static extern nuint av_get_codec_tag_string([NativeTypeName("char *")] sbyte* buf, [NativeTypeName("size_t")] nuint buf_size, [NativeTypeName("unsigned int")] uint codec_tag);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void avcodec_string([NativeTypeName("char *")] sbyte* buf, int buf_size, AVCodecContext* enc, int encode);
@@ -261,10 +261,10 @@ namespace FFmpegSharp.Interop
         public static extern sbyte* avcodec_profile_name([NativeTypeName("enum AVCodecID")] AVCodecID codec_id, int profile);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern int avcodec_default_execute(AVCodecContext* c, [NativeTypeName("int (*)(AVCodecContext *, void *)")] IntPtr func, void* arg, int* ret, int count, int size);
+        public static extern int avcodec_default_execute(AVCodecContext* c, [NativeTypeName("int (*)(AVCodecContext *, void *)")] delegate* unmanaged[Cdecl]<AVCodecContext*, void*, int> func, void* arg, int* ret, int count, int size);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern int avcodec_default_execute2(AVCodecContext* c, [NativeTypeName("int (*)(AVCodecContext *, void *, int, int)")] IntPtr func, void* arg, int* ret, int count);
+        public static extern int avcodec_default_execute2(AVCodecContext* c, [NativeTypeName("int (*)(AVCodecContext *, void *, int, int)")] delegate* unmanaged[Cdecl]<AVCodecContext*, void*, int, int, int> func, void* arg, int* ret, int count);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern int avcodec_fill_audio_frame(AVFrame* frame, int nb_channels, [NativeTypeName("enum AVSampleFormat")] AVSampleFormat sample_fmt, [NativeTypeName("const uint8_t *")] byte* buf, int buf_size, int align);
@@ -309,10 +309,10 @@ namespace FFmpegSharp.Interop
         public static extern AVBitStreamFilter* av_bsf_next(void** opaque);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void av_fast_padded_malloc(void* ptr, [NativeTypeName("unsigned int *")] uint* size, [NativeTypeName("size_t")] UIntPtr min_size);
+        public static extern void av_fast_padded_malloc(void* ptr, [NativeTypeName("unsigned int *")] uint* size, [NativeTypeName("size_t")] nuint min_size);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void av_fast_padded_mallocz(void* ptr, [NativeTypeName("unsigned int *")] uint* size, [NativeTypeName("size_t")] UIntPtr min_size);
+        public static extern void av_fast_padded_mallocz(void* ptr, [NativeTypeName("unsigned int *")] uint* size, [NativeTypeName("size_t")] nuint min_size);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("unsigned int")]
@@ -325,13 +325,13 @@ namespace FFmpegSharp.Interop
         public static extern AVHWAccel* av_hwaccel_next([NativeTypeName("const AVHWAccel *")] AVHWAccel* hwaccel);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern int av_lockmgr_register([NativeTypeName("int (*)(void **, enum AVLockOp)")] IntPtr cb);
+        public static extern int av_lockmgr_register([NativeTypeName("int (*)(void **, enum AVLockOp)")] delegate* unmanaged[Cdecl]<void**, AVLockOp, int> cb);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern int avcodec_is_open(AVCodecContext* s);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern AVCPBProperties* av_cpb_properties_alloc([NativeTypeName("size_t *")] UIntPtr* size);
+        public static extern AVCPBProperties* av_cpb_properties_alloc([NativeTypeName("size_t *")] nuint* size);
 
         [NativeTypeName("#define AV_INPUT_BUFFER_PADDING_SIZE 64")]
         public const int AV_INPUT_BUFFER_PADDING_SIZE = 64;
@@ -1397,7 +1397,7 @@ namespace FFmpegSharp.Interop
         public static extern byte* av_packet_new_side_data(AVPacket* pkt, [NativeTypeName("enum AVPacketSideDataType")] AVPacketSideDataType type, int size);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern int av_packet_add_side_data(AVPacket* pkt, [NativeTypeName("enum AVPacketSideDataType")] AVPacketSideDataType type, [NativeTypeName("uint8_t *")] byte* data, [NativeTypeName("size_t")] UIntPtr size);
+        public static extern int av_packet_add_side_data(AVPacket* pkt, [NativeTypeName("enum AVPacketSideDataType")] AVPacketSideDataType type, [NativeTypeName("uint8_t *")] byte* data, [NativeTypeName("size_t")] nuint size);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern int av_packet_shrink_side_data(AVPacket* pkt, [NativeTypeName("enum AVPacketSideDataType")] AVPacketSideDataType type, int size);

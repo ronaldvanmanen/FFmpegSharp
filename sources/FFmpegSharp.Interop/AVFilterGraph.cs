@@ -13,8 +13,6 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-
 namespace FFmpegSharp.Interop
 {
     public unsafe partial struct AVFilterGraph
@@ -22,7 +20,6 @@ namespace FFmpegSharp.Interop
         [NativeTypeName("const AVClass *")]
         public AVClass* av_class;
 
-        [NativeTypeName("AVFilterContext **")]
         public AVFilterContext** filters;
 
         [NativeTypeName("unsigned int")]
@@ -38,19 +35,16 @@ namespace FFmpegSharp.Interop
 
         public int nb_threads;
 
-        [NativeTypeName("AVFilterGraphInternal *")]
         public AVFilterGraphInternal* @internal;
 
-        [NativeTypeName("void *")]
         public void* opaque;
 
         [NativeTypeName("avfilter_execute_func *")]
-        public IntPtr* execute;
+        public delegate* unmanaged[Cdecl]<AVFilterContext*, delegate* unmanaged[Cdecl]<AVFilterContext*, void*, int, int, int>*, void*, int*, int, int>* execute;
 
         [NativeTypeName("char *")]
         public sbyte* aresample_swr_opts;
 
-        [NativeTypeName("AVFilterLink **")]
         public AVFilterLink** sink_links;
 
         public int sink_links_count;

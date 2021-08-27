@@ -26,25 +26,20 @@ namespace FFmpegSharp.Interop
         [NativeTypeName("char *")]
         public sbyte* name;
 
-        [NativeTypeName("AVFilterPad *")]
         public AVFilterPad* input_pads;
 
-        [NativeTypeName("AVFilterLink **")]
         public AVFilterLink** inputs;
 
         [NativeTypeName("unsigned int")]
         public uint nb_inputs;
 
-        [NativeTypeName("AVFilterPad *")]
         public AVFilterPad* output_pads;
 
-        [NativeTypeName("AVFilterLink **")]
         public AVFilterLink** outputs;
 
         [NativeTypeName("unsigned int")]
         public uint nb_outputs;
 
-        [NativeTypeName("void *")]
         public void* priv;
 
         [NativeTypeName("struct AVFilterGraph *")]
@@ -52,7 +47,6 @@ namespace FFmpegSharp.Interop
 
         public int thread_type;
 
-        [NativeTypeName("AVFilterInternal *")]
         public AVFilterInternal* @internal;
 
         [NativeTypeName("struct AVFilterCommand *")]
@@ -61,15 +55,12 @@ namespace FFmpegSharp.Interop
         [NativeTypeName("char *")]
         public sbyte* enable_str;
 
-        [NativeTypeName("void *")]
         public void* enable;
 
-        [NativeTypeName("double *")]
         public double* var_values;
 
         public int is_disabled;
 
-        [NativeTypeName("AVBufferRef *")]
         public AVBufferRef* hw_device_ctx;
 
         public int nb_threads;

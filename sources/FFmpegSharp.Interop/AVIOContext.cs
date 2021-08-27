@@ -13,8 +13,6 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-
 namespace FFmpegSharp.Interop
 {
     public unsafe partial struct AVIOContext
@@ -36,13 +34,13 @@ namespace FFmpegSharp.Interop
         public void* opaque;
 
         [NativeTypeName("int (*)(void *, uint8_t *, int)")]
-        public IntPtr read_packet;
+        public delegate* unmanaged[Cdecl]<void*, byte*, int, int> read_packet;
 
         [NativeTypeName("int (*)(void *, uint8_t *, int)")]
-        public IntPtr write_packet;
+        public delegate* unmanaged[Cdecl]<void*, byte*, int, int> write_packet;
 
         [NativeTypeName("int64_t (*)(void *, int64_t, int)")]
-        public IntPtr seek;
+        public delegate* unmanaged[Cdecl]<void*, long, int, long> seek;
 
         [NativeTypeName("int64_t")]
         public long pos;
@@ -60,15 +58,15 @@ namespace FFmpegSharp.Interop
         public byte* checksum_ptr;
 
         [NativeTypeName("unsigned long (*)(unsigned long, const uint8_t *, unsigned int)")]
-        public IntPtr update_checksum;
+        public delegate* unmanaged[Cdecl]<uint, byte*, uint, uint> update_checksum;
 
         public int error;
 
         [NativeTypeName("int (*)(void *, int)")]
-        public IntPtr read_pause;
+        public delegate* unmanaged[Cdecl]<void*, int, int> read_pause;
 
         [NativeTypeName("int64_t (*)(void *, int, int64_t, int)")]
-        public IntPtr read_seek;
+        public delegate* unmanaged[Cdecl]<void*, int, long, int, long> read_seek;
 
         public int seekable;
 
@@ -95,7 +93,7 @@ namespace FFmpegSharp.Interop
         public sbyte* protocol_blacklist;
 
         [NativeTypeName("int (*)(void *, uint8_t *, int, enum AVIODataMarkerType, int64_t)")]
-        public IntPtr write_data_type;
+        public delegate* unmanaged[Cdecl]<void*, byte*, int, AVIODataMarkerType, long, int> write_data_type;
 
         public int ignore_boundary_point;
 
@@ -106,7 +104,7 @@ namespace FFmpegSharp.Interop
         public long last_time;
 
         [NativeTypeName("int (*)(void *)")]
-        public IntPtr short_seek_get;
+        public delegate* unmanaged[Cdecl]<void*, int> short_seek_get;
 
         [NativeTypeName("int64_t")]
         public long written;

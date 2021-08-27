@@ -17,16 +17,12 @@ namespace FFmpegSharp.Interop
 {
     public unsafe partial struct AVFilterLink
     {
-        [NativeTypeName("AVFilterContext *")]
         public AVFilterContext* src;
 
-        [NativeTypeName("AVFilterPad *")]
         public AVFilterPad* srcpad;
 
-        [NativeTypeName("AVFilterContext *")]
         public AVFilterContext* dst;
 
-        [NativeTypeName("AVFilterPad *")]
         public AVFilterPad* dstpad;
 
         [NativeTypeName("enum AVMediaType")]
@@ -67,7 +63,6 @@ namespace FFmpegSharp.Interop
 
         public AVRational frame_rate;
 
-        [NativeTypeName("AVFrame *")]
         public AVFrame* partial_buf;
 
         public int partial_buf_size;
@@ -84,12 +79,10 @@ namespace FFmpegSharp.Interop
         [NativeTypeName("int64_t")]
         public long frame_count_out;
 
-        [NativeTypeName("void *")]
         public void* frame_pool;
 
         public int frame_wanted_out;
 
-        [NativeTypeName("AVBufferRef *")]
         public AVBufferRef* hw_frames_ctx;
 
         [NativeTypeName("char [61440]")]
