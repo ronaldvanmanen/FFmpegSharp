@@ -11,6 +11,8 @@ packages/ffmpeg.runtime.win-x64/include/libswscale
 --file
 swscale.h
 version.h
+--headerFile
+generation\HeaderFile.txt
 --include-directory
 packages/ffmpeg.runtime.win-x64/include
 packages/ffmpeg.runtime.win-x64/include/libswscale

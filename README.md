@@ -18,7 +18,7 @@ This project has adopted the [Contributor Covenant Code of Conduct](https://www.
 ### License
 
 Copyright (c) Ronald van Manen. All rights reserved.
-Licensed under the MIT license.
+Licensed under the GNU Lesser General Public License (LGPL) version 2.
 See [LICENSE](LICENSE) in the project root for license information.
 
 ### Languages and Frameworks

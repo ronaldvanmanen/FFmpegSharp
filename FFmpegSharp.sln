@@ -55,6 +55,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "generation", "generation", 
 		generation\avfilter.rsp = generation\avfilter.rsp
 		generation\avformat.rsp = generation\avformat.rsp
 		generation\avutil.rsp = generation\avutil.rsp
+		generation\HeaderFile.txt = generation\HeaderFile.txt
 		generation\swresample.rsp = generation\swresample.rsp
 		generation\swscale.rsp = generation\swscale.rsp
 	EndProjectSection
