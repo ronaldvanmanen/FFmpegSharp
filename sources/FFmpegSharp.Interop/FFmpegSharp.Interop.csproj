@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ffmpeg" Version="4.4.0" />
+    <PackageReference Include="ffmpeg" Version="4.4.0-1634191373" />
   </ItemGroup>
 
 </Project>
