@@ -41,7 +41,7 @@
     <ContinuousIntegrationBuild Condition="'$(GITHUB_RUN_ID)' != ''">true</ContinuousIntegrationBuild>
     <PackageOutputPath>$(BaseArtifactsPath)pkg/$(Configuration)/</PackageOutputPath>
     <Product>FFmpegSharp</Product>
-    <VersionPrefix>0.1.0</VersionPrefix>
+    <VersionPrefix>4.4.0</VersionPrefix>
     <VersionSuffix>beta1</VersionSuffix>
     <VersionSuffix Condition="'$(GITHUB_EVENT_NAME)' == 'pull_request'">pr</VersionSuffix>
   </PropertyGroup>
