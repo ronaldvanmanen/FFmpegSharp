@@ -65,6 +65,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{85329D61-F0DF-4465-85E1-1BBFB86E6886}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+		.github\workflows\ci-ffmpeg.yml = .github\workflows\ci-ffmpeg.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "packages", "packages", "{AB53006F-8383-4A0F-8258-9ABA5F23A935}"
@@ -72,21 +73,20 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ffmpeg", "ffmpeg", "{1698B42D-A389-4852-96EE-C7A4D8852439}"
 	ProjectSection(SolutionItems) = preProject
 		packages\ffmpeg\ffmpeg.nuspec = packages\ffmpeg\ffmpeg.nuspec
-		packages\ffmpeg\LICENSE = packages\ffmpeg\LICENSE
 		packages\ffmpeg\runtime.json = packages\ffmpeg\runtime.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ffmpeg.runtime.win-x64", "ffmpeg.runtime.win-x64", "{79FEC800-EB04-41D2-A559-671EE929AD8C}"
 	ProjectSection(SolutionItems) = preProject
 		packages\ffmpeg.runtime.win-x64\ffmpeg.runtime.win-x64.nuspec = packages\ffmpeg.runtime.win-x64\ffmpeg.runtime.win-x64.nuspec
-		packages\ffmpeg.runtime.win-x64\LICENSE = packages\ffmpeg.runtime.win-x64\LICENSE
-		packages\ffmpeg.runtime.win-x64\README.txt = packages\ffmpeg.runtime.win-x64\README.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{0BC86385-8630-4174-9911-81B469FF14B5}"
 	ProjectSection(SolutionItems) = preProject
+		scripts\build-ffmpeg.ps1 = scripts\build-ffmpeg.ps1
 		scripts\build.ps1 = scripts\build.ps1
 		scripts\build.sh = scripts\build.sh
+		scripts\cibuild-ffmpeg.cmd = scripts\cibuild-ffmpeg.cmd
 		scripts\cibuild.cmd = scripts\cibuild.cmd
 		scripts\cibuild.sh = scripts\cibuild.sh
 	EndProjectSection

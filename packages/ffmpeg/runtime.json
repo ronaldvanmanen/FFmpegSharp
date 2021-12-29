@@ -2,12 +2,12 @@
   "runtimes": {
     "win-x64": {
       "ffmpeg": {
-        "ffmpeg.runtime.win-x64": "4.4"
+        "ffmpeg.runtime.win-x64": "$version$"
       }
     },
     "win-x86": {
       "ffmpeg": {
-        "ffmpeg.runtime.win-x86": "4.4"
+        "ffmpeg.runtime.win-x86": "$version$"
       }
     }
   }

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata minClientVersion="2.12">
     <id>ffmpeg</id>
-    <version>4.4</version>
+    <version>$version$</version>
     <authors>Ronald van Manen</authors>
     <owners>Ronald van Manen</owners>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
@@ -17,6 +17,7 @@
   </metadata>
   <files>
     <file src="LICENSE" target="LICENSE" />
+    <file src="README.txt" target="README.txt" />
     <file src="runtime.json" target="runtime.json" />
     <file src="lib/net5.0/_._" target="lib/net5.0/_._" />
   </files>
