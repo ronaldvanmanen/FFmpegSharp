@@ -64,8 +64,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{4F13
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{85329D61-F0DF-4465-85E1-1BBFB86E6886}"
 	ProjectSection(SolutionItems) = preProject
-		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 		.github\workflows\ci-ffmpeg.yml = .github\workflows\ci-ffmpeg.yml
+		.github\workflows\ci.yml = .github\workflows\ci.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "packages", "packages", "{AB53006F-8383-4A0F-8258-9ABA5F23A935}"

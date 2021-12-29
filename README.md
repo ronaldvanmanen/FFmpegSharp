@@ -2,7 +2,7 @@
 
 FFmpegSharp provides FFmpeg bindings written in C#.
 
-[![.NET](https://github.com/ronaldvanmanen/FFmpegSharp/actions/workflows/dotnet.yml/badge.svg)](https://github.com/ronaldvanmanen/FFmpegSharp/actions/workflows/dotnet.yml)
+[![.NET](https://github.com/ronaldvanmanen/FFmpegSharp/actions/workflows/ci.yml/badge.svg)](https://github.com/ronaldvanmanen/FFmpegSharp/actions/workflows/ci.yml)
 
 ## Table of Contents
 
