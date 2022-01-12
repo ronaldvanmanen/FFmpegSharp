@@ -29,6 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{6DA7
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".root", ".root", "{64D0A5D2-9CAA-4496-9E49-13C64C9039ED}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		build.cmd = build.cmd
 		build.sh = build.sh
 		Directory.Build.props = Directory.Build.props
