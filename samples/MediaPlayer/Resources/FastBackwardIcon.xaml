@@ -1,0 +1,17 @@
+﻿
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DrawingBrush x:Key="FastBackwardIcon">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <DrawingGroup.Children>
+                    <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                    <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M5.248,8.0723L14,13.8853 14,2.1343z" />
+                    <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M-1.248,8.0723L8,13.8853 8,2.1343z" />
+                    <GeometryDrawing Brush="#FF414141" Geometry="F1M7,12L0.794,8.063 7,4z" />
+                    <GeometryDrawing Brush="#FF414141" Geometry="F1M13,12L6.794,8.063 13,4z" />
+                </DrawingGroup.Children>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+</ResourceDictionary>

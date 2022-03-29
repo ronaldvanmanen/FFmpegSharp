@@ -30,12 +30,12 @@
   </PropertyGroup>
 
   <!-- Settings that are only set for executables -->
-  <PropertyGroup Condition="'$(OutputType)' != 'Library'">
+  <PropertyGroup Condition="('$(OutputType)' != 'Library') and ('$(UseWpf)' == 'false')">
     <PublishTrimmed>true</PublishTrimmed>
   </PropertyGroup>
 
   <!-- Settings that are only set for libraries -->
-  <PropertyGroup Condition="'$(OutputType)' == 'Library'">
+  <PropertyGroup Condition="('$(OutputType)' == 'Library') and ('$(UseWpf)' == 'false')">
     <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
     <IsTrimmable>true</IsTrimmable>
   </PropertyGroup>
