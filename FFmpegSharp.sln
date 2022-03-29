@@ -31,18 +31,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".root", ".root", "{64D0A5D2
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		build.cmd = build.cmd
-		build.sh = build.sh
 		Directory.Build.props = Directory.Build.props
 		Directory.Build.targets = Directory.Build.targets
 		LICENSE = LICENSE
 		nuget.config = nuget.config
 		pack.cmd = pack.cmd
-		pack.sh = pack.sh
 		README.md = README.md
 		restore.cmd = restore.cmd
-		restore.sh = restore.sh
 		test.cmd = test.cmd
-		test.sh = test.sh
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFmpegSharp.Interop", "sources\FFmpegSharp.Interop\FFmpegSharp.Interop.csproj", "{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A}"
@@ -86,10 +82,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{0BC8
 	ProjectSection(SolutionItems) = preProject
 		scripts\build-ffmpeg.ps1 = scripts\build-ffmpeg.ps1
 		scripts\build.ps1 = scripts\build.ps1
-		scripts\build.sh = scripts\build.sh
 		scripts\cibuild-ffmpeg.cmd = scripts\cibuild-ffmpeg.cmd
 		scripts\cibuild.cmd = scripts\cibuild.cmd
-		scripts\cibuild.sh = scripts\cibuild.sh
 	EndProjectSection
 EndProject
 Global
