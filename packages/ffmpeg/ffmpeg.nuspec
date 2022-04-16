@@ -6,7 +6,7 @@
     <authors>Ronald van Manen</authors>
     <owners>Ronald van Manen</owners>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
-    <license type="expression">MIT</license>
+    <license type="expression">GPL-3.0-or-later</license>
     <projectUrl>https://github.com/ronaldvanmanen/FFmpegSharp</projectUrl>
     <description>Multi-platform native library for FFmpeg.</description>
     <copyright>Copyright © Ronald van Manen</copyright>
