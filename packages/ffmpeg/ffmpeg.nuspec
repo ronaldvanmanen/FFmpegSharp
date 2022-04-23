@@ -19,6 +19,7 @@
     <file src="LICENSE" target="LICENSE" />
     <file src="README.txt" target="README.txt" />
     <file src="runtime.json" target="runtime.json" />
-    <file src="lib/net5.0/_._" target="lib/net5.0/_._" />
+    <file src="lib\net5.0\_._" target="lib\net5.0\_._" />
+    <file src="include\**\*.h" target="lib\native\include" />
   </files>
 </package>

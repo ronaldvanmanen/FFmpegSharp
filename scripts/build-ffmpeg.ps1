@@ -48,6 +48,7 @@ try {
   Copy-Item -Path $PackagesDir\ffmpeg -Destination $StagingDir -Force -Recurse
   Copy-Item -Path "$ExpandPath\LICENSE" -Destination "$StagingDir\ffmpeg" -Force -Recurse
   Copy-Item -Path "$ExpandPath\README.txt" -Destination "$StagingDir\ffmpeg" -Force -Recurse
+  Copy-Item -Path "$ExpandPath\include" -Destination "$StagingDir\ffmpeg" -Force -Recurse
 
   Copy-Item -Path $PackagesDir\ffmpeg.runtime.win-x64 -Destination $StagingDir -Force -Recurse
   Copy-Item -Path "$ExpandPath\LICENSE" -Destination "$StagingDir\ffmpeg.runtime.win-x64" -Force -Recurse
