@@ -50,28 +50,28 @@ namespace FFmpegSharp.Interop.UnitTests
             }
         }
 
-        /// <summary>Provides validation of the <see cref="AVCodecHWConfigInternal" /> struct.</summary>
+        /// <summary>Provides validation of the <see cref="AVCodec.AVCodecHWConfigInternal" /> struct.</summary>
         public static unsafe partial class AVCodecHWConfigInternalTests
         {
-            /// <summary>Validates that the <see cref="AVCodecHWConfigInternal" /> struct is blittable.</summary>
+            /// <summary>Validates that the <see cref="AVCodec.AVCodecHWConfigInternal" /> struct is blittable.</summary>
             [Fact]
             public static void IsBlittableTest()
             {
-                Assert.Equal(sizeof(AVCodecHWConfigInternal), Marshal.SizeOf<AVCodecHWConfigInternal>());
+                Assert.Equal(sizeof(AVCodec.AVCodecHWConfigInternal), Marshal.SizeOf<AVCodec.AVCodecHWConfigInternal>());
             }
 
-            /// <summary>Validates that the <see cref="AVCodecHWConfigInternal" /> struct has the right <see cref="LayoutKind" />.</summary>
+            /// <summary>Validates that the <see cref="AVCodec.AVCodecHWConfigInternal" /> struct has the right <see cref="LayoutKind" />.</summary>
             [Fact]
             public static void IsLayoutSequentialTest()
             {
-                Assert.True(typeof(AVCodecHWConfigInternal).IsLayoutSequential);
+                Assert.True(typeof(AVCodec.AVCodecHWConfigInternal).IsLayoutSequential);
             }
 
-            /// <summary>Validates that the <see cref="AVCodecHWConfigInternal" /> struct has the correct size.</summary>
+            /// <summary>Validates that the <see cref="AVCodec.AVCodecHWConfigInternal" /> struct has the correct size.</summary>
             [Fact]
             public static void SizeOfTest()
             {
-                Assert.Equal(1, sizeof(AVCodecHWConfigInternal));
+                Assert.Equal(1, sizeof(AVCodec.AVCodecHWConfigInternal));
             }
         }
     }

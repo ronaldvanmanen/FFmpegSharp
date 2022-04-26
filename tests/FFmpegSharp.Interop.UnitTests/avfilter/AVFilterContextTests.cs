@@ -50,28 +50,28 @@ namespace FFmpegSharp.Interop.UnitTests
             }
         }
 
-        /// <summary>Provides validation of the <see cref="AVFilterCommand" /> struct.</summary>
+        /// <summary>Provides validation of the <see cref="AVFilterContext.AVFilterCommand" /> struct.</summary>
         public static unsafe partial class AVFilterCommandTests
         {
-            /// <summary>Validates that the <see cref="AVFilterCommand" /> struct is blittable.</summary>
+            /// <summary>Validates that the <see cref="AVFilterContext.AVFilterCommand" /> struct is blittable.</summary>
             [Fact]
             public static void IsBlittableTest()
             {
-                Assert.Equal(sizeof(AVFilterCommand), Marshal.SizeOf<AVFilterCommand>());
+                Assert.Equal(sizeof(AVFilterContext.AVFilterCommand), Marshal.SizeOf<AVFilterContext.AVFilterCommand>());
             }
 
-            /// <summary>Validates that the <see cref="AVFilterCommand" /> struct has the right <see cref="LayoutKind" />.</summary>
+            /// <summary>Validates that the <see cref="AVFilterContext.AVFilterCommand" /> struct has the right <see cref="LayoutKind" />.</summary>
             [Fact]
             public static void IsLayoutSequentialTest()
             {
-                Assert.True(typeof(AVFilterCommand).IsLayoutSequential);
+                Assert.True(typeof(AVFilterContext.AVFilterCommand).IsLayoutSequential);
             }
 
-            /// <summary>Validates that the <see cref="AVFilterCommand" /> struct has the correct size.</summary>
+            /// <summary>Validates that the <see cref="AVFilterContext.AVFilterCommand" /> struct has the correct size.</summary>
             [Fact]
             public static void SizeOfTest()
             {
-                Assert.Equal(1, sizeof(AVFilterCommand));
+                Assert.Equal(1, sizeof(AVFilterContext.AVFilterCommand));
             }
         }
     }

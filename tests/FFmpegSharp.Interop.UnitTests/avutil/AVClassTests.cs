@@ -1,4 +1,4 @@
-// This file is part of FFmpegSharp.
+﻿// This file is part of FFmpegSharp.
 //
 // FFmpegSharp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -71,7 +71,7 @@ namespace FFmpegSharp.Interop.UnitTests
             [Fact]
             public static void SizeOfTest()
             {
-                Assert.Equal(1, sizeof(AVOption));
+                Assert.Equal(64, sizeof(AVOption));
             }
         }
     }

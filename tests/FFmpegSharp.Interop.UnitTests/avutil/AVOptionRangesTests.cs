@@ -40,31 +40,6 @@ namespace FFmpegSharp.Interop.UnitTests
         [Fact]
         public static void SizeOfTest()
         {
-            Assert.Equal(1, sizeof(AVOptionRanges));
-        }
-    }
-
-    /// <summary>Provides validation of the <see cref="AVOptionRanges" /> struct.</summary>
-    public static unsafe partial class AVOptionRangesTests
-    {
-        /// <summary>Validates that the <see cref="AVOptionRanges" /> struct is blittable.</summary>
-        [Fact]
-        public static void IsBlittableTest()
-        {
-            Assert.Equal(sizeof(AVOptionRanges), Marshal.SizeOf<AVOptionRanges>());
-        }
-
-        /// <summary>Validates that the <see cref="AVOptionRanges" /> struct has the right <see cref="LayoutKind" />.</summary>
-        [Fact]
-        public static void IsLayoutSequentialTest()
-        {
-            Assert.True(typeof(AVOptionRanges).IsLayoutSequential);
-        }
-
-        /// <summary>Validates that the <see cref="AVOptionRanges" /> struct has the correct size.</summary>
-        [Fact]
-        public static void SizeOfTest()
-        {
             if (Environment.Is64BitProcess)
             {
                 Assert.Equal(16, sizeof(AVOptionRanges));
