@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31410.357
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sources", "sources", "{39FC87FE-AABB-4285-AEDE-92C45C2EB77D}"
 	ProjectSection(SolutionItems) = preProject
@@ -33,6 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".root", ".root", "{64D0A5D2
 		build.cmd = build.cmd
 		Directory.Build.props = Directory.Build.props
 		Directory.Build.targets = Directory.Build.targets
+		generate.cmd = generate.cmd
 		LICENSE = LICENSE
 		nuget.config = nuget.config
 		pack.cmd = pack.cmd
@@ -47,14 +48,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFmpegSharp.Interop.UnitTes
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "generation", "generation", "{93FE71AD-EF75-4A94-8A58-B7CF474332AC}"
 	ProjectSection(SolutionItems) = preProject
-		generation\avcodec.rsp = generation\avcodec.rsp
-		generation\avdevice.rsp = generation\avdevice.rsp
-		generation\avfilter.rsp = generation\avfilter.rsp
-		generation\avformat.rsp = generation\avformat.rsp
-		generation\avutil.rsp = generation\avutil.rsp
-		generation\HeaderFile.txt = generation\HeaderFile.txt
-		generation\swresample.rsp = generation\swresample.rsp
-		generation\swscale.rsp = generation\swscale.rsp
+		generation\header.txt = generation\header.txt
+		generation\remap.rsp = generation\remap.rsp
+		generation\settings.rsp = generation\settings.rsp
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{4F1374E9-7C3A-4CD5-BB37-2699BDAB1811}"
@@ -84,6 +80,61 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{0BC8
 		scripts\build.ps1 = scripts\build.ps1
 		scripts\cibuild-ffmpeg.cmd = scripts\cibuild-ffmpeg.cmd
 		scripts\cibuild.cmd = scripts\cibuild.cmd
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "avcodec", "avcodec", "{3CA3C571-25D2-4740-8953-D43A0B973876}"
+	ProjectSection(SolutionItems) = preProject
+		generation\avcodec\generate.ps1 = generation\avcodec\generate.ps1
+		generation\avcodec\libavcodec.h = generation\avcodec\libavcodec.h
+		generation\avcodec\settings.rsp = generation\avcodec\settings.rsp
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "avformat", "avformat", "{A6DBB12C-6208-46CB-9747-0D9DA7E9E2A0}"
+	ProjectSection(SolutionItems) = preProject
+		generation\avformat\generate.ps1 = generation\avformat\generate.ps1
+		generation\avformat\libavformat.h = generation\avformat\libavformat.h
+		generation\avformat\settings.rsp = generation\avformat\settings.rsp
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "avdevice", "avdevice", "{63F39A45-C966-4BD5-AA2A-8A958F02463C}"
+	ProjectSection(SolutionItems) = preProject
+		generation\avdevice\generate.ps1 = generation\avdevice\generate.ps1
+		generation\avdevice\libavdevice.h = generation\avdevice\libavdevice.h
+		generation\avdevice\settings.rsp = generation\avdevice\settings.rsp
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "avutil", "avutil", "{4CA3B6E3-88C5-4FFB-9972-4A43D3029BF3}"
+	ProjectSection(SolutionItems) = preProject
+		generation\avutil\generate.ps1 = generation\avutil\generate.ps1
+		generation\avutil\libavutil.h = generation\avutil\libavutil.h
+		generation\avutil\settings.rsp = generation\avutil\settings.rsp
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "avfilter", "avfilter", "{106E0E0E-D838-42CC-8CC6-B1167D2C802F}"
+	ProjectSection(SolutionItems) = preProject
+		generation\avfilter\generate.ps1 = generation\avfilter\generate.ps1
+		generation\avfilter\libavfilter.h = generation\avfilter\libavfilter.h
+		generation\avfilter\settings.rsp = generation\avfilter\settings.rsp
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "swresample", "swresample", "{9356F58C-9980-4AC2-837B-ABFB174CA940}"
+	ProjectSection(SolutionItems) = preProject
+		generation\swresample\generate.ps1 = generation\swresample\generate.ps1
+		generation\swresample\libswresample.h = generation\swresample\libswresample.h
+		generation\swresample\settings.rsp = generation\swresample\settings.rsp
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "swscale", "swscale", "{4C3ED5D1-F67B-401C-AC50-A5FE6BF80F1E}"
+	ProjectSection(SolutionItems) = preProject
+		generation\swscale\generate.ps1 = generation\swscale\generate.ps1
+		generation\swscale\libswscale.h = generation\swscale\libswscale.h
+		generation\swscale\settings.rsp = generation\swscale\settings.rsp
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ucrt", "ucrt", "{6C9D3093-9457-4A8B-8C76-34AE259A8800}"
+	ProjectSection(SolutionItems) = preProject
+		generation\ucrt\generate.ps1 = generation\ucrt\generate.ps1
+		generation\ucrt\settings.rsp = generation\ucrt\settings.rsp
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".config", ".config", "{55700DA3-CD98-4327-8283-624ED2D3D8AE}"
@@ -130,6 +181,14 @@ Global
 		{85329D61-F0DF-4465-85E1-1BBFB86E6886} = {4F1374E9-7C3A-4CD5-BB37-2699BDAB1811}
 		{1698B42D-A389-4852-96EE-C7A4D8852439} = {AB53006F-8383-4A0F-8258-9ABA5F23A935}
 		{79FEC800-EB04-41D2-A559-671EE929AD8C} = {AB53006F-8383-4A0F-8258-9ABA5F23A935}
+		{3CA3C571-25D2-4740-8953-D43A0B973876} = {93FE71AD-EF75-4A94-8A58-B7CF474332AC}
+		{A6DBB12C-6208-46CB-9747-0D9DA7E9E2A0} = {93FE71AD-EF75-4A94-8A58-B7CF474332AC}
+		{63F39A45-C966-4BD5-AA2A-8A958F02463C} = {93FE71AD-EF75-4A94-8A58-B7CF474332AC}
+		{4CA3B6E3-88C5-4FFB-9972-4A43D3029BF3} = {93FE71AD-EF75-4A94-8A58-B7CF474332AC}
+		{106E0E0E-D838-42CC-8CC6-B1167D2C802F} = {93FE71AD-EF75-4A94-8A58-B7CF474332AC}
+		{9356F58C-9980-4AC2-837B-ABFB174CA940} = {93FE71AD-EF75-4A94-8A58-B7CF474332AC}
+		{4C3ED5D1-F67B-401C-AC50-A5FE6BF80F1E} = {93FE71AD-EF75-4A94-8A58-B7CF474332AC}
+		{6C9D3093-9457-4A8B-8C76-34AE259A8800} = {93FE71AD-EF75-4A94-8A58-B7CF474332AC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2DE946DB-0256-49EC-A290-9C2E96A609D9}

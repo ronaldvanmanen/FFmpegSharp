@@ -1,0 +1,15 @@
+@..\settings.rsp
+--file
+libswresample.h
+--include-directory
+$HOME\.nuget\packages\ffmpeg\4.4.0-2212156955\lib\native\include\libswresample
+$HOME\.nuget\packages\ffmpeg\4.4.0-2212156955\lib\native\include
+--libraryPath
+swresample-3.dll
+--output
+..\..\sources\FFmpegSharp.Interop\swresample
+--test-output
+..\..\tests\FFmpegSharp.Interop.UnitTests\swresample
+--traverse
+$HOME\.nuget\packages\ffmpeg\4.4.0-2212156955\lib\native\include\libswresample\swresample.h
+$HOME\.nuget\packages\ffmpeg\4.4.0-2212156955\lib\native\include\libswresample\version.h
