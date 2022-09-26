@@ -1,4 +1,4 @@
-name: ci-ffmpeg
+name: nugetize-ffmpeg
 
 on: workflow_dispatch
 
@@ -10,7 +10,7 @@ jobs:
     - uses: nuget/setup-nuget@v1
       with:
         nuget-version: '5.x'
-    - run: .\scripts\cibuild-ffmpeg.cmd
+    - run: .\scripts\nugetize-ffmpeg.cmd
       shell: cmd
     - uses: actions/upload-artifact@v2
       with:
