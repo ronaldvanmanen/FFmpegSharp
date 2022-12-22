@@ -2,8 +2,8 @@
 --file
 libavdevice.h
 --include-directory
-$HOME\.nuget\packages\ffmpeg\4.4.0-2212156955\lib\native\include\libavdevice
-$HOME\.nuget\packages\ffmpeg\4.4.0-2212156955\lib\native\include
+$PackageDirectory\lib\native\include\libavdevice
+$PackageDirectory\lib\native\include
 --libraryPath
 avdevice-58.dll
 --output
@@ -11,8 +11,8 @@ avdevice-58.dll
 --test-output
 ..\..\tests\FFmpegSharp.Interop.UnitTests\avdevice
 --traverse
-$HOME\.nuget\packages\ffmpeg\4.4.0-2212156955\lib\native\include\libavdevice\avdevice.h
-$HOME\.nuget\packages\ffmpeg\4.4.0-2212156955\lib\native\include\libavdevice\version.h
+$PackageDirectory\lib\native\include\libavdevice\avdevice.h
+$PackageDirectory\lib\native\include\libavdevice\version.h
 --with-type
 AVAppToDevMessageType=uint
 --with-type

@@ -8,8 +8,8 @@ FF_API_NEXT
 --file
 libavformat.h
 --include-directory
-$HOME\.nuget\packages\ffmpeg\4.4.0-2212156955\lib\native\include\libavformat
-$HOME\.nuget\packages\ffmpeg\4.4.0-2212156955\lib\native\include
+$PackageDirectory\lib\native\include\libavformat
+$PackageDirectory\lib\native\include
 --libraryPath
 avformat-58.dll
 --output
@@ -17,6 +17,6 @@ avformat-58.dll
 --test-output
 ..\..\tests\FFmpegSharp.Interop.UnitTests\avformat
 --traverse
-$HOME\.nuget\packages\ffmpeg\4.4.0-2212156955\lib\native\include\libavformat\avformat.h
-$HOME\.nuget\packages\ffmpeg\4.4.0-2212156955\lib\native\include\libavformat\avio.h
-$HOME\.nuget\packages\ffmpeg\4.4.0-2212156955\lib\native\include\libavformat\version.h
+$PackageDirectory\lib\native\include\libavformat\avformat.h
+$PackageDirectory\lib\native\include\libavformat\avio.h
+$PackageDirectory\lib\native\include\libavformat\version.h

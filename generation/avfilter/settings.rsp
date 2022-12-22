@@ -4,8 +4,8 @@ FF_API_NEXT
 --file
 libavfilter.h
  --include-directory
- $HOME\.nuget\packages\ffmpeg\4.4.0-2212156955\lib\native\include\libavfilter
- $HOME\.nuget\packages\ffmpeg\4.4.0-2212156955\lib\native\include
+$PackageDirectory\lib\native\include\libavfilter
+$PackageDirectory\lib\native\include
 --libraryPath
 avfilter-7.dll
 --output
@@ -13,7 +13,7 @@ avfilter-7.dll
 --test-output
 ..\..\tests\FFmpegSharp.Interop.UnitTests\avfilter
 --traverse
-$HOME\.nuget\packages\ffmpeg\4.4.0-2212156955\lib\native\include\libavfilter\avfilter.h
-$HOME\.nuget\packages\ffmpeg\4.4.0-2212156955\lib\native\include\libavfilter\buffersink.h
-$HOME\.nuget\packages\ffmpeg\4.4.0-2212156955\lib\native\include\libavfilter\buffersrc.h
-$HOME\.nuget\packages\ffmpeg\4.4.0-2212156955\lib\native\include\libavfilter\version.h
+$PackageDirectory\lib\native\include\libavfilter\avfilter.h
+$PackageDirectory\lib\native\include\libavfilter\buffersink.h
+$PackageDirectory\lib\native\include\libavfilter\buffersrc.h
+$PackageDirectory\lib\native\include\libavfilter\version.h

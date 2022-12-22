@@ -2,8 +2,8 @@
 --file
 libswscale.h
 --include-directory
-$HOME\.nuget\packages\ffmpeg\4.4.0-2212156955\lib\native\include\libswscale
-$HOME\.nuget\packages\ffmpeg\4.4.0-2212156955\lib\native\include
+$PackageDirectory\lib\native\include\libswscale
+$PackageDirectory\lib\native\include
 --libraryPath
 swscale-5.dll
 --output
@@ -11,5 +11,5 @@ swscale-5.dll
 --test-output
 ..\..\tests\FFmpegSharp.Interop.UnitTests\swscale
 --traverse
-$HOME\.nuget\packages\ffmpeg\4.4.0-2212156955\lib\native\include\libswscale\swscale.h
-$HOME\.nuget\packages\ffmpeg\4.4.0-2212156955\lib\native\include\libswscale\version.h
+$PackageDirectory\lib\native\include\libswscale\swscale.h
+$PackageDirectory\lib\native\include\libswscale\version.h
