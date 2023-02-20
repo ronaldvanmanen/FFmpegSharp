@@ -9,15 +9,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sources", "sources", "{39FC
 		sources\Directory.Build.targets = sources\Directory.Build.targets
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFmpegSharp", "sources\FFmpegSharp\FFmpegSharp.csproj", "{AAF523C0-0BAC-47FA-B490-51C4547D55FC}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{267891C3-BA27-4D4B-8905-8AF9CD7AE981}"
 	ProjectSection(SolutionItems) = preProject
 		tests\Directory.Build.props = tests\Directory.Build.props
 		tests\Directory.Build.targets = tests\Directory.Build.targets
 	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFmpegSharp.UnitTests", "tests\FFmpegSharp.UnitTests\FFmpegSharp.UnitTests.csproj", "{A31210FD-7E75-45B2-AB6B-9E0C981EBC50}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".root", ".root", "{64D0A5D2-9CAA-4496-9E49-13C64C9039ED}"
 	ProjectSection(SolutionItems) = preProject
@@ -125,14 +121,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AAF523C0-0BAC-47FA-B490-51C4547D55FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AAF523C0-0BAC-47FA-B490-51C4547D55FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AAF523C0-0BAC-47FA-B490-51C4547D55FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AAF523C0-0BAC-47FA-B490-51C4547D55FC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A31210FD-7E75-45B2-AB6B-9E0C981EBC50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A31210FD-7E75-45B2-AB6B-9E0C981EBC50}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A31210FD-7E75-45B2-AB6B-9E0C981EBC50}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A31210FD-7E75-45B2-AB6B-9E0C981EBC50}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -146,8 +134,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{AAF523C0-0BAC-47FA-B490-51C4547D55FC} = {39FC87FE-AABB-4285-AEDE-92C45C2EB77D}
-		{A31210FD-7E75-45B2-AB6B-9E0C981EBC50} = {267891C3-BA27-4D4B-8905-8AF9CD7AE981}
 		{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A} = {39FC87FE-AABB-4285-AEDE-92C45C2EB77D}
 		{FBD47572-3A0F-4CF8-8D3C-EACE1AEF59C7} = {267891C3-BA27-4D4B-8905-8AF9CD7AE981}
 		{85329D61-F0DF-4465-85E1-1BBFB86E6886} = {4F1374E9-7C3A-4CD5-BB37-2699BDAB1811}
