@@ -1,0 +1,19 @@
+@..\remap.rsp
+--config
+latest-codegen
+generate-macro-bindings
+generate-tests-xunit
+multi-file
+log-exclusions
+log-potential-typedef-remappings
+log-visited-files
+--headerFile
+..\header.txt
+--include-directory
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt
+--language
+c++
+--methodClassName
+FFmpeg
+--namespace
+FFmpegSharp.Interop

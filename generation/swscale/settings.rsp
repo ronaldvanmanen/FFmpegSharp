@@ -1,0 +1,15 @@
+@..\settings.rsp
+--file
+libswscale.h
+--include-directory
+$PackageDirectory\lib\native\include\libswscale
+$PackageDirectory\lib\native\include
+--libraryPath
+swscale-5.dll
+--output
+..\..\sources\FFmpegSharp.Interop\swscale
+--test-output
+..\..\tests\FFmpegSharp.Interop.UnitTests\swscale
+--traverse
+$PackageDirectory\lib\native\include\libswscale\swscale.h
+$PackageDirectory\lib\native\include\libswscale\version.h

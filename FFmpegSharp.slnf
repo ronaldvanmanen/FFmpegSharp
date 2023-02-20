@@ -1,0 +1,12 @@
+{
+  "solution": {
+    "path": "FFmpegSharp.sln",
+    "projects": [
+      "samples\\FFplaySharp\\FFplaySharp.csproj",
+      "sources\\FFmpegSharp.Interop\\FFmpegSharp.Interop.csproj",
+      "sources\\FFmpegSharp\\FFmpegSharp.csproj",
+      "tests\\FFmpegSharp.Interop.UnitTests\\FFmpegSharp.Interop.UnitTests.csproj",
+      "tests\\FFmpegSharp.UnitTests\\FFmpegSharp.UnitTests.csproj"
+    ]
+  }
+}

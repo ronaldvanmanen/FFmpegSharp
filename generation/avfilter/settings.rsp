@@ -1,0 +1,19 @@
+@..\settings.rsp
+--exclude
+FF_API_NEXT
+--file
+libavfilter.h
+ --include-directory
+$PackageDirectory\lib\native\include\libavfilter
+$PackageDirectory\lib\native\include
+--libraryPath
+avfilter-7.dll
+--output
+..\..\sources\FFmpegSharp.Interop\avfilter
+--test-output
+..\..\tests\FFmpegSharp.Interop.UnitTests\avfilter
+--traverse
+$PackageDirectory\lib\native\include\libavfilter\avfilter.h
+$PackageDirectory\lib\native\include\libavfilter\buffersink.h
+$PackageDirectory\lib\native\include\libavfilter\buffersrc.h
+$PackageDirectory\lib\native\include\libavfilter\version.h
