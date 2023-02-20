@@ -27,6 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".root", ".root", "{64D0A5D2
 		Directory.Build.targets = Directory.Build.targets
 		generate.cmd = generate.cmd
 		LICENSE = LICENSE
+		GitVersion.yml = GitVersion.yml
 		nuget.config = nuget.config
 		pack.cmd = pack.cmd
 		README.md = README.md
