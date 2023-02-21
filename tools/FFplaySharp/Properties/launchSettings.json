@@ -6,6 +6,10 @@
     "FFplaySharp --help": {
       "commandName": "Project",
       "commandLineArgs": "--help"
+    },
+    "FFplaySharp --version": {
+      "commandName": "Project",
+      "commandLineArgs": "--version"
     }
   }
 }

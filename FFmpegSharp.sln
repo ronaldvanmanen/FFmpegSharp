@@ -121,7 +121,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{ED69391B
 		tools\Directory.Build.targets = tools\Directory.Build.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFplaySharp", "tools\FFplaySharp\FFplaySharp.csproj", "{46B92A6C-7579-46C1-AB87-151FAB206B38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFplaySharp", "tools\FFplaySharp\FFplaySharp.csproj", "{46B92A6C-7579-46C1-AB87-151FAB206B38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFmpegSharp", "sources\FFmpegSharp\FFmpegSharp.csproj", "{2945F278-2D26-43E6-89E6-768056FE6F88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -141,6 +143,10 @@ Global
 		{46B92A6C-7579-46C1-AB87-151FAB206B38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46B92A6C-7579-46C1-AB87-151FAB206B38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46B92A6C-7579-46C1-AB87-151FAB206B38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2945F278-2D26-43E6-89E6-768056FE6F88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2945F278-2D26-43E6-89E6-768056FE6F88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2945F278-2D26-43E6-89E6-768056FE6F88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2945F278-2D26-43E6-89E6-768056FE6F88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -158,6 +164,7 @@ Global
 		{4C3ED5D1-F67B-401C-AC50-A5FE6BF80F1E} = {93FE71AD-EF75-4A94-8A58-B7CF474332AC}
 		{6C9D3093-9457-4A8B-8C76-34AE259A8800} = {93FE71AD-EF75-4A94-8A58-B7CF474332AC}
 		{46B92A6C-7579-46C1-AB87-151FAB206B38} = {ED69391B-EAA7-497C-9427-750CCCE94F98}
+		{2945F278-2D26-43E6-89E6-768056FE6F88} = {39FC87FE-AABB-4285-AEDE-92C45C2EB77D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2DE946DB-0256-49EC-A290-9C2E96A609D9}
