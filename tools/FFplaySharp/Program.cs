@@ -41,7 +41,8 @@ namespace FFplaySharp
                 .UseExceptionHandler()
                 .CancelOnProcessTermination()
                 .UseShowVersionOption()
-                .UseShowLicenseOption();
+                .UseShowLicenseOption()
+                .UseShowBuildConfigurationOption();
 
             var commandLineParser = commandLineBuilder.Build();
 
@@ -56,6 +57,11 @@ namespace FFplaySharp
         private static CommandLineBuilder UseShowLicenseOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--license", "Show license", ShowLicense);
+        }
+
+        private static CommandLineBuilder UseShowBuildConfigurationOption(this CommandLineBuilder builder)
+        {
+            return builder.AddGlobalOption("--build-configuration", "Show build configuration", ShowBuildConfiguration);
         }
 
         private static void ShowVersion()
@@ -85,6 +91,16 @@ namespace FFplaySharp
             var license = Licenses.LGPLv2;
 #endif
             Console.WriteLine(license, programName);
+        }
+
+        private static void ShowBuildConfiguration()
+        {
+            Console.WriteLine($"configuration:");
+
+            foreach (var option in AVUtil.BuildConfiguration.Split(' '))
+            {
+                Console.WriteLine($"  {option}");
+            }
         }
 
         private static void PrintBuildConfiguration()

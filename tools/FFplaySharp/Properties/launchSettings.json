@@ -14,6 +14,10 @@
     "FFplaySharp --license": {
       "commandName": "Project",
       "commandLineArgs": "--license"
+    },
+    "FFplaySharp --build-configuration": {
+      "commandName": "Project",
+      "commandLineArgs": "--build-configuration"
     }
   }
 }
