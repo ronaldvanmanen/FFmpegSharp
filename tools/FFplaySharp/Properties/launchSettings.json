@@ -58,6 +58,10 @@
     "FFplaySharp --filters": {
       "commandName": "Project",
       "commandLineArgs": "--filters"
+    },
+    "FFplaySharp --colors": {
+      "commandName": "Project",
+      "commandLineArgs": "--colors"
     }
   }
 }

@@ -17,6 +17,7 @@ using System;
 using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using FFmpegSharp;
@@ -57,7 +58,8 @@ namespace FFplaySharp
                 .UseShowEncodersOption()
                 .UseShowBitStreamFiltersOption()
                 .UseShowProtocolsOption()
-                .UseShowFiltersOption();
+                .UseShowFiltersOption()
+                .UseShowColorsOption();
 
             var commandLineParser = commandLineBuilder.Build();
 
@@ -127,6 +129,11 @@ namespace FFplaySharp
         private static CommandLineBuilder UseShowFiltersOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--filters", "Show available filters", ShowFilters);
+        }
+
+        private static CommandLineBuilder UseShowColorsOption(this CommandLineBuilder builder)
+        {
+            return builder.AddGlobalOption("--colors", "Show available color names", ShowColors);
         }
 
         private static void ShowVersion()
@@ -328,6 +335,16 @@ namespace FFplaySharp
                        filter.Name,
                        descr,
                        filter.Description);
+            }
+        }
+
+        private static void ShowColors()
+        {
+            Console.WriteLine("{0,-32} #RRGGBB", "name");
+
+            foreach (var color in AVKnownColor.All)
+            {
+                Console.WriteLine("{0,-32} #{1:X2}{2:X2}{3:X2}", color.Name, color.R, color.G, color.B);
             }
         }
 
