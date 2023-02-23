@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "FFplaySharp": {
+      "commandName": "Project"
+    },
+    "FFplaySharp --help": {
+      "commandName": "Project",
+      "commandLineArgs": "--help"
+    }
+  }
+}

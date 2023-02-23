@@ -13,12 +13,34 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.CommandLine;
+using System.CommandLine.Builder;
+using System.CommandLine.Parsing;
+
 namespace FFplaySharp
 {
-    internal class Program
+    internal sealed class Program
     {
-        static void Main()
+        static int Main(string[] args)
         {
+            var rootCommand = new RootCommand("Simple media player based on FFplay");
+
+            rootCommand.SetHandler(() => { });
+
+            var commandLineBuilder = new CommandLineBuilder(rootCommand)
+                .UseHelp()
+                .UseEnvironmentVariableDirective()
+                .UseParseDirective()
+                .UseSuggestDirective()
+                .RegisterWithDotnetSuggest()
+                .UseTypoCorrections()
+                .UseParseErrorReporting()
+                .UseExceptionHandler()
+                .CancelOnProcessTermination();
+
+            var commandLineParser = commandLineBuilder.Build();
+
+            return commandLineParser.Invoke(args);
         }
     }
 }
