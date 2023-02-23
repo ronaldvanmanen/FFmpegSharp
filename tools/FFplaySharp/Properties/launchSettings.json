@@ -62,6 +62,10 @@
     "FFplaySharp --colors": {
       "commandName": "Project",
       "commandLineArgs": "--colors"
+    },
+    "FFplaySharp --pixel-formats": {
+      "commandName": "Project",
+      "commandLineArgs": "--pixel-formats"
     }
   }
 }

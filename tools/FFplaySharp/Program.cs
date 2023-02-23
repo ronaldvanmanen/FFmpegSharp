@@ -17,7 +17,6 @@ using System;
 using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using FFmpegSharp;
@@ -59,7 +58,8 @@ namespace FFplaySharp
                 .UseShowBitStreamFiltersOption()
                 .UseShowProtocolsOption()
                 .UseShowFiltersOption()
-                .UseShowColorsOption();
+                .UseShowColorsOption()
+                .UseShowPixelFormatsOption();
 
             var commandLineParser = commandLineBuilder.Build();
 
@@ -134,6 +134,11 @@ namespace FFplaySharp
         private static CommandLineBuilder UseShowColorsOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--colors", "Show available color names", ShowColors);
+        }
+
+        private static CommandLineBuilder UseShowPixelFormatsOption(this CommandLineBuilder builder)
+        {
+            return builder.AddGlobalOption("--pixel-formats", "Show available pixel formats", ShowPixelFormats);
         }
 
         private static void ShowVersion()
@@ -345,6 +350,32 @@ namespace FFplaySharp
             foreach (var color in AVKnownColor.All)
             {
                 Console.WriteLine("{0,-32} #{1:X2}{2:X2}{3:X2}", color.Name, color.R, color.G, color.B);
+            }
+        }
+
+        private static void ShowPixelFormats()
+        {
+            Console.WriteLine("Pixel formats:");
+            Console.WriteLine("I.... = Supported Input format for conversion");
+            Console.WriteLine(".O... = Supported Output format for conversion");
+            Console.WriteLine("..H.. = Hardware accelerated format");
+            Console.WriteLine("...P. = Paletted format");
+            Console.WriteLine("....B = Bitstream format");
+            Console.WriteLine("FLAGS NAME            NB_COMPONENTS BITS_PER_PIXEL");
+            Console.WriteLine("-----");
+
+            foreach (var descriptor in AVPixelFormatDescriptor.All)
+            {
+                AVPixelFormat format = descriptor.PixelFormat;
+                Console.WriteLine("{0}{1}{2}{3}{4} {5,-16}       {6:D}            {7:D2}",
+                    format.IsSupportedInputFormat() ? 'I' : '.',
+                    format.IsSupportedOutputFormat() ? 'O' : '.',
+                    descriptor.Flags.HasFlag(AVPixelFormatFlags.HardwareAcceleration) ? 'H' : '.',
+                    descriptor.Flags.HasFlag(AVPixelFormatFlags.Pal) ? 'P' : '.',
+                    descriptor.Flags.HasFlag(AVPixelFormatFlags.Bitstream) ? 'B' : '.',
+                    descriptor.Name,
+                    descriptor.ComponentsPerPixel,
+                    descriptor.BitsPerPixel);
             }
         }
 
