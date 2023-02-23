@@ -18,6 +18,7 @@ using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
 using System.IO;
+using System.Linq;
 using FFmpegSharp;
 
 namespace FFplaySharp
@@ -26,6 +27,7 @@ namespace FFplaySharp
     {
         static int Main(string[] args)
         {
+            AVCodec.RegisterAll();
             AVDevice.RegisterAll();
 
             var rootCommand = new RootCommand("Simple media player based on FFplay");
@@ -48,7 +50,8 @@ namespace FFplaySharp
                 .UseShowFormatsOption()
                 .UseShowMuxersOption()
                 .UseShowDemuxersOption()
-                .UseShowDevicesOption();
+                .UseShowDevicesOption()
+                .UseShowCodecsOption();
 
             var commandLineParser = commandLineBuilder.Build();
 
@@ -88,6 +91,11 @@ namespace FFplaySharp
         private static CommandLineBuilder UseShowDevicesOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--devices", "Show available devices", ShowDevices);
+        }
+
+        private static CommandLineBuilder UseShowCodecsOption(this CommandLineBuilder builder)
+        {
+            return builder.AddGlobalOption("--codecs", "Show available codecs", ShowCodecs);
         }
 
         private static void ShowVersion()
@@ -149,6 +157,56 @@ namespace FFplaySharp
             PrintFormats(showMuxers: true, showDemuxers: true, showDevicesOnly: true);
         }
 
+        private static void ShowCodecs()
+        {
+            Console.WriteLine("Codecs:");
+            Console.WriteLine(" D..... = Decoding supported");
+            Console.WriteLine(" .E.... = Encoding supported");
+            Console.WriteLine(" ..V... = Video codec");
+            Console.WriteLine(" ..A... = Audio codec");
+            Console.WriteLine(" ..S... = Subtitle codec");
+            Console.WriteLine(" ...I.. = Intra frame-only codec");
+            Console.WriteLine(" ....L. = Lossy compression");
+            Console.WriteLine(" .....S = Lossless compression");
+            Console.WriteLine(" -------");
+
+            foreach (var descriptor in AVCodecDescriptor.All.Where(e => !e.Name.Contains("_deprecated")))
+            {
+                Console.Write(" ");
+                Console.Write(AVCodec.FindDecoder(descriptor.Id) != null ? "D" : ".");
+                Console.Write(AVCodec.FindEncoder(descriptor.Id) != null ? "E" : ".");
+
+                Console.Write(GetMediaTypeChar(descriptor.Type));
+                Console.Write(descriptor.Properties.HasFlag(AVCodecProperties.IntraCompressionOnly) ? "I" : ".");
+                Console.Write(descriptor.Properties.HasFlag(AVCodecProperties.LossyCompression) ? "L" : ".");
+                Console.Write(descriptor.Properties.HasFlag(AVCodecProperties.LosslessCompression) ? "S" : ".");
+
+                Console.Write(" {0,-20} {1} ", descriptor.Name, descriptor.LongName ?? string.Empty);
+
+                /* print decoders/encoders when there's more than one or their
+                 * names are different from codec name */
+                foreach (var codec in AVCodec.All.Where(e => e.IsDecoder))
+                {
+                    if (codec.Name.Equals(descriptor.Name))
+                    {
+                        PrintDecoders(descriptor.Id);
+                        break;
+                    }
+                }
+
+                foreach (var codec in AVCodec.All.Where(e => e.IsEncoder))
+                {
+                    if (codec.Name.Equals(descriptor.Name))
+                    {
+                        PrintEncoders(descriptor.Id);
+                        break;
+                    }
+                }
+
+                Console.WriteLine();
+            }
+        }
+
         private static void PrintBuildConfiguration()
         {
             Console.WriteLine($"configuration: {AVUtil.BuildConfiguration}");
@@ -166,7 +224,6 @@ namespace FFplaySharp
                 GetMinorVersion(intVersion),
                 GetMicroVersion(intVersion));
         }
-
 
         private static int PrintFormats(bool showMuxers, bool showDemuxers, bool showDevicesOnly)
         {
@@ -241,6 +298,16 @@ namespace FFplaySharp
             return 0;
         }
 
+        private static void PrintEncoders(AVCodecID id)
+        {
+            Console.Write($"(encoders: {string.Join(' ', AVCodec.All.Where(c => c.Id == id && c.IsEncoder).Select(c => c.Name))})");
+        }
+
+        private static void PrintDecoders(AVCodecID id)
+        {
+            Console.Write($"(decoders: {string.Join(' ', AVCodec.All.Where(c => c.Id == id && c.IsDecoder).Select(c => c.Name))})");
+        }
+
         private static uint GetIntVersion(string libraryName)
         {
             var type = typeof(FFmpegSharp.Interop.FFmpeg);
@@ -310,5 +377,18 @@ namespace FFplaySharp
         private static uint GetMinorVersion(uint a) => (((a) & 0x00FF00) >> 8);
 
         private static uint GetMicroVersion(uint a) => ((a) & 0xFF);
+
+        private static char GetMediaTypeChar(AVMediaType type)
+        {
+            return type switch
+            {
+                AVMediaType.Video => 'V',
+                AVMediaType.Audio => 'A',
+                AVMediaType.Data => 'D',
+                AVMediaType.Subtitle => 'S',
+                AVMediaType.Attachment => 'T',
+                _ => '?',
+            };
+        }
     }
 }
