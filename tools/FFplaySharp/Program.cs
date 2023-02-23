@@ -59,7 +59,8 @@ namespace FFplaySharp
                 .UseShowProtocolsOption()
                 .UseShowFiltersOption()
                 .UseShowColorsOption()
-                .UseShowPixelFormatsOption();
+                .UseShowPixelFormatsOption()
+                .UseShowStandardChannelLayoutsOption();
 
             var commandLineParser = commandLineBuilder.Build();
 
@@ -139,6 +140,11 @@ namespace FFplaySharp
         private static CommandLineBuilder UseShowPixelFormatsOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--pixel-formats", "Show available pixel formats", ShowPixelFormats);
+        }
+
+        private static CommandLineBuilder UseShowStandardChannelLayoutsOption(this CommandLineBuilder builder)
+        {
+            return builder.AddGlobalOption("--channel-layouts", "Show standard channel layouts", () => ShowStandardChannelLayouts());
         }
 
         private static void ShowVersion()
@@ -376,6 +382,30 @@ namespace FFplaySharp
                     descriptor.Name,
                     descriptor.ComponentsPerPixel,
                     descriptor.BitsPerPixel);
+            }
+        }
+
+        private static void ShowStandardChannelLayouts()
+        {
+            Console.WriteLine("Individual channels:");
+            Console.WriteLine("NAME           DESCRIPTION");
+
+            foreach (var channel in Enum.GetValues<AVChannels>())
+            {
+                var name = channel.GetName();
+                var description = channel.GetDescription();
+                Console.WriteLine("{0,-14} {1}", name, description);
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Standard channel layouts:");
+            Console.WriteLine("NAME           DECOMPOSITION");
+
+            foreach (var channelLayout in AVStandardChannelLayout.All)
+            {
+                var name = channelLayout.Name;
+                var decomposition = string.Join("+", channelLayout.Layout.GetChannels().Select(e => e.GetName()));
+                Console.WriteLine("{0,-14} {1}", name, decomposition);
             }
         }
 

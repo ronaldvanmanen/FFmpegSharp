@@ -66,6 +66,10 @@
     "FFplaySharp --pixel-formats": {
       "commandName": "Project",
       "commandLineArgs": "--pixel-formats"
+    },
+    "FFplaySharp --channel-layouts": {
+      "commandName": "Project",
+      "commandLineArgs": "--channel-layouts"
     }
   }
 }
