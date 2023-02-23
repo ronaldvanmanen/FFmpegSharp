@@ -17,6 +17,7 @@ using System;
 using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
+using System.IO;
 using FFmpegSharp;
 
 namespace FFplaySharp
@@ -39,7 +40,8 @@ namespace FFplaySharp
                 .UseParseErrorReporting()
                 .UseExceptionHandler()
                 .CancelOnProcessTermination()
-                .UseShowVersionOption();
+                .UseShowVersionOption()
+                .UseShowLicenseOption();
 
             var commandLineParser = commandLineBuilder.Build();
 
@@ -49,6 +51,11 @@ namespace FFplaySharp
         private static CommandLineBuilder UseShowVersionOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--version", "Show version", ShowVersion);
+        }
+
+        private static CommandLineBuilder UseShowLicenseOption(this CommandLineBuilder builder)
+        {
+            return builder.AddGlobalOption("--license", "Show license", ShowLicense);
         }
 
         private static void ShowVersion()
@@ -61,6 +68,23 @@ namespace FFplaySharp
             PrintLibraryVersion("avfilter");
             PrintLibraryVersion("swresample");
             PrintLibraryVersion("swscale");
+        }
+
+        private static void ShowLicense()
+        {
+            var programName = Path.GetFileNameWithoutExtension(Environment.GetCommandLineArgs()[0]);
+#if CONFIG_NONFREE
+            var license = Licenses.NonFree;
+#elif CONFIG_GPLV3
+            var license = Licenses.GPLv3;
+#elif CONFIG_GPL
+            var license = Licenses.GPLv2;
+#elif CONFIG_LGPLV3
+            var license = Licenses.LGPLv3;
+#else
+            var license = Licenses.LGPLv2;
+#endif
+            Console.WriteLine(license, programName);
         }
 
         private static void PrintBuildConfiguration()

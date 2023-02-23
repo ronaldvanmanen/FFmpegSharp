@@ -10,6 +10,10 @@
     "FFplaySharp --version": {
       "commandName": "Project",
       "commandLineArgs": "--version"
+    },
+    "FFplaySharp --license": {
+      "commandName": "Project",
+      "commandLineArgs": "--license"
     }
   }
 }

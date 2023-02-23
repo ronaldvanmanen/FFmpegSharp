@@ -15,4 +15,19 @@
     <ProjectReference Include="..\..\sources\FFmpegSharp\FFmpegSharp.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Licenses.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Licenses.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Licenses.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Licenses.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>
