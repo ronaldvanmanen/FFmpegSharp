@@ -50,6 +50,10 @@
     "FFplaySharp --bit-stream-filters": {
       "commandName": "Project",
       "commandLineArgs": "--bit-stream-filters"
+    },
+    "FFplaySharp --protocols": {
+      "commandName": "Project",
+      "commandLineArgs": "--protocols"
     }
   }
 }

@@ -54,7 +54,8 @@ namespace FFplaySharp
                 .UseShowCodecsOption()
                 .UseShowDecodersOption()
                 .UseShowEncodersOption()
-                .UseShowBitStreamFiltersOption();
+                .UseShowBitStreamFiltersOption()
+                .UseShowProtocolsOption();
 
             var commandLineParser = commandLineBuilder.Build();
 
@@ -114,6 +115,11 @@ namespace FFplaySharp
         private static CommandLineBuilder UseShowBitStreamFiltersOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--bit-stream-filters", "Show available bit stream filters", ShowBitStreamFilters);
+        }
+
+        private static CommandLineBuilder UseShowProtocolsOption(this CommandLineBuilder builder)
+        {
+            return builder.AddGlobalOption("--protocols", "Show available protocols", ShowProtocols);
         }
 
         private static void ShowVersion()
@@ -245,6 +251,26 @@ namespace FFplaySharp
             }
 
             Console.WriteLine();
+        }
+
+        private static void ShowProtocols()
+        {
+            Console.WriteLine("Supported file protocols:");
+            Console.WriteLine();
+            Console.WriteLine("Input:");
+
+            foreach (var protocolName in AVIO.InputProtocolNames)
+            {
+                Console.WriteLine($"  {protocolName}");
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Output:");
+
+            foreach (var protocolName in AVIO.OutputProtocolNames)
+            {
+                Console.WriteLine($"  {new string(protocolName)}");
+            }
         }
 
         private static void PrintBuildConfiguration()
