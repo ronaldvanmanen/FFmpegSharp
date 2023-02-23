@@ -26,6 +26,8 @@ namespace FFplaySharp
     {
         static int Main(string[] args)
         {
+            AVDevice.RegisterAll();
+
             var rootCommand = new RootCommand("Simple media player based on FFplay");
 
             rootCommand.SetHandler(() => { });
@@ -42,7 +44,11 @@ namespace FFplaySharp
                 .CancelOnProcessTermination()
                 .UseShowVersionOption()
                 .UseShowLicenseOption()
-                .UseShowBuildConfigurationOption();
+                .UseShowBuildConfigurationOption()
+                .UseShowFormatsOption()
+                .UseShowMuxersOption()
+                .UseShowDemuxersOption()
+                .UseShowDevicesOption();
 
             var commandLineParser = commandLineBuilder.Build();
 
@@ -62,6 +68,26 @@ namespace FFplaySharp
         private static CommandLineBuilder UseShowBuildConfigurationOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--build-configuration", "Show build configuration", ShowBuildConfiguration);
+        }
+
+        private static CommandLineBuilder UseShowFormatsOption(this CommandLineBuilder builder)
+        {
+            return builder.AddGlobalOption("--formats", "Show available formats", ShowFormats);
+        }
+
+        private static CommandLineBuilder UseShowMuxersOption(this CommandLineBuilder builder)
+        {
+            return builder.AddGlobalOption("--muxers", "Show available muxers", ShowMuxers);
+        }
+
+        private static CommandLineBuilder UseShowDemuxersOption(this CommandLineBuilder builder)
+        {
+            return builder.AddGlobalOption("--demuxers", "Show available demuxers", ShowDemuxers);
+        }
+
+        private static CommandLineBuilder UseShowDevicesOption(this CommandLineBuilder builder)
+        {
+            return builder.AddGlobalOption("--devices", "Show available devices", ShowDevices);
         }
 
         private static void ShowVersion()
@@ -103,6 +129,26 @@ namespace FFplaySharp
             }
         }
 
+        private static void ShowFormats()
+        {
+            PrintFormats(showMuxers: true, showDemuxers: true, showDevicesOnly: false);
+        }
+
+        private static void ShowMuxers()
+        {
+            PrintFormats(showMuxers: true, showDemuxers: false, showDevicesOnly: false);
+        }
+
+        private static void ShowDemuxers()
+        {
+            PrintFormats(showMuxers: false, showDemuxers: true, showDevicesOnly: false);
+        }
+
+        private static void ShowDevices()
+        {
+            PrintFormats(showMuxers: true, showDemuxers: true, showDevicesOnly: true);
+        }
+
         private static void PrintBuildConfiguration()
         {
             Console.WriteLine($"configuration: {AVUtil.BuildConfiguration}");
@@ -119,6 +165,80 @@ namespace FFplaySharp
                 GetMajorVersion(intVersion),
                 GetMinorVersion(intVersion),
                 GetMicroVersion(intVersion));
+        }
+
+
+        private static int PrintFormats(bool showMuxers, bool showDemuxers, bool showDevicesOnly)
+        {
+            Console.WriteLine(showDevicesOnly ? "Devices:" : "File formats:");
+            Console.WriteLine(" D. = Demuxing supported");
+            Console.WriteLine(" .E = Muxing supported");
+            Console.WriteLine(" --");
+
+            var lastName = "000";
+
+            while (true)
+            {
+                var decode = false;
+                var encode = false;
+                string? formatName = null;
+                string? formatLongName = null;
+
+                if (showMuxers)
+                {
+                    foreach (var outputFormat in AVOutputFormat.All)
+                    {
+                        if (showDevicesOnly && !outputFormat.IsDevice)
+                        {
+                            continue;
+                        }
+
+                        if ((formatName == null || outputFormat.Name.CompareTo(formatName) < 0) && outputFormat.Name.CompareTo(lastName) > 0)
+                        {
+                            formatName = outputFormat.Name;
+                            formatLongName = outputFormat.LongName;
+                            encode = true;
+                        }
+                    }
+                }
+
+                if (showDemuxers)
+                {
+                    foreach (var inputFormat in AVInputFormat.All)
+                    {
+                        if (showDevicesOnly && !inputFormat.IsDevice)
+                        {
+                            continue;
+                        }
+
+                        if ((formatName == null || inputFormat.Name.CompareTo(formatName) < 0) && inputFormat.Name.CompareTo(lastName) > 0)
+                        {
+                            formatName = inputFormat.Name;
+                            formatLongName = inputFormat.LongName;
+                            encode = false;
+                        }
+
+                        if (formatName != null && inputFormat.Name.Equals(formatName))
+                        {
+                            decode = true;
+                        }
+                    }
+                }
+
+                if (formatName == null)
+                {
+                    break;
+                }
+
+                lastName = formatName;
+
+                Console.WriteLine(" {0}{1} {2,-15} {3}",
+                    decode ? "D" : " ",
+                    encode ? "E" : " ",
+                    formatName,
+                    formatLongName ?? " ");
+            }
+            return 0;
         }
 
         private static uint GetIntVersion(string libraryName)

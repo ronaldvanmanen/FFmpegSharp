@@ -18,6 +18,22 @@
     "FFplaySharp --build-configuration": {
       "commandName": "Project",
       "commandLineArgs": "--build-configuration"
+    },
+    "FFplaySharp --formats": {
+      "commandName": "Project",
+      "commandLineArgs": "--formats"
+    },
+    "FFplaySharp --muxers": {
+      "commandName": "Project",
+      "commandLineArgs": "--muxers"
+    },
+    "FFplaySharp --demuxers": {
+      "commandName": "Project",
+      "commandLineArgs": "--demuxers"
+    },
+    "FFplaySharp --devices": {
+      "commandName": "Project",
+      "commandLineArgs": "--devices"
     }
   }
 }
