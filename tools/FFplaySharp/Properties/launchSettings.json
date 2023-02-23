@@ -38,6 +38,14 @@
     "FFplaySharp --codecs": {
       "commandName": "Project",
       "commandLineArgs": "--codecs"
+    },
+    "FFplaySharp --decoders": {
+      "commandName": "Project",
+      "commandLineArgs": "--decoders"
+    },
+    "FFplaySharp --encoders": {
+      "commandName": "Project",
+      "commandLineArgs": "--encoders"
     }
   }
 }

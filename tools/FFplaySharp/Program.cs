@@ -51,7 +51,9 @@ namespace FFplaySharp
                 .UseShowMuxersOption()
                 .UseShowDemuxersOption()
                 .UseShowDevicesOption()
-                .UseShowCodecsOption();
+                .UseShowCodecsOption()
+                .UseShowDecodersOption()
+                .UseShowEncodersOption();
 
             var commandLineParser = commandLineBuilder.Build();
 
@@ -96,6 +98,16 @@ namespace FFplaySharp
         private static CommandLineBuilder UseShowCodecsOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--codecs", "Show available codecs", ShowCodecs);
+        }
+
+        private static CommandLineBuilder UseShowDecodersOption(this CommandLineBuilder builder)
+        {
+            return builder.AddGlobalOption("--decoders", "Show available decoders", ShowDecoders);
+        }
+
+        private static CommandLineBuilder UseShowEncodersOption(this CommandLineBuilder builder)
+        {
+            return builder.AddGlobalOption("--encoders", "Show available encoders", ShowEncoders);
         }
 
         private static void ShowVersion()
@@ -207,6 +219,16 @@ namespace FFplaySharp
             }
         }
 
+        private static void ShowDecoders()
+        {
+            PrintCodecs(false);
+        }
+
+        private static void ShowEncoders()
+        {
+            PrintCodecs(true);
+        }
+
         private static void PrintBuildConfiguration()
         {
             Console.WriteLine($"configuration: {AVUtil.BuildConfiguration}");
@@ -306,6 +328,41 @@ namespace FFplaySharp
         private static void PrintDecoders(AVCodecID id)
         {
             Console.Write($"(decoders: {string.Join(' ', AVCodec.All.Where(c => c.Id == id && c.IsDecoder).Select(c => c.Name))})");
+        }
+
+        private static void PrintCodecs(bool encoder)
+        {
+            Console.WriteLine($"{(encoder ? "Encoders" : "Decoders")}");
+            Console.WriteLine(" V..... = Video");
+            Console.WriteLine(" A..... = Audio");
+            Console.WriteLine(" S..... = Subtitle");
+            Console.WriteLine(" .F.... = Frame-level multithreading");
+            Console.WriteLine(" ..S... = Slice-level multithreading");
+            Console.WriteLine(" ...X.. = Codec is experimental");
+            Console.WriteLine(" ....B. = Supports draw_horiz_band");
+            Console.WriteLine(" .....D = Supports direct rendering method 1");
+            Console.WriteLine(" ------");
+
+            foreach (var descriptor in AVCodecDescriptor.All)
+            {
+                foreach (var codec in AVCodec.All.Where(c => c.Id == descriptor.Id && (encoder == c.IsEncoder || !encoder == c.IsDecoder)))
+                {
+                    Console.Write($" {GetMediaTypeChar(descriptor.Type)}");
+                    Console.Write(codec.Capabilities.HasFlag(AVCodecCapabilities.FrameThreads) ? "F" : ".");
+                    Console.Write(codec.Capabilities.HasFlag(AVCodecCapabilities.SliceThreads) ? "S" : ".");
+                    Console.Write(codec.Capabilities.HasFlag(AVCodecCapabilities.Experimental) ? "X" : ".");
+                    Console.Write(codec.Capabilities.HasFlag(AVCodecCapabilities.DrawHorizontalBand) ? "B" : ".");
+                    Console.Write(codec.Capabilities.HasFlag(AVCodecCapabilities.DR1) ? "D" : ".");
+                    Console.Write($" {codec.Name,-20} {codec.LongName ?? string.Empty}");
+
+                    if (codec.Name == descriptor.Name)
+                    {
+                        Console.Write($" (codec {descriptor.Name})");
+                    }
+
+                    Console.WriteLine();
+                }
+            }
         }
 
         private static uint GetIntVersion(string libraryName)
