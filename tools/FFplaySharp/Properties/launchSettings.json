@@ -46,6 +46,10 @@
     "FFplaySharp --encoders": {
       "commandName": "Project",
       "commandLineArgs": "--encoders"
+    },
+    "FFplaySharp --bit-stream-filters": {
+      "commandName": "Project",
+      "commandLineArgs": "--bit-stream-filters"
     }
   }
 }

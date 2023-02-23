@@ -53,7 +53,8 @@ namespace FFplaySharp
                 .UseShowDevicesOption()
                 .UseShowCodecsOption()
                 .UseShowDecodersOption()
-                .UseShowEncodersOption();
+                .UseShowEncodersOption()
+                .UseShowBitStreamFiltersOption();
 
             var commandLineParser = commandLineBuilder.Build();
 
@@ -108,6 +109,11 @@ namespace FFplaySharp
         private static CommandLineBuilder UseShowEncodersOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--encoders", "Show available encoders", ShowEncoders);
+        }
+
+        private static CommandLineBuilder UseShowBitStreamFiltersOption(this CommandLineBuilder builder)
+        {
+            return builder.AddGlobalOption("--bit-stream-filters", "Show available bit stream filters", ShowBitStreamFilters);
         }
 
         private static void ShowVersion()
@@ -227,6 +233,18 @@ namespace FFplaySharp
         private static void ShowEncoders()
         {
             PrintCodecs(true);
+        }
+
+        private static void ShowBitStreamFilters()
+        {
+            Console.WriteLine("Bit stream filters:");
+
+            foreach (var filter in AVBitStreamFilter.All)
+            {
+                Console.WriteLine(filter.Name);
+            }
+
+            Console.WriteLine();
         }
 
         private static void PrintBuildConfiguration()
