@@ -190,24 +190,5 @@ namespace FFplaySharp
         private static uint GetMinorVersion(uint a) => (((a) & 0x00FF00) >> 8);
 
         private static uint GetMicroVersion(uint a) => ((a) & 0xFF);
-
-        private static CommandLineBuilder AddGlobalOption(this CommandLineBuilder builder, string alias, string description, Action callback)
-        {
-            var option = new Option<bool>(alias, description);
-            builder.Command.AddGlobalOption(option);
-            builder.AddMiddleware(async (context, next) =>
-            {
-                if (null != context.ParseResult.FindResultFor(option))
-                {
-                    callback();
-                }
-                else
-                {
-                    await next(context);
-                }
-            });
-            return builder;
-        }
-
     }
 }
