@@ -54,6 +54,10 @@
     "FFplaySharp --protocols": {
       "commandName": "Project",
       "commandLineArgs": "--protocols"
+    },
+    "FFplaySharp --filters": {
+      "commandName": "Project",
+      "commandLineArgs": "--filters"
     }
   }
 }

@@ -29,6 +29,7 @@ namespace FFplaySharp
         {
             AVCodec.RegisterAll();
             AVDevice.RegisterAll();
+            AVFilter.RegisterAll();
 
             var rootCommand = new RootCommand("Simple media player based on FFplay");
 
@@ -55,7 +56,8 @@ namespace FFplaySharp
                 .UseShowDecodersOption()
                 .UseShowEncodersOption()
                 .UseShowBitStreamFiltersOption()
-                .UseShowProtocolsOption();
+                .UseShowProtocolsOption()
+                .UseShowFiltersOption();
 
             var commandLineParser = commandLineBuilder.Build();
 
@@ -120,6 +122,11 @@ namespace FFplaySharp
         private static CommandLineBuilder UseShowProtocolsOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--protocols", "Show available protocols", ShowProtocols);
+        }
+
+        private static CommandLineBuilder UseShowFiltersOption(this CommandLineBuilder builder)
+        {
+            return builder.AddGlobalOption("--filters", "Show available filters", ShowFilters);
         }
 
         private static void ShowVersion()
@@ -270,6 +277,57 @@ namespace FFplaySharp
             foreach (var protocolName in AVIO.OutputProtocolNames)
             {
                 Console.WriteLine($"  {new string(protocolName)}");
+            }
+        }
+
+        private static void ShowFilters()
+        {
+            Console.WriteLine("Filters:");
+            Console.WriteLine("  T.. = Timeline support");
+            Console.WriteLine("  .S. = Slice threading");
+            Console.WriteLine("  ..C = Command support");
+            Console.WriteLine("  A   = Audio input/output");
+            Console.WriteLine("  V   = Video input/output");
+            Console.WriteLine("  N   = Dynamic number and/or type of input/output");
+            Console.WriteLine("  |   = Source or sink filter");
+
+            foreach (var filter in AVFilter.All)
+            {
+                string descr = "";
+
+                if (filter.Inputs.Any())
+                {
+                    foreach (var input in filter.Inputs)
+                    {
+                        descr += GetMediaTypeChar(input.Type);
+                    }
+                }
+                else
+                {
+                    descr += filter.Flags.HasFlag(AVFilterFlags.DynamicInputs) ? 'N' : '|';
+                }
+
+                descr += "->";
+
+                if (filter.Outputs.Any())
+                {
+                    foreach (var output in filter.Outputs)
+                    {
+                        descr += GetMediaTypeChar(output.Type);
+                    }
+                }
+                else
+                {
+                    descr += filter.Flags.HasFlag(AVFilterFlags.DynamicOutputs) ? 'N' : '|';
+                }
+
+                Console.WriteLine(" {0}{1}{2} {3,-17} {4,-10} {5}",
+                       filter.Flags.HasFlag(AVFilterFlags.SupportTimeline) ? 'T' : '.',
+                       filter.Flags.HasFlag(AVFilterFlags.SliceThreads) ? 'S' : '.',
+                       filter.CanProcessCommand ? 'C' : '.',
+                       filter.Name,
+                       descr,
+                       filter.Description);
             }
         }
 
