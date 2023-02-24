@@ -60,7 +60,8 @@ namespace FFplaySharp
                 .UseShowFiltersOption()
                 .UseShowColorsOption()
                 .UseShowPixelFormatsOption()
-                .UseShowStandardChannelLayoutsOption();
+                .UseShowStandardChannelLayoutsOption()
+                .UseShowSampleFormatsOption();
 
             var commandLineParser = commandLineBuilder.Build();
 
@@ -145,6 +146,11 @@ namespace FFplaySharp
         private static CommandLineBuilder UseShowStandardChannelLayoutsOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--channel-layouts", "Show standard channel layouts", () => ShowStandardChannelLayouts());
+        }
+
+        private static CommandLineBuilder UseShowSampleFormatsOption(this CommandLineBuilder builder)
+        {
+            return builder.AddGlobalOption("--sample-formats", "Show available audio sample formats", ShowSampleFormats);
         }
 
         private static void ShowVersion()
@@ -406,6 +412,15 @@ namespace FFplaySharp
                 var name = channelLayout.Name;
                 var decomposition = string.Join("+", channelLayout.Layout.GetChannels().Select(e => e.GetName()));
                 Console.WriteLine("{0,-14} {1}", name, decomposition);
+            }
+        }
+
+        private static void ShowSampleFormats()
+        {
+            var sampleFormats = Enum.GetValues<AVSampleFormat>();
+            foreach (var sampleFormat in sampleFormats.OrderBy(e => e))
+            {
+                Console.WriteLine("{0}", sampleFormat.AsString());
             }
         }
 
