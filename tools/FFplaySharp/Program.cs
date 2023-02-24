@@ -14,8 +14,10 @@
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Builder;
+using System.CommandLine.Completions;
 using System.CommandLine.Parsing;
 using System.IO;
 using System.Linq;
@@ -157,12 +159,16 @@ namespace FFplaySharp
 
         private static CommandLineBuilder UseShowSourcesOption(this CommandLineBuilder builder)
         {
-            return builder.AddGlobalOption("--sources", "device", "List sources of the input device", ShowSources);
+            var completions = AVInputFormat.All.Where(e => e.IsDevice).Select(e => e.Name).ToArray();
+            var result = builder.AddGlobalOption("--sources", "device", "List sources of the input device", completions, ShowSources);
+            return result;
         }
 
         private static CommandLineBuilder UseShowSinksOption(this CommandLineBuilder builder)
         {
-            return builder.AddGlobalOption("--sinks", "device", "List sinks of the output device", ShowSinks);
+            var completions = AVOutputFormat.All.Where(e => e.IsDevice).Select(e => e.Name).ToArray();
+            var result = builder.AddGlobalOption("--sinks", "device", "List sinks of the output device", completions, ShowSinks);
+            return result;
         }
 
         private static void ShowVersion()

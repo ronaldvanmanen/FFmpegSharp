@@ -14,8 +14,10 @@
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Builder;
+using System.CommandLine.Completions;
 using System.Linq;
 
 namespace FFplaySharp
@@ -40,13 +42,19 @@ namespace FFplaySharp
             return builder;
         }
 
-        public static CommandLineBuilder AddGlobalOption(this CommandLineBuilder builder, string alias, string argumentHelpName, string description, Action<string> callback)
+        public static CommandLineBuilder AddGlobalOption(
+            this CommandLineBuilder builder,
+            string alias,
+            string argumentHelpName,
+            string description,
+            string[] completions,
+            Action<string> callback)
         {
-            var option = new Option<string>(alias, description)
-            {
-                Arity = ArgumentArity.ExactlyOne,
-                ArgumentHelpName = argumentHelpName
-            };
+            var option = new Option<string>(alias, description);
+            option.AddCompletions(completions);
+            option.Arity = ArgumentArity.ExactlyOne;
+            option.ArgumentHelpName = argumentHelpName;
+
             builder.Command.AddGlobalOption(option);
             builder.AddMiddleware(async (context, next) =>
             {
