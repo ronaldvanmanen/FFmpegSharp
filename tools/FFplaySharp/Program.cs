@@ -444,34 +444,20 @@ namespace FFplaySharp
 
         private static void ShowSources(string deviceName)
         {
-            foreach (var device in AVDevice.AudioInputDevices)
+            foreach (var device in AVDevice.AudioInputDevices.Where(e => !e.Name.Equals("lavfi")))
             {
-                if (device.Name.Equals("lavfi"))
+                if (deviceName.Equals(device.Name))
                 {
-                    continue;
+                    PrintSources(device);
                 }
-
-                if (deviceName != null && deviceName.Equals(device.Name))
-                {
-                    continue;
-                }
-
-                PrintSources(device);
             }
 
-            foreach (var device in AVDevice.VideoInputDevices)
+            foreach (var device in AVDevice.VideoInputDevices.Where(e => !e.Name.Equals("lavfi")))
             {
-                if (device.Name.Equals("lavfi"))
+                if (deviceName.Equals(device.Name))
                 {
-                    continue;
+                    PrintSources(device);
                 }
-
-                if (deviceName != null && deviceName.Equals(device.Name))
-                {
-                    continue;
-                }
-
-                PrintSources(device);
             }
         }
 
@@ -479,22 +465,18 @@ namespace FFplaySharp
         {
             foreach (var device in AVDevice.AudioOutputDevices.Where(e => !e.Name.Equals("lavfi")))
             {
-                if (deviceName != null && deviceName.Equals(device.Name))
+                if (deviceName.Equals(device.Name))
                 {
-                    continue;
+                    PrintDeviceSinks(device);
                 }
-
-                PrintDeviceSinks(device);
             }
 
             foreach (var device in AVDevice.VideoOutputDevices.Where(e => !e.Name.Equals("lavfi")))
             {
-                if (deviceName != null && deviceName.Equals(device.Name))
+                if (deviceName.Equals(device.Name))
                 {
-                    continue;
+                    PrintDeviceSinks(device);
                 }
-
-                PrintDeviceSinks(device);
             }
         }
 
