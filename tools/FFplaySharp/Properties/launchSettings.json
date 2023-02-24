@@ -74,6 +74,10 @@
     "FFplaySharp --colors": {
       "commandName": "Project",
       "commandLineArgs": "--colors"
+    },
+    "FFplaySharp --sources": {
+      "commandName": "Project",
+      "commandLineArgs": "--sources"
     }
   }
 }

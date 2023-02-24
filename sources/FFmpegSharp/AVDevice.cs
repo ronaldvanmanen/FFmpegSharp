@@ -13,12 +13,37 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Collections.Generic;
 using static FFmpegSharp.Interop.FFmpeg;
 
 namespace FFmpegSharp
 {
     public sealed unsafe class AVDevice
     {
+        public static IEnumerable<AVInputFormat> AudioInputDevices
+        {
+            get
+            {
+                var iterator = new AVInputAudioDeviceIterator();
+                while (iterator.MoveNext())
+                {
+                    yield return iterator.Current;
+                }
+            }
+        }
+
+        public static IEnumerable<AVInputFormat> VideoInputDevices
+        {
+            get
+            {
+                var iterator = new AVInputVideoDeviceIterator();
+                while (iterator.MoveNext())
+                {
+                    yield return iterator.Current;
+                }
+            }
+        }
+
         public static void RegisterAll()
         {
             avdevice_register_all();

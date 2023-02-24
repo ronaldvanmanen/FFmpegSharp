@@ -16,6 +16,7 @@
 using System;
 using System.CommandLine;
 using System.CommandLine.Builder;
+using System.Linq;
 
 namespace FFplaySharp
 {
@@ -30,6 +31,29 @@ namespace FFplaySharp
                 if (null != context.ParseResult.FindResultFor(option))
                 {
                     callback();
+                }
+                else
+                {
+                    await next(context);
+                }
+            });
+            return builder;
+        }
+
+        public static CommandLineBuilder AddGlobalOption(this CommandLineBuilder builder, string alias, string argumentHelpName, string description, Action<string> callback)
+        {
+            var option = new Option<string>(alias, description)
+            {
+                Arity = ArgumentArity.ExactlyOne,
+                ArgumentHelpName = argumentHelpName
+            };
+            builder.Command.AddGlobalOption(option);
+            builder.AddMiddleware(async (context, next) =>
+            {
+                var parseResult = context.ParseResult.FindResultFor(option);
+                if (parseResult != null && parseResult.Tokens.Any())
+                {
+                    callback(parseResult.Tokens.Select(e => e.Value).First());
                 }
                 else
                 {

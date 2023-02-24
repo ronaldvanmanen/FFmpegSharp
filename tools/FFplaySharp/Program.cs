@@ -61,7 +61,8 @@ namespace FFplaySharp
                 .UseShowPixelFormatsOption()
                 .UseShowStandardChannelLayoutsOption()
                 .UseShowSampleFormatsOption()
-                .UseShowColorsOption();
+                .UseShowColorsOption()
+                .UseShowSourcesOption();
 
             var commandLineParser = commandLineBuilder.Build();
 
@@ -151,6 +152,11 @@ namespace FFplaySharp
         private static CommandLineBuilder UseShowColorsOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--colors", "Show available color names", ShowColors);
+        }
+
+        private static CommandLineBuilder UseShowSourcesOption(this CommandLineBuilder builder)
+        {
+            return builder.AddGlobalOption("--sources", "device", "List sources of the input device", ShowSources);
         }
 
         private static void ShowVersion()
@@ -424,6 +430,39 @@ namespace FFplaySharp
             }
         }
 
+        private static void ShowSources(string deviceName)
+        {
+            foreach (var device in AVDevice.AudioInputDevices)
+            {
+                if (device.Name.Equals("lavfi"))
+                {
+                    continue;
+                }
+
+                if (deviceName != null && deviceName.Equals(device.Name))
+                {
+                    continue;
+                }
+
+                PrintSources(device);
+            }
+
+            foreach (var device in AVDevice.VideoInputDevices)
+            {
+                if (device.Name.Equals("lavfi"))
+                {
+                    continue;
+                }
+
+                if (deviceName != null && deviceName.Equals(device.Name))
+                {
+                    continue;
+                }
+
+                PrintSources(device);
+            }
+        }
+
         private static void PrintBuildConfiguration()
         {
             Console.WriteLine($"configuration: {AVUtil.BuildConfiguration}");
@@ -556,6 +595,37 @@ namespace FFplaySharp
                     }
 
                     Console.WriteLine();
+                }
+            }
+        }
+
+        private static void PrintSources(AVInputFormat format)
+        {
+            if (format == null)
+            {
+                throw new ArgumentNullException(nameof(format));
+            }
+
+            if (!format.IsInputDevice)
+            {
+                throw new ArgumentException("The specified input format is not an input device", nameof(format));
+            }
+
+            Console.WriteLine("Auto-detected sources for {0}:", format.Name);
+
+            var devices = format.InputSources;
+            if (devices == null)
+            {
+                Console.WriteLine("Cannot list sources. Not implemented.");
+            }
+            else
+            {
+                for (var deviceIndex = 0; deviceIndex < devices.Count; ++deviceIndex)
+                {
+                    Console.WriteLine("{0} {1} [{2}]",
+                        devices.DefaultDeviceIndex == deviceIndex ? "*" : " ",
+                        devices[deviceIndex].Name,
+                        devices[deviceIndex].Description);
                 }
             }
         }

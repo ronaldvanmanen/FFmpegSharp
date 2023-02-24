@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using static FFmpegSharp.Interop.FFmpeg;
 
 namespace FFmpegSharp
 {
@@ -89,6 +90,25 @@ namespace FFmpegSharp
                     return null;
                 }
                 return new AVClass(_handle->priv_class);
+            }
+        }
+
+        public AVDeviceInfoList? InputSources
+        {
+            get
+            {
+                if (_handle->get_device_list == null)
+                {
+                    return null;
+                }
+
+                Interop.AVDeviceInfoList* deviceInfoList = null;
+
+                AVError.ThrowOnFailure(
+                    avdevice_list_input_sources(_handle, null, null, &deviceInfoList)
+                );
+
+                return new AVDeviceInfoList(deviceInfoList);
             }
         }
 
