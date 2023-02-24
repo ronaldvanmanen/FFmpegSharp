@@ -59,10 +59,6 @@
       "commandName": "Project",
       "commandLineArgs": "--filters"
     },
-    "FFplaySharp --colors": {
-      "commandName": "Project",
-      "commandLineArgs": "--colors"
-    },
     "FFplaySharp --pixel-formats": {
       "commandName": "Project",
       "commandLineArgs": "--pixel-formats"
@@ -70,6 +66,14 @@
     "FFplaySharp --channel-layouts": {
       "commandName": "Project",
       "commandLineArgs": "--channel-layouts"
+    },
+    "FFplaySharp --sample-formats": {
+      "commandName": "Project",
+      "commandLineArgs": "--sample-formats"
+    },
+    "FFplaySharp --colors": {
+      "commandName": "Project",
+      "commandLineArgs": "--colors"
     }
   }
 }

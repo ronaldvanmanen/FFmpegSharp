@@ -58,10 +58,10 @@ namespace FFplaySharp
                 .UseShowBitStreamFiltersOption()
                 .UseShowProtocolsOption()
                 .UseShowFiltersOption()
-                .UseShowColorsOption()
                 .UseShowPixelFormatsOption()
                 .UseShowStandardChannelLayoutsOption()
-                .UseShowSampleFormatsOption();
+                .UseShowSampleFormatsOption()
+                .UseShowColorsOption();
 
             var commandLineParser = commandLineBuilder.Build();
 
@@ -133,11 +133,6 @@ namespace FFplaySharp
             return builder.AddGlobalOption("--filters", "Show available filters", ShowFilters);
         }
 
-        private static CommandLineBuilder UseShowColorsOption(this CommandLineBuilder builder)
-        {
-            return builder.AddGlobalOption("--colors", "Show available color names", ShowColors);
-        }
-
         private static CommandLineBuilder UseShowPixelFormatsOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--pixel-formats", "Show available pixel formats", ShowPixelFormats);
@@ -151,6 +146,11 @@ namespace FFplaySharp
         private static CommandLineBuilder UseShowSampleFormatsOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--sample-formats", "Show available audio sample formats", ShowSampleFormats);
+        }
+
+        private static CommandLineBuilder UseShowColorsOption(this CommandLineBuilder builder)
+        {
+            return builder.AddGlobalOption("--colors", "Show available color names", ShowColors);
         }
 
         private static void ShowVersion()
@@ -355,16 +355,6 @@ namespace FFplaySharp
             }
         }
 
-        private static void ShowColors()
-        {
-            Console.WriteLine("{0,-32} #RRGGBB", "name");
-
-            foreach (var color in AVKnownColor.All)
-            {
-                Console.WriteLine("{0,-32} #{1:X2}{2:X2}{3:X2}", color.Name, color.R, color.G, color.B);
-            }
-        }
-
         private static void ShowPixelFormats()
         {
             Console.WriteLine("Pixel formats:");
@@ -421,6 +411,16 @@ namespace FFplaySharp
             foreach (var sampleFormat in sampleFormats.OrderBy(e => e))
             {
                 Console.WriteLine("{0}", sampleFormat.AsString());
+            }
+        }
+
+        private static void ShowColors()
+        {
+            Console.WriteLine("{0,-32} #RRGGBB", "name");
+
+            foreach (var color in AVKnownColor.All)
+            {
+                Console.WriteLine("{0,-32} #{1:X2}{2:X2}{3:X2}", color.Name, color.R, color.G, color.B);
             }
         }
 
