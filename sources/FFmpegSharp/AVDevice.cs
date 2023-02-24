@@ -32,11 +32,35 @@ namespace FFmpegSharp
             }
         }
 
+        public static IEnumerable<AVOutputFormat> AudioOutputDevices
+        {
+            get
+            {
+                var iterator = new AVOutputAudioDeviceIterator();
+                while (iterator.MoveNext())
+                {
+                    yield return iterator.Current;
+                }
+            }
+        }
+
         public static IEnumerable<AVInputFormat> VideoInputDevices
         {
             get
             {
                 var iterator = new AVInputVideoDeviceIterator();
+                while (iterator.MoveNext())
+                {
+                    yield return iterator.Current;
+                }
+            }
+        }
+
+        public static IEnumerable<AVOutputFormat> VideoOutputDevices
+        {
+            get
+            {
+                var iterator = new AVOutputVideoDeviceIterator();
                 while (iterator.MoveNext())
                 {
                     yield return iterator.Current;

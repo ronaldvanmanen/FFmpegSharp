@@ -62,7 +62,8 @@ namespace FFplaySharp
                 .UseShowStandardChannelLayoutsOption()
                 .UseShowSampleFormatsOption()
                 .UseShowColorsOption()
-                .UseShowSourcesOption();
+                .UseShowSourcesOption()
+                .UseShowSinksOption();
 
             var commandLineParser = commandLineBuilder.Build();
 
@@ -157,6 +158,11 @@ namespace FFplaySharp
         private static CommandLineBuilder UseShowSourcesOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--sources", "device", "List sources of the input device", ShowSources);
+        }
+
+        private static CommandLineBuilder UseShowSinksOption(this CommandLineBuilder builder)
+        {
+            return builder.AddGlobalOption("--sinks", "device", "List sinks of the output device", ShowSinks);
         }
 
         private static void ShowVersion()
@@ -463,6 +469,29 @@ namespace FFplaySharp
             }
         }
 
+        private static void ShowSinks(string deviceName)
+        {
+            foreach (var device in AVDevice.AudioOutputDevices.Where(e => !e.Name.Equals("lavfi")))
+            {
+                if (deviceName != null && deviceName.Equals(device.Name))
+                {
+                    continue;
+                }
+
+                PrintDeviceSinks(device);
+            }
+
+            foreach (var device in AVDevice.VideoOutputDevices.Where(e => !e.Name.Equals("lavfi")))
+            {
+                if (deviceName != null && deviceName.Equals(device.Name))
+                {
+                    continue;
+                }
+
+                PrintDeviceSinks(device);
+            }
+        }
+
         private static void PrintBuildConfiguration()
         {
             Console.WriteLine($"configuration: {AVUtil.BuildConfiguration}");
@@ -617,6 +646,37 @@ namespace FFplaySharp
             if (devices == null)
             {
                 Console.WriteLine("Cannot list sources. Not implemented.");
+            }
+            else
+            {
+                for (var deviceIndex = 0; deviceIndex < devices.Count; ++deviceIndex)
+                {
+                    Console.WriteLine("{0} {1} [{2}]",
+                        devices.DefaultDeviceIndex == deviceIndex ? "*" : " ",
+                        devices[deviceIndex].Name,
+                        devices[deviceIndex].Description);
+                }
+            }
+        }
+
+        private static void PrintDeviceSinks(AVOutputFormat format)
+        {
+            if (format == null)
+            {
+                throw new ArgumentNullException(nameof(format));
+            }
+
+            if (!format.IsOutputDevice)
+            {
+                throw new ArgumentException("The specified output format is not an output device", nameof(format));
+            }
+
+            Console.WriteLine("Auto-detected sinks for {0}:", format.Name);
+
+            var devices = format.OutputSinks;
+            if (devices == null)
+            {
+                Console.WriteLine("Cannot list sinks. Not implemented.");
             }
             else
             {

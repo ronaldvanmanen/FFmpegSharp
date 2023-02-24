@@ -75,9 +75,13 @@
       "commandName": "Project",
       "commandLineArgs": "--colors"
     },
-    "FFplaySharp --sources": {
+    "FFplaySharp --sources <device>": {
       "commandName": "Project",
       "commandLineArgs": "--sources"
+    },
+    "FFplaySharp --sinks <device>": {
+      "commandName": "Project",
+      "commandLineArgs": "--sinks"
     }
   }
 }
