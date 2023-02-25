@@ -14,10 +14,8 @@
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Builder;
-using System.CommandLine.Completions;
 using System.CommandLine.Parsing;
 using System.IO;
 using System.Linq;
@@ -159,16 +157,18 @@ namespace FFplaySharp
 
         private static CommandLineBuilder UseShowSourcesOption(this CommandLineBuilder builder)
         {
-            var completions = AVInputFormat.All.Where(e => e.IsDevice).Select(e => e.Name).ToArray();
-            var result = builder.AddGlobalOption("--sources", "device", "List sources of the input device", completions, ShowSources);
-            return result;
+            var completions = AVInputFormat.All.Where(e => e.IsDevice)
+                .SelectMany(e => e.Name.Split(','))
+                .ToArray();
+            return builder.AddGlobalOption("--sources", "device name", "List sources of the input device", completions, ShowSources);
         }
 
         private static CommandLineBuilder UseShowSinksOption(this CommandLineBuilder builder)
         {
-            var completions = AVOutputFormat.All.Where(e => e.IsDevice).Select(e => e.Name).ToArray();
-            var result = builder.AddGlobalOption("--sinks", "device", "List sinks of the output device", completions, ShowSinks);
-            return result;
+            var completions = AVOutputFormat.All.Where(e => e.IsDevice)
+                .SelectMany(e => e.Name.Split(','))
+                .ToArray();
+            return builder.AddGlobalOption("--sinks", "device name", "List sinks of the output device", completions, ShowSinks);
         }
 
         private static void ShowVersion()
@@ -446,7 +446,7 @@ namespace FFplaySharp
         {
             foreach (var device in AVDevice.AudioInputDevices.Where(e => !e.Name.Equals("lavfi")))
             {
-                if (deviceName.Equals(device.Name))
+                if (device.Name.Contains(deviceName))
                 {
                     PrintSources(device);
                 }
@@ -454,7 +454,7 @@ namespace FFplaySharp
 
             foreach (var device in AVDevice.VideoInputDevices.Where(e => !e.Name.Equals("lavfi")))
             {
-                if (deviceName.Equals(device.Name))
+                if (device.Name.Contains(deviceName))
                 {
                     PrintSources(device);
                 }
@@ -465,7 +465,7 @@ namespace FFplaySharp
         {
             foreach (var device in AVDevice.AudioOutputDevices.Where(e => !e.Name.Equals("lavfi")))
             {
-                if (deviceName.Equals(device.Name))
+                if (device.Name.Contains(deviceName))
                 {
                     PrintDeviceSinks(device);
                 }
@@ -473,7 +473,7 @@ namespace FFplaySharp
 
             foreach (var device in AVDevice.VideoOutputDevices.Where(e => !e.Name.Equals("lavfi")))
             {
-                if (deviceName.Equals(device.Name))
+                if (device.Name.Contains(deviceName))
                 {
                     PrintDeviceSinks(device);
                 }
