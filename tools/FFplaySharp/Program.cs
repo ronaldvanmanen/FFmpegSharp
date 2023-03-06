@@ -20,6 +20,8 @@ using System.CommandLine.Parsing;
 using System.IO;
 using System.Linq;
 using FFmpegSharp;
+using MoreLinq;
+using static System.Linq.Enumerable;
 
 namespace FFplaySharp
 {
@@ -479,77 +481,56 @@ namespace FFplaySharp
                 GetMicroVersion(intVersion));
         }
 
-        private static int PrintFormats(bool showMuxers, bool showDemuxers, bool showDevicesOnly)
+        private static void PrintFormats(bool showMuxers, bool showDemuxers, bool showDevicesOnly)
         {
             Console.WriteLine(showDevicesOnly ? "Devices:" : "File formats:");
             Console.WriteLine(" D. = Demuxing supported");
             Console.WriteLine(" .E = Muxing supported");
             Console.WriteLine(" --");
 
-            var lastName = "000";
+            var formats = MoreEnumerable.FullJoin(
+                first: AVOutputFormat.All.Where(_ => showMuxers),
+                second: AVInputFormat.All.Where(_ => showDemuxers),
+                firstKeySelector: outputFormat => outputFormat.LongName,
+                secondKeySelector: inputFormat => inputFormat.LongName,
+                firstSelector: outputFormat => new
+                {
+                    outputFormat.Name,
+                    outputFormat.LongName,
+                    outputFormat.IsDevice,
+                    IsEncoder = true,
+                    IsDecoder = false
+                },
+                secondSelector: inputFormat => new
+                {
+                    inputFormat.Name,
+                    inputFormat.LongName,
+                    inputFormat.IsDevice,
+                    IsEncoder = false,
+                    IsDecoder = true
+                },
+                (outputFormat, inputFormat) => new
+                {
+                    outputFormat.Name,
+                    outputFormat.LongName,
+                    outputFormat.IsDevice,
+                    IsEncoder = true,
+                    IsDecoder = true
+                });
 
-            while (true)
+            foreach (var format in formats.OrderBy(e => e.Name))
             {
-                var decode = false;
-                var encode = false;
-                string? formatName = null;
-                string? formatLongName = null;
-
-                if (showMuxers)
+                if (showDevicesOnly && !format.IsDevice)
                 {
-                    foreach (var outputFormat in AVOutputFormat.All)
-                    {
-                        if (showDevicesOnly && !outputFormat.IsDevice)
-                        {
-                            continue;
-                        }
-
-                        if ((formatName == null || outputFormat.Name.CompareTo(formatName) < 0) && outputFormat.Name.CompareTo(lastName) > 0)
-                        {
-                            formatName = outputFormat.Name;
-                            formatLongName = outputFormat.LongName;
-                            encode = true;
-                        }
-                    }
+                    continue;
                 }
-
-                if (showDemuxers)
-                {
-                    foreach (var inputFormat in AVInputFormat.All)
-                    {
-                        if (showDevicesOnly && !inputFormat.IsDevice)
-                        {
-                            continue;
-                        }
-
-                        if ((formatName == null || inputFormat.Name.CompareTo(formatName) < 0) && inputFormat.Name.CompareTo(lastName) > 0)
-                        {
-                            formatName = inputFormat.Name;
-                            formatLongName = inputFormat.LongName;
-                            encode = false;
-                        }
-
-                        if (formatName != null && inputFormat.Name.Equals(formatName))
-                        {
-                            decode = true;
-                        }
-                    }
-                }
-
-                if (formatName == null)
-                {
-                    break;
-                }
-
-                lastName = formatName;
 
                 Console.WriteLine(" {0}{1} {2,-15} {3}",
-                    decode ? "D" : " ",
-                    encode ? "E" : " ",
-                    formatName,
-                    formatLongName ?? " ");
+                    format.IsDecoder ? "D" : " ",
+                    format.IsEncoder ? "E" : " ",
+                    format.Name,
+                    format.LongName ?? " ");
             }
-            return 0;
         }
 
         private static void PrintEncoders(AVCodecID id)
