@@ -444,39 +444,20 @@ namespace FFplaySharp
 
         private static void ShowSources(string deviceName)
         {
-            foreach (var device in AVDevice.AudioInputDevices.Where(e => !e.Name.Equals("lavfi")))
+            // Note: it's pointless to probe lavfi (see 'show_sources' in ffplay.c)
+            var devices = AVDevice.InputDevices.Where(e => !e.Name.Equals("lavfi") && e.Name.Contains(deviceName));
+            foreach (var device in devices)
             {
-                if (device.Name.Contains(deviceName))
-                {
-                    PrintSources(device);
-                }
-            }
-
-            foreach (var device in AVDevice.VideoInputDevices.Where(e => !e.Name.Equals("lavfi")))
-            {
-                if (device.Name.Contains(deviceName))
-                {
-                    PrintSources(device);
-                }
+                PrintSources(device);
             }
         }
 
         private static void ShowSinks(string deviceName)
         {
-            foreach (var device in AVDevice.AudioOutputDevices.Where(e => !e.Name.Equals("lavfi")))
+            var devices = AVDevice.OutputDevices.Where(e => e.Name.Contains(deviceName));
+            foreach (var device in devices)
             {
-                if (device.Name.Contains(deviceName))
-                {
-                    PrintDeviceSinks(device);
-                }
-            }
-
-            foreach (var device in AVDevice.VideoOutputDevices.Where(e => !e.Name.Equals("lavfi")))
-            {
-                if (device.Name.Contains(deviceName))
-                {
-                    PrintDeviceSinks(device);
-                }
+                PrintDeviceSinks(device);
             }
         }
 

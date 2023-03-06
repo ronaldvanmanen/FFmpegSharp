@@ -14,6 +14,7 @@
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
+using System.Linq;
 using static FFmpegSharp.Interop.FFmpeg;
 
 namespace FFmpegSharp
@@ -67,6 +68,12 @@ namespace FFmpegSharp
                 }
             }
         }
+
+        public static IEnumerable<AVInputFormat> InputDevices =>
+            Enumerable.Concat(AudioInputDevices, VideoInputDevices);
+
+        public static IEnumerable<AVOutputFormat> OutputDevices =>
+            Enumerable.Concat(AudioOutputDevices, VideoOutputDevices);
 
         public static void RegisterAll()
         {
