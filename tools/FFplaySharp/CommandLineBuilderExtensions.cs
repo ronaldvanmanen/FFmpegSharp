@@ -14,19 +14,21 @@
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Builder;
-using System.CommandLine.Completions;
 using System.Linq;
 
 namespace FFplaySharp
 {
     internal static class CommandLineBuilderExtensions
     {
-        public static CommandLineBuilder AddGlobalOption(this CommandLineBuilder builder, string alias, string description, Action callback)
+        public static CommandLineBuilder AddGlobalOption(
+            this CommandLineBuilder builder,
+            string name,
+            string? description,
+            Action callback)
         {
-            var option = new Option<bool>(alias, description);
+            var option = new Option<bool>(name, description);
             builder.Command.AddGlobalOption(option);
             builder.AddMiddleware(async (context, next) =>
             {
@@ -44,16 +46,19 @@ namespace FFplaySharp
 
         public static CommandLineBuilder AddGlobalOption(
             this CommandLineBuilder builder,
-            string alias,
-            string argumentHelpName,
-            string description,
+            string name,
+            string? argumentHelpName,
+            string? description,
             string[] completions,
             Action<string> callback)
         {
-            var option = new Option<string>(alias, description);
-            option.AddCompletions(completions);
+            // Note: The list of completions will be shown in the help text of
+            // this option instead of the ArgumentHelpName when the latter is
+            // set to null. For example --sinks <sdl|sdl2|...>.
+            var option = new Option<string>(name, description);
             option.Arity = ArgumentArity.ExactlyOne;
             option.ArgumentHelpName = argumentHelpName;
+            option.AddCompletions(completions);
 
             builder.Command.AddGlobalOption(option);
             builder.AddMiddleware(async (context, next) =>
