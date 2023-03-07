@@ -16,6 +16,7 @@
 using System;
 using System.CommandLine;
 using System.CommandLine.Builder;
+using System.CommandLine.Invocation;
 using System.CommandLine.Parsing;
 using System.Globalization;
 using System.IO;
@@ -36,8 +37,6 @@ namespace FFplaySharp
             AVFormat.RegisterAll();
 
             var rootCommand = new RootCommand("Simple media player based on FFplay");
-
-            rootCommand.SetHandler(() => { });
 
             var commandLineBuilder = new CommandLineBuilder(rootCommand)
                 .UseHelp()
@@ -69,9 +68,20 @@ namespace FFplaySharp
                 .UseShowSourcesOption()
                 .UseShowSinksOption();
 
+            var inputArgument = new Argument<string>("input", "input file");
+
+            commandLineBuilder.Command.AddArgument(inputArgument);
+
+            rootCommand.SetHandler(Play, inputArgument);
+
             var commandLineParser = commandLineBuilder.Build();
 
             return commandLineParser.Invoke(args);
+        }
+
+        private static void Play(string inputFile)
+        {
+            throw new NotImplementedException();
         }
 
         private static CommandLineBuilder UseShowVersionOption(this CommandLineBuilder builder)
