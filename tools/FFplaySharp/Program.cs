@@ -20,7 +20,6 @@ using System.CommandLine.Parsing;
 using System.IO;
 using System.Linq;
 using FFmpegSharp;
-using MoreLinq;
 using static System.Linq.Enumerable;
 
 namespace FFplaySharp
@@ -488,48 +487,37 @@ namespace FFplaySharp
             Console.WriteLine(" .E = Muxing supported");
             Console.WriteLine(" --");
 
-            var formats = MoreEnumerable.FullJoin(
-                first: AVOutputFormat.All.Where(_ => showMuxers),
-                second: AVInputFormat.All.Where(_ => showDemuxers),
-                firstKeySelector: outputFormat => outputFormat.LongName,
-                secondKeySelector: inputFormat => inputFormat.LongName,
-                firstSelector: outputFormat => new
-                {
-                    outputFormat.Name,
-                    outputFormat.LongName,
-                    outputFormat.IsDevice,
-                    IsEncoder = true,
-                    IsDecoder = false
-                },
-                secondSelector: inputFormat => new
-                {
-                    inputFormat.Name,
-                    inputFormat.LongName,
-                    inputFormat.IsDevice,
-                    IsEncoder = false,
-                    IsDecoder = true
-                },
-                (outputFormat, inputFormat) => new
-                {
-                    outputFormat.Name,
-                    outputFormat.LongName,
-                    outputFormat.IsDevice,
-                    IsEncoder = true,
-                    IsDecoder = true
-                });
+            var inputFormats = showDemuxers ? AVOutputFormat.All : Empty<AVOutputFormat>();
+            var inputFormatLookup = inputFormats.ToLookup(inputFormat => inputFormat.Name);
+            var inputFormatNames = inputFormats.Select(inputFormat => inputFormat.Name);
+
+            var outputFormats = showMuxers ? AVInputFormat.All : Empty<AVInputFormat>();
+            var outputFormatLookup = outputFormats.ToLookup(outputFormat => outputFormat.Name);
+            var outputFormatNames = outputFormats.Select(outputFormat => outputFormat.Name);
+
+            var formatNames = Enumerable.Union(inputFormatNames, outputFormatNames);
+            var formats = from formatName in formatNames
+                          from inputFormat in inputFormatLookup[formatName].DefaultIfEmpty()
+                          from outputFormat in outputFormatLookup[formatName].DefaultIfEmpty()
+                          select new
+                          {
+                              Name = inputFormat?.Name ?? outputFormat?.Name,
+                              LongName = inputFormat?.LongName ?? outputFormat?.LongName,
+                              IsDevice = inputFormat?.IsDevice ?? outputFormat?.IsDevice ?? false,
+                              IsDecoder = inputFormat is not null,
+                              IsEncoder = outputFormat is not null,
+                          };
 
             foreach (var format in formats.OrderBy(e => e.Name))
             {
-                if (showDevicesOnly && !format.IsDevice)
+                if (!showDevicesOnly || format.IsDevice)
                 {
-                    continue;
+                    Console.WriteLine(" {0}{1} {2,-15} {3}",
+                        format.IsDecoder ? "D" : " ",
+                        format.IsEncoder ? "E" : " ",
+                        format.Name,
+                        format.LongName ?? " ");
                 }
-
-                Console.WriteLine(" {0}{1} {2,-15} {3}",
-                    format.IsDecoder ? "D" : " ",
-                    format.IsEncoder ? "E" : " ",
-                    format.Name,
-                    format.LongName ?? " ");
             }
         }
 
