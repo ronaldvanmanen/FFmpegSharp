@@ -178,13 +178,7 @@ namespace FFplaySharp
         {
             PrintProgramInfo();
             PrintBuildConfiguration();
-            PrintLibraryVersion("avutil");
-            PrintLibraryVersion("avcodec");
-            PrintLibraryVersion("avformat");
-            PrintLibraryVersion("avdevice");
-            PrintLibraryVersion("avfilter");
-            PrintLibraryVersion("swresample");
-            PrintLibraryVersion("swscale");
+            PrintAllLibraryInfo();
         }
 
         private static void ShowLicense()
@@ -479,7 +473,18 @@ namespace FFplaySharp
             Console.WriteLine($"configuration: {AVUtil.BuildConfiguration}");
         }
 
-        private static void PrintLibraryVersion(string libraryName)
+        private static void PrintAllLibraryInfo()
+        {
+            PrintLibraryInfo("avutil");
+            PrintLibraryInfo("avcodec");
+            PrintLibraryInfo("avformat");
+            PrintLibraryInfo("avdevice");
+            PrintLibraryInfo("avfilter");
+            PrintLibraryInfo("swresample");
+            PrintLibraryInfo("swscale");
+        }
+
+        private static void PrintLibraryInfo(string libraryName)
         {
             var intVersion = GetIntVersion(libraryName);
             Console.WriteLine("lib{0,-14} {1,2}.{2,3}.{3,3} / {4,2}.{5,3}.{6,3}",
