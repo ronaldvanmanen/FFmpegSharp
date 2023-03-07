@@ -17,8 +17,10 @@ using System;
 using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using FFmpegSharp;
 using static System.Linq.Enumerable;
 
@@ -174,6 +176,7 @@ namespace FFplaySharp
 
         private static void ShowVersion()
         {
+            PrintProgramInfo();
             PrintBuildConfiguration();
             PrintLibraryVersion("avutil");
             PrintLibraryVersion("avcodec");
@@ -462,6 +465,15 @@ namespace FFplaySharp
             }
         }
 
+        private static void PrintProgramInfo()
+        {
+            var title = GetApplicationName();
+            var version = GetApplicationVersion();
+            var copyright = GetApplicationCopyright();
+
+            Console.WriteLine($"{title} {version} {copyright}");
+        }
+
         private static void PrintBuildConfiguration()
         {
             Console.WriteLine($"configuration: {AVUtil.BuildConfiguration}");
@@ -626,6 +638,53 @@ namespace FFplaySharp
                         devices[deviceIndex].Description);
                 }
             }
+        }
+
+        private static string? GetApplicationName()
+        {
+            var titleAttribute = GetAttribute<AssemblyTitleAttribute>();
+            var title = titleAttribute?.Title ?? GetAssemblyName();
+            return title;
+        }
+
+        private static string? GetApplicationVersion()
+        {
+            var versionAttribute = GetAttribute<AssemblyInformationalVersionAttribute>();
+            var version = versionAttribute?.InformationalVersion ?? GetAssemblyVersion();
+            return version;
+        }
+
+        private static string? GetApplicationCopyright()
+        {
+            var copyrightAttribute = GetAttribute<AssemblyCopyrightAttribute>();
+            var copyright = copyrightAttribute?.Copyright;
+            return copyright;
+        }
+
+        private static string? GetAssemblyName()
+        {
+            var assembly = GetExecutingOrEntryAssembly();
+            var assemblyName = assembly.GetName();
+            return assemblyName.Name;
+        }
+
+        private static string? GetAssemblyVersion()
+        {
+            var assembly = GetExecutingOrEntryAssembly();
+            var assemblyName = assembly.GetName();
+            return assemblyName.Version?.ToString();
+        }
+
+        private static Assembly GetExecutingOrEntryAssembly()
+        {
+            return Assembly.GetEntryAssembly() ?? Assembly.GetCallingAssembly();
+        }
+
+        private static TAttribute? GetAttribute<TAttribute>() where TAttribute : Attribute
+        {
+            var assembly = GetExecutingOrEntryAssembly();
+            var attribute = assembly.GetCustomAttribute<TAttribute>();
+            return attribute;
         }
 
         private static uint GetIntVersion(string libraryName)
