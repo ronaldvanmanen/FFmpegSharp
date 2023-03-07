@@ -33,6 +33,7 @@ namespace FFplaySharp
             AVCodec.RegisterAll();
             AVDevice.RegisterAll();
             AVFilter.RegisterAll();
+            AVFormat.RegisterAll();
 
             var rootCommand = new RootCommand("Simple media player based on FFplay");
 
