@@ -13,26 +13,30 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
-using static FFmpegSharp.AVError;
-using static FFmpegSharp.Interop.FFmpeg;
+using System;
 
-namespace FFmpegSharp
+namespace FFmpegSharp.Extensions.Framework
 {
-    public static class AVFormat
+    public sealed class PacketizedElementaryStream : ElementaryStream<AVPacket>
     {
-        public static void RegisterAll()
+        private readonly AVStream _stream;
+
+        public AVCodecID CodecID => _stream.CodecParameters.CodecID;
+
+        public AVCodecParameters CodecParameters => _stream.CodecParameters;
+
+        public AVTimeBase TimeBase => _stream.TimeBase;
+
+        public AVDiscard Discard
         {
-            av_register_all();
+            get => _stream.Discard;
+            set => _stream.Discard = value;
         }
 
-        public static void NetworkInit()
+        public PacketizedElementaryStream(AVStream stream, int boundedCapacity)
+        : base(boundedCapacity)
         {
-            ThrowOnError(avformat_network_init());
-        }
-
-        public static void NetworkDeinit()
-        {
-            ThrowOnError(avformat_network_deinit());
+            _stream = stream ?? throw new ArgumentNullException(nameof(stream));
         }
     }
 }

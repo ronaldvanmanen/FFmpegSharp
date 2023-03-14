@@ -82,6 +82,10 @@
     "FFplaySharp --sinks <device>": {
       "commandName": "Project",
       "commandLineArgs": "--sinks"
+    },
+    "FFplaySharp sample.wav": {
+      "commandName": "Project",
+      "commandLineArgs": "sample.wav"
     }
   }
 }

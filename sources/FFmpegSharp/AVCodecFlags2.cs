@@ -13,27 +13,24 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using static FFmpegSharp.Interop.FFmpeg;
 
 namespace FFmpegSharp
 {
-    public static unsafe class AVSampleFormatExtensions
+    [Flags]
+    public enum AVCodecFlags2
     {
-        public static AVSampleFormat ToPackedFormat(this AVSampleFormat format)
-        {
-            return (AVSampleFormat)av_get_packed_sample_fmt((Interop.AVSampleFormat)format);
-        }
-
-        public static string? AsString(this AVSampleFormat format)
-        {
-            const int formatStringBufferSize = 128;
-            sbyte* formatStringBuffer = stackalloc sbyte[formatStringBufferSize];
-            sbyte* formatString = av_get_sample_fmt_string(formatStringBuffer, formatStringBufferSize, (Interop.AVSampleFormat)format);
-            if (formatString == null)
-            {
-                return null;
-            }
-            return new string(formatString);
-        }
+        None = 0,
+        Fast = AV_CODEC_FLAG2_FAST,
+        NoOutput = AV_CODEC_FLAG2_NO_OUTPUT,
+        LocalHeader = AV_CODEC_FLAG2_LOCAL_HEADER,
+        DropFrameTimecode = AV_CODEC_FLAG2_DROP_FRAME_TIMECODE,
+        Chunks = AV_CODEC_FLAG2_CHUNKS,
+        IgnoreCrop = AV_CODEC_FLAG2_IGNORE_CROP,
+        ShowAll = AV_CODEC_FLAG2_SHOW_ALL,
+        ExportMvs = AV_CODEC_FLAG2_EXPORT_MVS,
+        SkipManual = AV_CODEC_FLAG2_SKIP_MANUAL,
+        RoFlushNoop = AV_CODEC_FLAG2_RO_FLUSH_NOOP
     }
 }

@@ -13,26 +13,18 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
-using static FFmpegSharp.AVError;
-using static FFmpegSharp.Interop.FFmpeg;
+using static FFmpegSharp.Interop.AVDiscard;
 
 namespace FFmpegSharp
 {
-    public static class AVFormat
+    public enum AVDiscard
     {
-        public static void RegisterAll()
-        {
-            av_register_all();
-        }
-
-        public static void NetworkInit()
-        {
-            ThrowOnError(avformat_network_init());
-        }
-
-        public static void NetworkDeinit()
-        {
-            ThrowOnError(avformat_network_deinit());
-        }
+        None = AVDISCARD_NONE,
+        Default = AVDISCARD_DEFAULT,
+        NonRef = AVDISCARD_NONREF,
+        BiDir = AVDISCARD_BIDIR,
+        NonIntra = AVDISCARD_NONINTRA,
+        NonKey = AVDISCARD_NONKEY,
+        All = AVDISCARD_ALL,
     }
 }

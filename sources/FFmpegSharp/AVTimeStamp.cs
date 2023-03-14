@@ -17,23 +17,27 @@ using static FFmpegSharp.Interop.FFmpeg;
 
 namespace FFmpegSharp
 {
-    public static unsafe class AVSampleFormatExtensions
+    public readonly struct AVTimeStamp
     {
-        public static AVSampleFormat ToPackedFormat(this AVSampleFormat format)
+        public static readonly AVTimeStamp Undefined = new(AV_NOPTS_VALUE);
+
+        private readonly long _value;
+
+        public AVTimeStamp(long value)
         {
-            return (AVSampleFormat)av_get_packed_sample_fmt((Interop.AVSampleFormat)format);
+            _value = value;
         }
 
-        public static string? AsString(this AVSampleFormat format)
+        public static bool IsUndefined(AVTimeStamp timeStamp) => timeStamp._value == AV_NOPTS_VALUE;
+
+        public static AVRelativeTime operator *(AVTimeStamp timeStamp, AVTimeBase timeBase)
         {
-            const int formatStringBufferSize = 128;
-            sbyte* formatStringBuffer = stackalloc sbyte[formatStringBufferSize];
-            sbyte* formatString = av_get_sample_fmt_string(formatStringBuffer, formatStringBufferSize, (Interop.AVSampleFormat)format);
-            if (formatString == null)
-            {
-                return null;
-            }
-            return new string(formatString);
+            return new AVRelativeTime(timeStamp._value * ((double)(AVRational)timeBase));
+        }
+
+        public static explicit operator long(AVTimeStamp value)
+        {
+            return value._value;
         }
     }
 }

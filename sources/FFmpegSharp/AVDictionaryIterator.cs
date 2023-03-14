@@ -13,27 +13,38 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Collections.Generic;
 using static FFmpegSharp.Interop.FFmpeg;
 
 namespace FFmpegSharp
 {
-    public static unsafe class AVSampleFormatExtensions
+    internal sealed unsafe class AVDictionaryIterator
     {
-        public static AVSampleFormat ToPackedFormat(this AVSampleFormat format)
+        private readonly Interop.AVDictionary* _dictionary;
+
+        private Interop.AVDictionaryEntry* _current;
+
+        public KeyValuePair<string, string> Current =>
+            new(
+                new string(_current->key),
+                new string(_current->value));
+
+        public AVDictionaryIterator(Interop.AVDictionary* dictionary)
         {
-            return (AVSampleFormat)av_get_packed_sample_fmt((Interop.AVSampleFormat)format);
+            _dictionary = dictionary;
+            _current = null;
         }
 
-        public static string? AsString(this AVSampleFormat format)
+        public bool MoveNext()
         {
-            const int formatStringBufferSize = 128;
-            sbyte* formatStringBuffer = stackalloc sbyte[formatStringBufferSize];
-            sbyte* formatString = av_get_sample_fmt_string(formatStringBuffer, formatStringBufferSize, (Interop.AVSampleFormat)format);
-            if (formatString == null)
-            {
-                return null;
-            }
-            return new string(formatString);
+            var key = stackalloc sbyte[1] { 0 };
+            _current = av_dict_get(_dictionary, key, _current, AV_DICT_IGNORE_SUFFIX);
+            return _current != null;
+        }
+
+        public void Reset()
+        {
+            _current = null;
         }
     }
 }

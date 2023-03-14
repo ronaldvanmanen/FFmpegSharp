@@ -13,26 +13,22 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
-using static FFmpegSharp.AVError;
-using static FFmpegSharp.Interop.FFmpeg;
+using static FFmpegSharp.Interop.Std;
 
-namespace FFmpegSharp
+namespace FFmpegSharp.Interop
 {
-    public static class AVFormat
+    public static unsafe partial class FFmpeg
     {
-        public static void RegisterAll()
-        {
-            av_register_all();
-        }
+        public static readonly int AVERROR_EOF = FFERRTAG('E', 'O', 'F', ' ');
 
-        public static void NetworkInit()
-        {
-            ThrowOnError(avformat_network_init());
-        }
+        public static readonly int AVERROR_STREAM_NOT_FOUND = FFERRTAG(0xF8, 'S', 'T', 'R');
 
-        public static void NetworkDeinit()
-        {
-            ThrowOnError(avformat_network_deinit());
-        }
+        public static readonly int AVERROR_EAGAIN = AVERROR(EAGAIN);
+
+        public static int FFERRTAG(uint a, uint b, uint c, uint d) => (-(int)MKTAG(a, b, c, d));
+
+        public static uint MKTAG(uint a, uint b, uint c, uint d) => (a & 0xFF) | ((b & 0xFF) << 8) | ((c & 0xFF) << 16) | ((d & 0xFF) << 24);
+
+        public static int AVERROR(int e) => -e;
     }
 }

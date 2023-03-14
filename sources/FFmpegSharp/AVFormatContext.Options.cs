@@ -13,26 +13,17 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
-using static FFmpegSharp.AVError;
-using static FFmpegSharp.Interop.FFmpeg;
-
 namespace FFmpegSharp
 {
-    public static class AVFormat
+    public sealed partial class AVFormatContext
     {
-        public static void RegisterAll()
+        public sealed class Options
         {
-            av_register_all();
-        }
+            public AVFormatFlags Flags { get; set; } = AVFormatFlags.AutoBitStreamFilters;
 
-        public static void NetworkInit()
-        {
-            ThrowOnError(avformat_network_init());
-        }
+            public long ProbeSize { get; set; } = 500000;
 
-        public static void NetworkDeinit()
-        {
-            ThrowOnError(avformat_network_deinit());
+            public long MaxAnalyzeDuration { get; set; } = 0;
         }
     }
 }

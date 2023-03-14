@@ -48,6 +48,17 @@ namespace FFmpegSharp
             }
         }
 
+        public static bool ReturnOnFailure(int returnCode, out AVError? error)
+        {
+            if (returnCode < 0)
+            {
+                error = new AVError(returnCode);
+                return true;
+            }
+            error = null;
+            return false;
+        }
+
         private static unsafe string GetErrorMessage(int errorCode)
         {
             const int errorBufferSize = 128;

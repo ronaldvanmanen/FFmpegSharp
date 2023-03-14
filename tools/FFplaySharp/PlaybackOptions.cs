@@ -13,26 +13,28 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
-using static FFmpegSharp.AVError;
-using static FFmpegSharp.Interop.FFmpeg;
+using System.Threading;
+using Microsoft.Extensions.Logging;
 
-namespace FFmpegSharp
+namespace FFplaySharp
 {
-    public static class AVFormat
+    internal sealed class PlaybackOptions
     {
-        public static void RegisterAll()
-        {
-            av_register_all();
-        }
+        public string InputFile { get; set; }
 
-        public static void NetworkInit()
-        {
-            ThrowOnError(avformat_network_init());
-        }
+        public bool Fast { get; set; }
 
-        public static void NetworkDeinit()
+        public bool GeneratePts { get; set; }
+
+        public bool FindStreamInfo { get; set; }
+
+        public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
+
+        public ILogger Logger { get; set; } = null!;
+
+        public PlaybackOptions(string input)
         {
-            ThrowOnError(avformat_network_deinit());
+            InputFile = input;
         }
     }
 }

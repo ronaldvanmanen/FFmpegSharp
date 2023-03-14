@@ -13,26 +13,22 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
-using static FFmpegSharp.AVError;
-using static FFmpegSharp.Interop.FFmpeg;
-
-namespace FFmpegSharp
+namespace FFmpegSharp.Extensions.Framework
 {
-    public static class AVFormat
+    public sealed class AudioElementaryStream : ElementaryStream<AVFrame>
     {
-        public static void RegisterAll()
-        {
-            av_register_all();
-        }
+        public int ChannelCount { get; init; }
 
-        public static void NetworkInit()
-        {
-            ThrowOnError(avformat_network_init());
-        }
+        public AVChannelLayout ChannelLayout { get; init; }
 
-        public static void NetworkDeinit()
-        {
-            ThrowOnError(avformat_network_deinit());
-        }
+        public int SampleRate { get; init; }
+
+        public AVSampleFormat SampleFormat { get; init; }
+
+        public AVTimeBase TimeBase { get; init; }
+
+        public AudioElementaryStream(int boundedCapacity)
+        : base(boundedCapacity)
+        { }
     }
 }

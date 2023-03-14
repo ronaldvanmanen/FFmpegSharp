@@ -13,26 +13,24 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
-using static FFmpegSharp.AVError;
-using static FFmpegSharp.Interop.FFmpeg;
+using System;
+using System.Text;
 
-namespace FFmpegSharp
+namespace FFmpegSharp.Internals
 {
-    public static class AVFormat
+    internal static unsafe class SpanExtensions
     {
-        public static void RegisterAll()
+        public static string AsString(this ReadOnlySpan<byte> self)
         {
-            av_register_all();
-        }
+            if (self.IsEmpty)
+            {
+                return string.Empty;
+            }
 
-        public static void NetworkInit()
-        {
-            ThrowOnError(avformat_network_init());
-        }
-
-        public static void NetworkDeinit()
-        {
-            ThrowOnError(avformat_network_deinit());
+            fixed (byte* pSelf = self)
+            {
+                return Encoding.UTF8.GetString(pSelf, self.Length);
+            }
         }
     }
 }
