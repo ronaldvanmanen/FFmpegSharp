@@ -40,7 +40,7 @@ namespace FFmpegSharp
         : base(info, context)
         { }
 
-        public static void ThrowOnFailure(int returnCode)
+        public static void ThrowOnError(int returnCode)
         {
             if (returnCode < 0)
             {

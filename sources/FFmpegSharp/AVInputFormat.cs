@@ -104,7 +104,7 @@ namespace FFmpegSharp
 
                 Interop.AVDeviceInfoList* deviceInfoList = null;
 
-                AVError.ThrowOnFailure(
+                AVError.ThrowOnError(
                     avdevice_list_input_sources(_handle, null, null, &deviceInfoList)
                 );
 
