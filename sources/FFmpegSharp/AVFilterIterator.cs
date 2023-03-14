@@ -31,6 +31,6 @@ namespace FFmpegSharp
             }
         }
 
-        public AVFilter Current => new AVFilter(_current);
+        public AVFilter Current => new(_current);
     }
 }

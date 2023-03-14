@@ -19,6 +19,6 @@ namespace FFmpegSharp
 {
     public static unsafe class AVUtil
     {
-        public static string BuildConfiguration => new string(avutil_configuration());
+        public static string BuildConfiguration => new(avutil_configuration());
     }
 }

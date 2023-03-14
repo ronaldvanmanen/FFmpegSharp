@@ -21,7 +21,7 @@ namespace FFmpegSharp
     {
         private int _index = 0;
 
-        private AVKnownColor _current = new AVKnownColor(string.Empty, 0, 0, 0);
+        private AVKnownColor _current = new(string.Empty, 0, 0, 0);
 
         public bool MoveNext()
         {

@@ -30,7 +30,7 @@ namespace FFmpegSharp
 
         public AVDeviceInfo DefaultDevice => this[DefaultDeviceIndex];
 
-        public AVDeviceInfo this[int index] => new AVDeviceInfo(_handle->devices[index]);
+        public AVDeviceInfo this[int index] => new(_handle->devices[index]);
 
         public AVDeviceInfoList(Interop.AVDeviceInfoList* handle)
         {

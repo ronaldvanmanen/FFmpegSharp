@@ -36,7 +36,7 @@ namespace FFmpegSharp
 
         private readonly Interop.AVPixFmtDescriptor* _handle;
 
-        public string Name => new string(_handle->name);
+        public string Name => new(_handle->name);
 
         public int BitsPerPixel => av_get_bits_per_pixel(_handle);
 
