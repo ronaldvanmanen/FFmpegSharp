@@ -26,6 +26,8 @@ namespace FFmpegSharp
         public AVCodecParameters CodecParameters =>
             _codecParameters ??= new AVCodecParameters(_handle->codecpar, false);
 
+        public int Index => _handle->index;
+
         public AVDiscard Discard
         {
             get => (AVDiscard)_handle->discard;

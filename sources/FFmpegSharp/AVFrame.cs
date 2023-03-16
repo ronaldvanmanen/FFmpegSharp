@@ -127,6 +127,7 @@ namespace FFmpegSharp
         public int SampleRate
         {
             get => _handle->sample_rate;
+
             set => _handle->sample_rate = value;
         }
 

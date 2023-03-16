@@ -19,24 +19,8 @@ namespace FFmpegSharp.Extensions.Framework
 {
     public sealed class PacketizedElementaryStream : ElementaryStream<AVPacket>
     {
-        private readonly AVStream _stream;
-
-        public AVCodecID CodecID => _stream.CodecParameters.CodecID;
-
-        public AVCodecParameters CodecParameters => _stream.CodecParameters;
-
-        public AVTimeBase TimeBase => _stream.TimeBase;
-
-        public AVDiscard Discard
-        {
-            get => _stream.Discard;
-            set => _stream.Discard = value;
-        }
-
-        public PacketizedElementaryStream(AVStream stream, int boundedCapacity)
+        public PacketizedElementaryStream(int boundedCapacity)
         : base(boundedCapacity)
-        {
-            _stream = stream ?? throw new ArgumentNullException(nameof(stream));
-        }
+        { }
     }
 }

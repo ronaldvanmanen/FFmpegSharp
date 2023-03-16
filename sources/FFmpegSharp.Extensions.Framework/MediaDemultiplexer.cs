@@ -21,22 +21,42 @@ namespace FFmpegSharp.Extensions.Framework
 {
     public sealed partial class MediaDemultiplexer : IDisposable
     {
+        public sealed class OutputPort
+        {
+            private readonly AVStream _streamInfo;
+
+            public int StreamIndex => _streamInfo.Index;
+
+            public AVDiscard Discard { get => _streamInfo.Discard; set => _streamInfo.Discard = value; }
+
+            public AVTimeBase PacketTimeBase => _streamInfo.TimeBase;
+
+            public AVCodecParameters CodecParameters => _streamInfo.CodecParameters;
+
+            public PacketizedElementaryStream? Stream { get; set; }
+
+            public OutputPort(AVStream streamInfo)
+            {
+                _streamInfo = streamInfo ?? throw new ArgumentNullException(nameof(streamInfo));
+            }
+        }
+
         private readonly AVFormatContext _formatContext;
 
-        private readonly List<PacketizedElementaryStream> _streams;
+        private readonly List<OutputPort> _outputs;
 
         private CancellationTokenSource _cancellationTokenSource;
 
         private Thread _thread;
 
-        public PacketizedElementaryStream? BestAudioStream
+        public OutputPort? BestAudioOutput
         {
             get
             {
-                var streamIndex = _formatContext.FindBestStream(AVMediaType.Audio);
-                if (streamIndex >= 0)
+                var index = _formatContext.FindBestStream(AVMediaType.Audio);
+                if (index >= 0)
                 {
-                    return _streams[streamIndex];
+                    return _outputs[index];
                 }
                 return null;
             }
@@ -49,7 +69,7 @@ namespace FFmpegSharp.Extensions.Framework
         public MediaDemultiplexer(string uri, Options? options)
         {
             _formatContext = CreateFormatContext(uri, options);
-            _streams = CreateStreams(_formatContext);
+            _outputs = CreateOutputs(_formatContext);
             _cancellationTokenSource = null!;
             _thread = null!;
         }
@@ -89,36 +109,50 @@ namespace FFmpegSharp.Extensions.Framework
         {
             var cancellationToken = (CancellationToken)userState!;
             var packet = new AVPacket();
-            while (!cancellationToken.IsCancellationRequested)
+            try
             {
-                try
+                while (!cancellationToken.IsCancellationRequested)
                 {
-                    var success = _formatContext.Read(ref packet);
-                    if (success)
+                    try
                     {
-                        var stream = _streams[packet.StreamIndex];
-                        var streamPacket = stream.PeekWritable(cancellationToken);
-                        packet.MoveRef(ref streamPacket);
-                        stream.PushWritable(cancellationToken);
-                    }
-                    else
-                    {
-                        foreach (var stream in _streams)
+                        var success = _formatContext.Read(ref packet);
+                        if (success)
                         {
-                            var streamPacket = stream.PeekWritable(cancellationToken);
-                            streamPacket.Ref(AVPacket.Null);
-                            stream.PushWritable(cancellationToken);
+                            var stream = _outputs[packet.StreamIndex].Stream;
+                            if (stream is not null)
+                            {
+                                var streamPacket = stream.PeekWritable(cancellationToken);
+                                packet.MoveRef(ref streamPacket);
+                                stream.PushWritable(cancellationToken);
+                            }
+                        }
+                        else
+                        {
+                            foreach (var output in _outputs)
+                            {
+                                var stream = _outputs[packet.StreamIndex].Stream;
+                                if (stream is not null)
+                                {
+                                    var streamPacket = stream.PeekWritable(cancellationToken);
+                                    streamPacket.Ref(AVPacket.Null);
+                                    stream.PushWritable(cancellationToken);
+                                }
+                            }
                         }
                     }
+                    catch (OperationCanceledException)
+                    {
+                        return;
+                    }
+                    catch (Exception)
+                    {
+                        return;
+                    }
                 }
-                catch (OperationCanceledException)
-                {
-                    return;
-                }
-                catch (Exception)
-                {
-                    return;
-                }
+            }
+            finally
+            {
+                packet.Dispose();
             }
         }
 
@@ -167,21 +201,21 @@ namespace FFmpegSharp.Extensions.Framework
             return result;
         }
 
-        private static List<PacketizedElementaryStream> CreateStreams(AVFormatContext formatContext)
+        private static List<OutputPort> CreateOutputs(AVFormatContext formatContext)
         {
-            var streams = new List<PacketizedElementaryStream>();
+            var outputs = new List<OutputPort>();
             foreach (var streamInfo in formatContext.Streams)
             {
                 streamInfo.Discard = AVDiscard.All;
-                var stream = CreateStream(streamInfo);
-                streams.Add(stream);
+                var output = CreateOutput(streamInfo);
+                outputs.Add(output);
             }
-            return streams;
+            return outputs;
         }
 
-        private static PacketizedElementaryStream CreateStream(AVStream streamInfo)
+        private static OutputPort CreateOutput(AVStream streamInfo)
         {
-            return new PacketizedElementaryStream(streamInfo, 256);
+            return new OutputPort(streamInfo);
         }
     }
 }

@@ -14,6 +14,7 @@
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using FFmpegSharp.Interop;
 using static FFmpegSharp.Interop.FFmpeg;
 
 namespace FFmpegSharp
@@ -23,6 +24,64 @@ namespace FFmpegSharp
         private readonly Interop.AVCodecParameters* _handle;
 
         private readonly bool _ownsHandle;
+
+        public AVMediaType CodecType => (AVMediaType)_handle->codec_type;
+
+        public AVCodecID CodecID => (AVCodecID)_handle->codec_id;
+
+        public uint CodecTag => _handle->codec_tag;
+
+        public byte* ExtraData => _handle->extradata;
+
+        public int ExtraDataSize => _handle->extradata_size;
+
+        public int Format => _handle->format;
+
+        public long BitRate => _handle->bit_rate;
+
+        public int BitsPerCodecSample => _handle->bits_per_coded_sample;
+
+        public int BitsPerRawSample => _handle->bits_per_raw_sample;
+
+        public int Profile => _handle->profile;
+
+        public int Level => _handle->level;
+
+        public int Width => _handle->width;
+
+        public int Height => _handle->height;
+
+        public AVRational SampleAspectRatio => _handle->sample_aspect_ratio;
+
+        public AVFieldOrder FieldOrder => _handle->field_order;
+
+        public AVColorRange ColorRange => _handle->color_range;
+
+        public AVColorPrimaries ColorPrimaries => _handle->color_primaries;
+
+        public AVColorTransferCharacteristic ColorTransferCharacteristic => _handle->color_trc;
+
+        public AVColorSpace ColorSpace => _handle->color_space;
+
+        public AVChromaLocation ChromaLocation => _handle->chroma_location;
+
+        public int VideoDelay => _handle->video_delay;
+
+        public ulong ChannelLayout => _handle->channel_layout;
+
+        public int Channels => _handle->channels;
+
+        public int SampleRate => _handle->sample_rate;
+
+        public int BlockAlign => _handle->block_align;
+
+        public int FrameSize => _handle->frame_size;
+
+        public int InitialPadding => _handle->initial_padding;
+
+        public int TrailingPadding => _handle->trailing_padding;
+
+        public int SeekPreroll => _handle->seek_preroll;
 
         public AVCodecParameters()
         : this(avcodec_parameters_alloc(), true)
@@ -73,10 +132,6 @@ namespace FFmpegSharp
                 }
             }
         }
-
-        public AVCodecID CodecID => (AVCodecID)_handle->codec_id;
-
-        public AVMediaType CodecType => (AVMediaType)_handle->codec_type;
 
         public static implicit operator Interop.AVCodecParameters*(AVCodecParameters value)
         {

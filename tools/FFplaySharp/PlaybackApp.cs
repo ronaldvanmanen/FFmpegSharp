@@ -24,6 +24,10 @@ namespace FFplaySharp
     {
         private readonly PlaybackOptions _options;
 
+        private PacketizedElementaryStream _packetizedElementaryAudioStream = null!;
+
+        private AudioElementaryStream _audioElementaryStream = null!;
+
         private MediaDemultiplexer _mediaDemultiplexer = null!;
 
         private AudioDecoder _audioDecoder = null!;
@@ -42,16 +46,30 @@ namespace FFplaySharp
 
         protected override void OnInitialized()
         {
+            _packetizedElementaryAudioStream = new PacketizedElementaryStream(256);
+
             _mediaDemultiplexer = new MediaDemultiplexer(_options.InputFile);
-            _mediaDemultiplexer.BestAudioStream!.Discard = AVDiscard.Default;
+            _mediaDemultiplexer.BestAudioOutput!.Discard = AVDiscard.Default;
+            _mediaDemultiplexer.BestAudioOutput!.Stream = _packetizedElementaryAudioStream;
             _mediaDemultiplexer.Start();
 
+            _audioElementaryStream = new AudioElementaryStream(16);
+
             var audioDecoderOptions = new AudioDecoder.Options { Fast = _options.Fast };
-            _audioDecoder = new AudioDecoder(_mediaDemultiplexer.BestAudioStream!, audioDecoderOptions);
+            _audioDecoder = new AudioDecoder(audioDecoderOptions);
+            _audioDecoder.AudioInput.CodecParameters = _mediaDemultiplexer.BestAudioOutput!.CodecParameters;
+            _audioDecoder.AudioInput.PacketTimeBase = _mediaDemultiplexer.BestAudioOutput!.PacketTimeBase;
+            _audioDecoder.AudioInput.Stream = _packetizedElementaryAudioStream;
+            _audioDecoder.AudioOutput.Stream = _audioElementaryStream;
             _audioDecoder.Start();
 
-            _audioRenderer = new AudioRenderer(_audioDecoder.AudioOutput);
+            _audioRenderer = new AudioRenderer();
             _audioRenderer.Volume = AudioRenderer.MaxVolume;
+            _audioRenderer.AudioInput.SampleFormat = _audioDecoder.AudioOutput.SampleFormat;
+            _audioRenderer.AudioInput.ChannelLayout = _audioDecoder.AudioOutput.ChannelLayout;
+            _audioRenderer.AudioInput.SampleRate = _audioDecoder.AudioOutput.SampleRate;
+            _audioRenderer.AudioInput.TimeBase = _audioDecoder.AudioOutput.TimeBase;
+            _audioRenderer.AudioInput.Stream = _audioElementaryStream;
             _audioRenderer.Start();
         }
 

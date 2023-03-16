@@ -15,55 +15,61 @@
 
 using System;
 using System.Threading;
+using FFmpegSharp.Interop;
 using static FFmpegSharp.Interop.FFmpeg;
-using static FFmpegSharp.Interop.Std;
 
 namespace FFmpegSharp.Extensions.Framework
 {
     public sealed partial class AudioDecoder
     {
-        private readonly PacketizedElementaryStream _audioInput;
+        public sealed class AudioInputPort
+        {
+            public AVTimeBase PacketTimeBase { get; set; }
 
-        private readonly AudioElementaryStream _audioOutput;
+            public AVCodecParameters? CodecParameters { get; set; }
 
-        private readonly AVCodec _codec;
+            public PacketizedElementaryStream? Stream { get; set; }
+        }
 
-        private readonly AVCodecContext _codecContext;
+        public sealed class AudioOutputPort
+        {
+            public AudioElementaryStream? Stream { get; set; }
+
+            public AVTimeBase TimeBase { get; internal set; }
+            public int ChannelCount { get; internal set; }
+            public AVChannelLayout ChannelLayout { get; internal set; }
+            public int SampleRate { get; internal set; }
+            public AVSampleFormat SampleFormat { get; internal set; }
+        }
+
+        private readonly AudioInputPort _audioInput;
+
+        private readonly AudioOutputPort _audioOutput;
+
+        private readonly Options _options;
+
+        private AVCodecContext _codecContext;
 
         private CancellationTokenSource _cancellationTokenSource;
 
         private Thread _thread;
 
-        public AudioElementaryStream AudioOutput => _audioOutput;
+        public AudioInputPort AudioInput => _audioInput;
 
-        public AudioDecoder(PacketizedElementaryStream audioInput)
-        : this(audioInput, null)
+        public AudioOutputPort AudioOutput => _audioOutput;
+
+        public AudioDecoder()
+        : this(null)
         { }
 
-        public AudioDecoder(PacketizedElementaryStream audioInput, Options? options)
+        public AudioDecoder(Options? options)
         {
-            _audioInput = audioInput ?? throw new ArgumentNullException(nameof(audioInput));
-
-            _codec = AVCodec.FindDecoder(_audioInput.CodecID) ?? throw new InvalidOperationException();
-            _codecContext = new AVCodecContext(_audioInput.CodecParameters);
-            _codecContext.PacketTimeBase = _audioInput.TimeBase;
-            _codecContext.Flags2 |= options is not null && options.Fast ? AVCodecFlags2.Fast : AVCodecFlags2.None;
-            _codecContext.Open(_codec, new AVDictionary
-            {
-                { "threads", "auto" }
-            });
-
-            _audioOutput = new AudioElementaryStream(16)
-            {
-                TimeBase = _audioInput.TimeBase,
-                ChannelCount = _codecContext.ChannelCount,
-                ChannelLayout = _codecContext.ChannelLayout != 0 ? _codecContext.ChannelLayout : AVUtil.GetDefaultChannelLayout(_codecContext.ChannelCount),
-                SampleRate = _codecContext.SampleRate,
-                SampleFormat = _codecContext.SampleFormat
-            };
-
-            _thread = null!;
+            _options = options ?? new Options();
+            _audioInput = new AudioInputPort();
+            _audioOutput = new AudioOutputPort();
+            _codecContext = null!;
             _cancellationTokenSource = null!;
+            _thread = null!;
         }
 
         public void Start()
@@ -72,6 +78,21 @@ namespace FFmpegSharp.Extensions.Framework
             {
                 return;
             }
+
+            var codec = AVCodec.FindDecoder(_audioInput.CodecParameters!.CodecID) ?? throw new InvalidOperationException();
+            _codecContext = new AVCodecContext(_audioInput.CodecParameters);
+            _codecContext.PacketTimeBase = _audioInput.PacketTimeBase;
+            _codecContext.Flags2 |= _options.Fast ? AVCodecFlags2.Fast : AVCodecFlags2.None;
+            _codecContext.Open(codec, new AVDictionary
+            {
+                { "threads", "auto" }
+            });
+
+            _audioOutput.TimeBase = _audioInput.PacketTimeBase;
+            _audioOutput.ChannelCount = _codecContext.ChannelCount;
+            _audioOutput.ChannelLayout = _codecContext.ChannelLayout != 0 ? _codecContext.ChannelLayout : AVUtil.GetDefaultChannelLayout(_codecContext.ChannelCount);
+            _audioOutput.SampleRate = _codecContext.SampleRate;
+            _audioOutput.SampleFormat = _codecContext.SampleFormat;
 
             _cancellationTokenSource = new CancellationTokenSource();
             _thread = new Thread(Decode);
@@ -95,19 +116,20 @@ namespace FFmpegSharp.Extensions.Framework
         private void Decode(object? userState)
         {
             var cancellationToken = (CancellationToken)userState!;
-
+            var audioInputStream = _audioInput.Stream!;
+            var audioOutputStream = _audioOutput.Stream!;
             try
             {
                 while (!cancellationToken.IsCancellationRequested)
                 {
                     while (!cancellationToken.IsCancellationRequested)
                     {
-                        var packet = _audioInput.PeekReadable(cancellationToken);
+                        var packet = audioInputStream.PeekReadable(cancellationToken);
 
                         if (_codecContext.TrySend(packet, out var error))
                         {
                             packet.Unref();
-                            _audioInput.PushReadable();
+                            audioInputStream.PushReadable();
                             break;
                         }
                         else
@@ -126,7 +148,7 @@ namespace FFmpegSharp.Extensions.Framework
 
                     while (!cancellationToken.IsCancellationRequested)
                     {
-                        var frame = _audioOutput.PeekWritable(cancellationToken);
+                        var frame = audioOutputStream.PeekWritable(cancellationToken);
 
                         if (_codecContext.TryReceive(ref frame, out var error))
                         {
@@ -142,7 +164,7 @@ namespace FFmpegSharp.Extensions.Framework
                                 }
                             }
 
-                            _audioOutput.PushWritable(cancellationToken);
+                            audioOutputStream.PushWritable(cancellationToken);
                         }
                         else
                         {
