@@ -49,16 +49,22 @@ namespace FFplaySharp
             _packetizedElementaryAudioStream = new PacketizedElementaryStream(256);
 
             _mediaDemultiplexer = new MediaDemultiplexer(_options.InputFile);
-            _mediaDemultiplexer.BestAudioOutput!.Discard = AVDiscard.Default;
-            _mediaDemultiplexer.BestAudioOutput!.Stream = _packetizedElementaryAudioStream;
+
+            if (_mediaDemultiplexer.BestAudioOutput is null)
+            {
+                throw new PlaybackException($"{_options.InputFile} has no audio streams.");
+            }
+
+            _mediaDemultiplexer.BestAudioOutput.Discard = AVDiscard.Default;
+            _mediaDemultiplexer.BestAudioOutput.Stream = _packetizedElementaryAudioStream;
             _mediaDemultiplexer.Start();
 
             _audioElementaryStream = new AudioElementaryStream(16);
 
             var audioDecoderOptions = new AudioDecoder.Options { Fast = _options.Fast };
             _audioDecoder = new AudioDecoder(audioDecoderOptions);
-            _audioDecoder.AudioInput.CodecParameters = _mediaDemultiplexer.BestAudioOutput!.CodecParameters;
-            _audioDecoder.AudioInput.PacketTimeBase = _mediaDemultiplexer.BestAudioOutput!.PacketTimeBase;
+            _audioDecoder.AudioInput.CodecParameters = _mediaDemultiplexer.BestAudioOutput.CodecParameters;
+            _audioDecoder.AudioInput.PacketTimeBase = _mediaDemultiplexer.BestAudioOutput.PacketTimeBase;
             _audioDecoder.AudioInput.Stream = _packetizedElementaryAudioStream;
             _audioDecoder.AudioOutput.Stream = _audioElementaryStream;
             _audioDecoder.Start();
