@@ -20,18 +20,18 @@ using Microsoft.Extensions.Logging;
 
 namespace FFplaySharp
 {
-    internal sealed class PlaybackOptionsBinder : BinderBase<PlaybackOptions>
+    internal sealed class PlaybackOptionsBinder : CompositeBinderBase<PlaybackOptions>
     {
-        public static readonly Argument<string> InputArgument =
+        public readonly Argument<string> InputArgument =
             new("input", "input file");
 
-        public static readonly Option<bool> FastOption =
+        public readonly Option<bool> FastOption =
             new("--fast", "Non-spec compliant optimizations");
 
-        public static readonly Option<bool> FindStreamInfoOption =
+        public readonly Option<bool> FindStreamInfoOption =
             new("--find-stream-info", "Read and decode the streams to fill missing information with heuristics");
 
-        public static readonly Option<bool> GeneratePtsOption =
+        public readonly Option<bool> GeneratePtsOption =
             new("--generate-pts", "Generate presentation timestamps (pts)");
 
         protected override PlaybackOptions GetBoundValue(BindingContext bindingContext)
@@ -47,6 +47,14 @@ namespace FFplaySharp
                 Logger = loggerFactory.CreateLogger("FFplaySharp")
             };
             return boundValue;
+        }
+
+        protected internal override void AddOptionsAndArguments(Command command)
+        {
+            command.AddArgument(InputArgument);
+            command.AddOption(FastOption);
+            command.AddOption(GeneratePtsOption);
+            command.AddOption(FindStreamInfoOption);
         }
     }
 }

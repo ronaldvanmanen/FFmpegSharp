@@ -89,10 +89,24 @@ namespace FFplaySharp
                 .UseShowSampleFormatsOption()
                 .UseShowColorsOption()
                 .UseShowSourcesOption()
-                .UseShowSinksOption()
-                .UsePlaybackOptions();
+                .UseShowSinksOption();
 
-            rootCommand.SetHandler(Playback, new PlaybackOptionsBinder());
+            var optionsBinder = new PlaybackOptionsBinder();
+            commandLineBuilder.Command.AddComposite(optionsBinder);
+            rootCommand.SetHandler(context =>
+            {
+                var options = context.GetValueFor(optionsBinder);
+                if (options is null)
+                {
+                    return;
+                }
+                else
+                {
+                    var exitCode = PlaybackInput(options);
+                    context.ExitCode = exitCode;
+                    return;
+                }
+            });
 
             var commandLineParser = commandLineBuilder.Build();
 
@@ -111,20 +125,6 @@ namespace FFplaySharp
         private static void Deinitialize()
         {
             AVFormat.NetworkDeinit();
-        }
-
-        private static void Playback(PlaybackOptions options)
-        {
-            try
-            {
-                var app = new PlaybackApp(options);
-                options.CancellationToken.Register(app.Quit);
-                app.Run(Environment.GetCommandLineArgs());
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, "An error occured while running FFplaySharp.");
-            }
         }
 
         private static CommandLineBuilder UseShowVersionOption(this CommandLineBuilder builder)
@@ -226,15 +226,6 @@ namespace FFplaySharp
                 .SelectMany(e => e.Name.Split(','))
                 .ToArray();
             return builder.AddGlobalOption("--sinks", "device name", "List sinks of the output device", completions, ShowSinks);
-        }
-
-        private static CommandLineBuilder UsePlaybackOptions(this CommandLineBuilder builder)
-        {
-            builder.Command.AddArgument(PlaybackOptionsBinder.InputArgument);
-            builder.Command.AddOption(PlaybackOptionsBinder.FastOption);
-            builder.Command.AddOption(PlaybackOptionsBinder.GeneratePtsOption);
-            builder.Command.AddOption(PlaybackOptionsBinder.FindStreamInfoOption);
-            return builder;
         }
 
         private static void ShowVersion()
@@ -519,6 +510,22 @@ namespace FFplaySharp
             foreach (var device in devices)
             {
                 PrintDeviceSinks(device);
+            }
+        }
+
+        private static int PlaybackInput(PlaybackOptions options)
+        {
+            try
+            {
+                var app = new PlaybackApp(options);
+                options.CancellationToken.Register(app.Quit);
+                return app.Run();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occured while running FFplaySharp.");
+
+                return -1;
             }
         }
 
