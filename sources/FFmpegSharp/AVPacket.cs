@@ -18,7 +18,7 @@ using static FFmpegSharp.Interop.FFmpeg;
 
 namespace FFmpegSharp
 {
-    public readonly unsafe struct AVPacket : IDisposable
+    public sealed unsafe class AVPacket : IDisposable
     {
         public static readonly AVPacket Null = new();
 
@@ -43,7 +43,18 @@ namespace FFmpegSharp
             _ownsHandle = ownsHandle;
         }
 
+        ~AVPacket()
+        {
+            Dispose(false);
+        }
+
         public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool _)
         {
             if (_ownsHandle && _handle != null)
             {
