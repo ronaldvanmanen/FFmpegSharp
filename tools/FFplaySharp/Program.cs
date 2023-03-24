@@ -108,9 +108,7 @@ namespace FFplaySharp
                 }
             });
 
-            var commandLineParser = commandLineBuilder.Build();
-
-            return commandLineParser.Invoke(args);
+            return commandLineBuilder.Build().Invoke(args);
         }
 
         private static void Initialize()
