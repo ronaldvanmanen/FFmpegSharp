@@ -200,47 +200,27 @@ namespace FFmpegSharp
         {
             get
             {
-                using (var k = new MarshaledString(key))
-                {
-                    var entry = av_dict_get(_handle, k, null, 0);
-                    var value = new string(entry->value);
-                    return value;
-                }
+                using var marshaledKey = new MarshaledString(key);
+                var entry = av_dict_get(_handle, marshaledKey, null, 0);
+                var value = new string(entry->value);
+                return value;
             }
             set
             {
                 fixed (Interop.AVDictionary** handle = &_handle)
-                    using (var k = new MarshaledString(key))
-                    using (var v = new MarshaledString(value))
-                    {
-                        av_dict_set(handle, k, v, 0);
-                    }
+                {
+                    using var marshaledKey = new MarshaledString(key);
+                    using var marshaledValue = new MarshaledString(value);
+                    AVError.ThrowOnError(
+                        av_dict_set(handle, marshaledKey, marshaledValue, 0)
+                    );
+                }
             }
         }
 
-        public ICollection<string> Keys
-        {
-            get
-            {
-                if (_keys == null)
-                {
-                    _keys = new KeyCollection(this);
-                }
-                return _keys;
-            }
-        }
+        public ICollection<string> Keys => _keys ??= new KeyCollection(this);
 
-        public ICollection<string> Values
-        {
-            get
-            {
-                if (_values == null)
-                {
-                    _values = new ValueCollection(this);
-                }
-                return _values;
-            }
-        }
+        public ICollection<string> Values => _values ??= new ValueCollection(this);
 
         public int Count => _handle != null ? av_dict_count(_handle) : 0;
 
@@ -299,32 +279,28 @@ namespace FFmpegSharp
                 throw new ArgumentNullException(nameof(key));
             }
 
-            using (var marshaledKey = new MarshaledString(key))
+            using var marshaledKey = new MarshaledString(key);
+            var entry = av_dict_get(_handle, marshaledKey, null, AV_DICT_MATCH_CASE);
+            if (entry == null)
             {
-                var entry = av_dict_get(_handle, marshaledKey, null, AV_DICT_MATCH_CASE);
-                if (entry == null)
-                {
-                    value = null;
-                    return false;
-                }
-                value = new string(entry->value);
-                return true;
+                value = null;
+                return false;
             }
+            value = new string(entry->value);
+            return true;
         }
 
         public bool Contains(KeyValuePair<string, string> item)
         {
-            using (var marshaledKey = new MarshaledString(item.Key))
+            using var marshaledKey = new MarshaledString(item.Key);
+            var entry = av_dict_get(_handle, marshaledKey, null, AV_DICT_MATCH_CASE);
+            if (entry == null)
             {
-                var entry = av_dict_get(_handle, marshaledKey, null, AV_DICT_MATCH_CASE);
-                if (entry == null)
-                {
-                    return false;
-                }
-                var value = new string(entry->value);
-                var result = value.Equals(item.Value);
-                return result;
+                return false;
             }
+            var value = new string(entry->value);
+            var result = value.Equals(item.Value);
+            return result;
         }
 
         public bool ContainsKey(string key)
@@ -334,10 +310,9 @@ namespace FFmpegSharp
                 throw new ArgumentNullException(nameof(key));
             }
 
-            using (var marshaledKey = new MarshaledString(key))
-            {
-                return null != av_dict_get(_handle, marshaledKey, null, AV_DICT_MATCH_CASE);
-            }
+            using var marshaledKey = new MarshaledString(key);
+            var entry = av_dict_get(_handle, marshaledKey, null, AV_DICT_MATCH_CASE);
+            return null != entry;
         }
 
         public bool ContainsValue(string value)
@@ -360,22 +335,19 @@ namespace FFmpegSharp
                 throw new ArgumentNullException(nameof(key));
             }
 
-            using (var marshaledKey = new MarshaledString(key))
+            using var marshaledKey = new MarshaledString(key);
+            var entry = av_dict_get(_handle, marshaledKey, null, AV_DICT_MATCH_CASE | AV_DICT_DONT_OVERWRITE);
+            if (entry != null)
             {
-                if (av_dict_get(_handle, marshaledKey, null, AV_DICT_MATCH_CASE | AV_DICT_DONT_OVERWRITE) != null)
-                {
-                    throw new ArgumentException($"An item with the specified key '{key}' already exists", nameof(key));
-                }
+                throw new ArgumentException($"An item with the specified key '{key}' already exists", nameof(key));
+            }
 
-                fixed (Interop.AVDictionary** dictionary = &_handle)
-                {
-                    using (var marshaledValue = new MarshaledString(value))
-                    {
-                        AVError.ThrowOnError(
-                            av_dict_set(dictionary, marshaledKey, marshaledValue, AV_DICT_MATCH_CASE | AV_DICT_DONT_OVERWRITE)
-                        );
-                    }
-                }
+            fixed (Interop.AVDictionary** dictionary = &_handle)
+            {
+                using var marshaledValue = new MarshaledString(value);
+                AVError.ThrowOnError(
+                    av_dict_set(dictionary, marshaledKey, marshaledValue, AV_DICT_MATCH_CASE | AV_DICT_DONT_OVERWRITE)
+                );
             }
         }
 
@@ -393,10 +365,9 @@ namespace FFmpegSharp
 
             fixed (Interop.AVDictionary** dictionary = &_handle)
             {
-                using (var k = new MarshaledString(key))
-                {
-                    return av_dict_set(dictionary, k, null, AV_DICT_MATCH_CASE) >= 0;
-                }
+                using var marshaledKey = new MarshaledString(key);
+                var result = av_dict_set(dictionary, marshaledKey, null, AV_DICT_MATCH_CASE);
+                return result >= 0;
             }
         }
 
@@ -404,10 +375,9 @@ namespace FFmpegSharp
         {
             fixed (Interop.AVDictionary** dictionary = &_handle)
             {
-                using (var k = new MarshaledString(item.Key))
-                {
-                    return av_dict_set(dictionary, k, null, AV_DICT_MATCH_CASE) >= 0;
-                }
+                using var marshaledKey = new MarshaledString(item.Key);
+                var result = av_dict_set(dictionary, marshaledKey, null, AV_DICT_MATCH_CASE);
+                return result >= 0;
             }
         }
 
