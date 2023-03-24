@@ -37,17 +37,16 @@ namespace FFplaySharp
         protected override PlaybackOptions GetBoundValue(BindingContext bindingContext)
         {
             var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
-            var logger = loggerFactory.CreateLogger("FFplaySharp");
             var inputFile = bindingContext.ParseResult.GetValueForArgument(InputArgument);
-            var playbackOptions = new PlaybackOptions(inputFile)
+            var boundValue = new PlaybackOptions(inputFile)
             {
                 Fast = bindingContext.ParseResult.GetValueForOption(FastOption),
                 FindStreamInfo = bindingContext.ParseResult.GetValueForOption(FindStreamInfoOption),
                 GeneratePts = bindingContext.ParseResult.GetValueForOption(GeneratePtsOption),
                 CancellationToken = bindingContext.GetService<CancellationToken>(),
-                Logger = logger
+                Logger = loggerFactory.CreateLogger("FFplaySharp")
             };
-            return playbackOptions;
+            return boundValue;
         }
     }
 }
