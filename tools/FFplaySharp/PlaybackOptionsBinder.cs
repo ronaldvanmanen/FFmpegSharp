@@ -22,27 +22,27 @@ namespace FFplaySharp
 {
     internal sealed class PlaybackOptionsBinder : CompositeBinderBase<PlaybackOptions>
     {
-        public readonly Argument<string> InputArgument =
+        private readonly Argument<string> _inputArgument =
             new("input", "input file");
 
-        public readonly Option<bool> FastOption =
+        private readonly Option<bool> _fastOption =
             new("--fast", "Non-spec compliant optimizations");
 
-        public readonly Option<bool> FindStreamInfoOption =
+        private readonly Option<bool> _findStreamInfoOption =
             new("--find-stream-info", "Read and decode the streams to fill missing information with heuristics");
 
-        public readonly Option<bool> GeneratePtsOption =
+        private readonly Option<bool> _generatePtsOption =
             new("--generate-pts", "Generate presentation timestamps (pts)");
 
         protected override PlaybackOptions GetBoundValue(BindingContext bindingContext)
         {
             var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
-            var inputFile = bindingContext.ParseResult.GetValueForArgument(InputArgument);
+            var inputFile = bindingContext.ParseResult.GetValueForArgument(_inputArgument);
             var boundValue = new PlaybackOptions(inputFile)
             {
-                Fast = bindingContext.ParseResult.GetValueForOption(FastOption),
-                FindStreamInfo = bindingContext.ParseResult.GetValueForOption(FindStreamInfoOption),
-                GeneratePts = bindingContext.ParseResult.GetValueForOption(GeneratePtsOption),
+                Fast = bindingContext.ParseResult.GetValueForOption(_fastOption),
+                FindStreamInfo = bindingContext.ParseResult.GetValueForOption(_findStreamInfoOption),
+                GeneratePts = bindingContext.ParseResult.GetValueForOption(_generatePtsOption),
                 CancellationToken = bindingContext.GetService<CancellationToken>(),
                 Logger = loggerFactory.CreateLogger("FFplaySharp")
             };
@@ -51,10 +51,10 @@ namespace FFplaySharp
 
         protected internal override void AddOptionsAndArguments(Command command)
         {
-            command.AddArgument(InputArgument);
-            command.AddOption(FastOption);
-            command.AddOption(GeneratePtsOption);
-            command.AddOption(FindStreamInfoOption);
+            command.AddArgument(_inputArgument);
+            command.AddOption(_fastOption);
+            command.AddOption(_generatePtsOption);
+            command.AddOption(_findStreamInfoOption);
         }
     }
 }

@@ -19,12 +19,9 @@ namespace FFplaySharp
 {
     internal static class CommandExtensions
     {
-        public static void AddComposite<T>(this Command command, CompositeBinderBase<T> binder)
+        public static void AddComposite<T>(this Command command, CompositeBinderBase<T> composite)
         {
-            if (binder is PlaybackOptionsBinder composite)
-            {
-                composite.AddOptionsAndArguments(command);
-            }
+            composite.AddOptionsAndArguments(command);
         }
     }
 }
