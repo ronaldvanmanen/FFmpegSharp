@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\sources\FFmpegSharp.Interop\FFmpegSharp.Interop.csproj" />
+    <ProjectReference Include="..\..\sources\FFmpegSharp\FFmpegSharp.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Licenses.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Licenses.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Licenses.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Licenses.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>
