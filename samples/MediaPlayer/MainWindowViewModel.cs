@@ -49,7 +49,8 @@ namespace MediaPlayer
         {
             var openFileDialog = new OpenFileDialog
             {
-                Filter = "Video Files (*.asf;*.mkv;*.mov;*.mp4;*.wma;*.wmv)|*.asf;*.mkv;*.mov;*.mp4;*.wma;*.wmv|"
+                Filter = "Media Files (*.asf;*.mkv;*.mov;*.mp4;*.wma;*.wmv;*.flac;*.mp3;*.wav)|*.asf;*.mkv;*.mov;*.mp4;*.wma;*.wmv*.flac;*.mp3;*.wav|"
+                       + "Video Files (*.asf;*.mkv;*.mov;*.mp4;*.wma;*.wmv)|*.asf;*.mkv;*.mov;*.mp4;*.wma;*.wmv|"
                        + "Audio Files (*.flac;*.mp3;*.wav)|*.flac;*.mp3;*.wav|"
                        + "All files (*.*)|*.*",
                 Multiselect = false
