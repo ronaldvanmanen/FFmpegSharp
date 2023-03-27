@@ -51,7 +51,7 @@ namespace FFmpegSharp
             {
                 using var uriString = new MarshaledString(uri);
                 AVError.ThrowOnError(
-                    avformat_open_input(handle, uriString.Value, null, null)
+                    avformat_open_input(handle, uriString, null, null)
                 );
             }
         }

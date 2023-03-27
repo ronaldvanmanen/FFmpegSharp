@@ -24,11 +24,11 @@ namespace FFplaySharp
     {
         private readonly PlaybackOptions _options;
 
-        private PacketizedElementaryStream _packetizedElementaryAudioStream = null!;
-
-        private AudioElementaryStream _audioElementaryStream = null!;
+        private MediaStream<AVPacket> _packetizedElementaryAudioStream = null!;
 
         private MediaDemultiplexer _mediaDemultiplexer = null!;
+
+        private MediaStream<AVFrame> _elementaryAudioStream = null!;
 
         private AudioDecoder _audioDecoder = null!;
 
@@ -46,36 +46,25 @@ namespace FFplaySharp
 
         protected override void OnInitialized()
         {
-            _packetizedElementaryAudioStream = new PacketizedElementaryStream(256);
+            _packetizedElementaryAudioStream = new MediaStream<AVPacket>(256);
 
             _mediaDemultiplexer = new MediaDemultiplexer(_options.InputFile);
+            _mediaDemultiplexer.BestAudioOutput!.StreamInfo.Discard = AVDiscard.Default;
+            _mediaDemultiplexer.BestAudioOutput.Connect(_packetizedElementaryAudioStream);
 
-            if (_mediaDemultiplexer.BestAudioOutput is null)
-            {
-                throw new PlaybackException($"{_options.InputFile} has no audio streams.");
-            }
-
-            _mediaDemultiplexer.BestAudioOutput.Discard = AVDiscard.Default;
-            _mediaDemultiplexer.BestAudioOutput.Stream = _packetizedElementaryAudioStream;
-            _mediaDemultiplexer.Start();
-
-            _audioElementaryStream = new AudioElementaryStream(16);
+            _elementaryAudioStream = new MediaStream<AVFrame>(16);
 
             var audioDecoderOptions = new AudioDecoder.Options { Fast = _options.Fast };
             _audioDecoder = new AudioDecoder(audioDecoderOptions);
-            _audioDecoder.AudioInput.CodecParameters = _mediaDemultiplexer.BestAudioOutput.CodecParameters;
-            _audioDecoder.AudioInput.PacketTimeBase = _mediaDemultiplexer.BestAudioOutput.PacketTimeBase;
-            _audioDecoder.AudioInput.Stream = _packetizedElementaryAudioStream;
-            _audioDecoder.AudioOutput.Stream = _audioElementaryStream;
-            _audioDecoder.Start();
+            _audioDecoder.AudioInput.Connect(_packetizedElementaryAudioStream, _mediaDemultiplexer.BestAudioOutput.StreamInfo);
+            _audioDecoder.AudioOutput.Connect(_elementaryAudioStream);
 
             _audioRenderer = new AudioRenderer();
             _audioRenderer.Volume = AudioRenderer.MaxVolume;
-            _audioRenderer.AudioInput.SampleFormat = _audioDecoder.AudioOutput.SampleFormat;
-            _audioRenderer.AudioInput.ChannelLayout = _audioDecoder.AudioOutput.ChannelLayout;
-            _audioRenderer.AudioInput.SampleRate = _audioDecoder.AudioOutput.SampleRate;
-            _audioRenderer.AudioInput.TimeBase = _audioDecoder.AudioOutput.TimeBase;
-            _audioRenderer.AudioInput.Stream = _audioElementaryStream;
+            _audioRenderer.AudioInput.Connect(_elementaryAudioStream, _audioDecoder.AudioOutput.StreamInfo);
+
+            _mediaDemultiplexer.Start();
+            _audioDecoder.Start();
             _audioRenderer.Start();
         }
 

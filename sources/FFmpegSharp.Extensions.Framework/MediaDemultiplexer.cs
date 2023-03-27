@@ -23,27 +23,34 @@ namespace FFmpegSharp.Extensions.Framework
     {
         public sealed class OutputPort
         {
+            private readonly MediaDemultiplexer _owner;
+
             private readonly AVStream _streamInfo;
 
-            public int StreamIndex => _streamInfo.Index;
+            public AVStream StreamInfo => _streamInfo;
 
-            public AVDiscard Discard { get => _streamInfo.Discard; set => _streamInfo.Discard = value; }
-
-            public AVTimeBase PacketTimeBase => _streamInfo.TimeBase;
-
-            public AVCodecParameters CodecParameters => _streamInfo.CodecParameters;
-
-            public PacketizedElementaryStream? Stream { get; set; }
-
-            public OutputPort(AVStream streamInfo)
+            public OutputPort(MediaDemultiplexer owner, AVStream streamInfo)
             {
+                _owner = owner ?? throw new ArgumentNullException(nameof(owner));
                 _streamInfo = streamInfo ?? throw new ArgumentNullException(nameof(streamInfo));
+            }
+
+            public void Connect(MediaStream<AVPacket> stream)
+            {
+                _owner.OnOutputConnected(this, stream);
+            }
+
+            public void Disconnect()
+            {
+                _owner.OnOutputDisconnected(this);
             }
         }
 
         private readonly AVFormatContext _formatContext;
 
         private readonly List<OutputPort> _outputs;
+
+        private readonly Dictionary<int, MediaStream<AVPacket>> _outputStreams;
 
         private CancellationTokenSource _cancellationTokenSource;
 
@@ -69,7 +76,8 @@ namespace FFmpegSharp.Extensions.Framework
         public MediaDemultiplexer(string uri, Options? options)
         {
             _formatContext = CreateFormatContext(uri, options);
-            _outputs = CreateOutputs(_formatContext);
+            _outputs = CreateOutputs(this, _formatContext);
+            _outputStreams = new Dictionary<int, MediaStream<AVPacket>>();
             _cancellationTokenSource = null!;
             _thread = null!;
         }
@@ -115,28 +123,21 @@ namespace FFmpegSharp.Extensions.Framework
                 {
                     try
                     {
-                        var success = _formatContext.Read(ref packet);
-                        if (success)
+                        var packetRead = _formatContext.Read(ref packet);
+                        if (packetRead)
                         {
-                            var stream = _outputs[packet.StreamIndex].Stream;
-                            if (stream is not null)
+                            if (_outputStreams.TryGetValue(packet.StreamIndex, out var outputStream))
                             {
-                                var streamPacket = stream.PeekWritable(cancellationToken);
-                                packet.MoveRef(ref streamPacket);
-                                stream.PushWritable(cancellationToken);
+                                var outputPacket = new AVPacket();
+                                packet.MoveRef(ref outputPacket);
+                                outputStream.Write(outputPacket, cancellationToken);
                             }
                         }
                         else
                         {
-                            foreach (var output in _outputs)
+                            foreach (var outputStream in _outputStreams.Values)
                             {
-                                var stream = _outputs[packet.StreamIndex].Stream;
-                                if (stream is not null)
-                                {
-                                    var streamPacket = stream.PeekWritable(cancellationToken);
-                                    streamPacket.Ref(AVPacket.Null);
-                                    stream.PushWritable(cancellationToken);
-                                }
+                                outputStream.Write(AVPacket.Null, cancellationToken);
                             }
                         }
                     }
@@ -201,21 +202,31 @@ namespace FFmpegSharp.Extensions.Framework
             return result;
         }
 
-        private static List<OutputPort> CreateOutputs(AVFormatContext formatContext)
+        private static List<OutputPort> CreateOutputs(MediaDemultiplexer owner, AVFormatContext formatContext)
         {
             var outputs = new List<OutputPort>();
             foreach (var streamInfo in formatContext.Streams)
             {
                 streamInfo.Discard = AVDiscard.All;
-                var output = CreateOutput(streamInfo);
+                var output = CreateOutput(owner, streamInfo);
                 outputs.Add(output);
             }
             return outputs;
         }
 
-        private static OutputPort CreateOutput(AVStream streamInfo)
+        private static OutputPort CreateOutput(MediaDemultiplexer owner, AVStream streamInfo)
         {
-            return new OutputPort(streamInfo);
+            return new OutputPort(owner, streamInfo);
+        }
+
+        private void OnOutputConnected(OutputPort output, MediaStream<AVPacket> outputStream)
+        {
+            _outputStreams.Add(output.StreamInfo.Index, outputStream);
+        }
+
+        private void OnOutputDisconnected(OutputPort output)
+        {
+            _outputStreams.Remove(output.StreamInfo.Index);
         }
     }
 }

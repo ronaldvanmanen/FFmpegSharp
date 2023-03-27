@@ -13,22 +13,28 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Collections.Concurrent;
+using System.Threading;
+
 namespace FFmpegSharp.Extensions.Framework
 {
-    public sealed class AudioElementaryStream : ElementaryStream<AVFrame>
+    public sealed class MediaStream<T>
     {
-        public int ChannelCount { get; init; }
+        private readonly BlockingCollection<T> _samples;
 
-        public AVChannelLayout ChannelLayout { get; init; }
+        public MediaStream(int bufferSize)
+        {
+            _samples = new BlockingCollection<T>(bufferSize);
+        }
 
-        public int SampleRate { get; init; }
+        public void Write(T sample, CancellationToken cancellationToken)
+        {
+            _samples.Add(sample, cancellationToken);
+        }
 
-        public AVSampleFormat SampleFormat { get; init; }
-
-        public AVTimeBase TimeBase { get; init; }
-
-        public AudioElementaryStream(int boundedCapacity)
-        : base(boundedCapacity)
-        { }
+        public T Read(CancellationToken cancellationToken)
+        {
+            return _samples.Take(cancellationToken);
+        }
     }
 }
