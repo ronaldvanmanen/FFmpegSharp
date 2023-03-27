@@ -98,6 +98,8 @@ namespace FFplaySharp
                 var options = context.GetValueFor(optionsBinder);
                 if (options is null)
                 {
+                    _logger.LogError("Required argument(s) and/or option(s) missing.");
+                    context.ExitCode = -1;
                     return;
                 }
                 else
