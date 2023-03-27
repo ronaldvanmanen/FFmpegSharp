@@ -86,6 +86,10 @@ namespace FFmpegSharp
         public int FindBestStream(AVMediaType type)
         {
             var retval = av_find_best_stream(_handle, (Interop.AVMediaType)type, -1, -1, null, 0);
+            if (retval == AVERROR_STREAM_NOT_FOUND)
+            {
+                return -1;
+            }
             AVError.ThrowOnError(retval);
             return retval;
         }

@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace FFmpegSharp.Extensions.Framework
@@ -65,7 +66,7 @@ namespace FFmpegSharp.Extensions.Framework
                 {
                     return _outputs[index];
                 }
-                return null;
+                return _outputs.FirstOrDefault(e => e.StreamInfo.CodecParameters.CodecType == AVMediaType.Audio);
             }
         }
 

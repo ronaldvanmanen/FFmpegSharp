@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 
 namespace MediaPlayer
 {
@@ -13,5 +7,20 @@ namespace MediaPlayer
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            InitializeComponent();
+        }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            var viewModel = new MainWindowViewModel();
+            var view = new MainWindow
+            {
+                DataContext = viewModel
+            };
+            view.Show();
+        }
     }
 }

@@ -15,10 +15,16 @@
 
     <!-- WPF workaround: GitVersion and .NET SDK between v5.0.200 and v6.0.0-preview.2  -->
     <IncludePackageReferencesDuringMarkupCompilation>true</IncludePackageReferencesDuringMarkupCompilation>
+    <StartupObject>MediaPlayer.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\sources\FFmpegSharp.Extensions.Framework\FFmpegSharp.Extensions.Framework.csproj" />
+    <ProjectReference Include="..\..\sources\FFmpegSharp\FFmpegSharp.csproj" />
   </ItemGroup>
 
 </Project>

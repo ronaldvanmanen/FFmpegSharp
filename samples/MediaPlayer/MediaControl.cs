@@ -14,9 +14,12 @@
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using FFmpegSharp;
+using FFmpegSharp.Extensions.Framework;
 
 namespace MediaPlayer
 {
@@ -28,6 +31,16 @@ namespace MediaPlayer
                 typeof(Uri),
                 typeof(MediaControl),
                 new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.None, SourceChanged));
+
+        private MediaStream<AVPacket> _demultiplexedAudioStream = null!;
+
+        private MediaDemultiplexer _mediaDemultiplexer = null!;
+
+        private MediaStream<AVFrame> _decodedAudioStream = null!;
+
+        private AudioDecoder _audioDecoder = null!;
+
+        private AudioRenderer _audioRenderer = null!;
 
         public Uri Source
         {
@@ -53,12 +66,40 @@ namespace MediaPlayer
         {
         }
 
+        public void Load(Uri source)
+        {
+            _mediaDemultiplexer = new MediaDemultiplexer(source.IsFile ? source.LocalPath : source.ToString());
+
+            if (_mediaDemultiplexer.BestAudioOutput is null)
+            {
+                return;
+            }
+
+            _demultiplexedAudioStream = new MediaStream<AVPacket>(256);
+            _mediaDemultiplexer.BestAudioOutput.StreamInfo.Discard = AVDiscard.Default;
+            _mediaDemultiplexer.BestAudioOutput.Connect(_demultiplexedAudioStream);
+            _mediaDemultiplexer.Start();
+
+            _decodedAudioStream = new MediaStream<AVFrame>(16);
+
+            _audioDecoder = new AudioDecoder();
+            _audioDecoder.AudioInput.Connect(_demultiplexedAudioStream, _mediaDemultiplexer.BestAudioOutput.StreamInfo);
+            _audioDecoder.AudioOutput.Connect(_decodedAudioStream);
+            _audioDecoder.Start();
+
+            _audioRenderer = new AudioRenderer();
+            _audioRenderer.Volume = AudioRenderer.MaxVolume;
+            _audioRenderer.AudioInput.Connect(_decodedAudioStream, _audioDecoder.AudioOutput.StreamInfo);
+        }
+
         public void Play()
         {
+            _audioRenderer.Start();
         }
 
         public void Stop()
         {
+            _audioRenderer.Stop();
         }
 
         public void Pause()
@@ -176,6 +217,13 @@ namespace MediaPlayer
 
         private static void SourceChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs eventArgs)
         {
+            if (dependencyObject is MediaControl mediaControl)
+            {
+                if (eventArgs.NewValue is Uri source)
+                {
+                    mediaControl.Load(source);
+                }
+            }
         }
     }
 }

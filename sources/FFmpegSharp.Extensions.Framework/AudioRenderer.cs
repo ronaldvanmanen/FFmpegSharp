@@ -17,6 +17,7 @@ using System;
 using System.IO;
 using System.Threading;
 using FFmpegSharp.Extensions.Collections;
+using FFmpegSharp.Interop;
 using SDL2Sharp;
 using SDL2Sharp.Extensions;
 using static System.Math;
@@ -196,9 +197,9 @@ namespace FFmpegSharp.Extensions.Framework
 
         private void OnInputConnected(MediaStream<AVFrame> stream, AVCodecContext streamInfo)
         {
-            var audioFormat = GetAudioFormat(streamInfo.SampleFormat);
-            var audioChannelLayout = GetAudioChannelLayout(streamInfo.ChannelLayout != 0 ? streamInfo.ChannelLayout : AVUtil.GetDefaultChannelLayout(streamInfo.ChannelCount));
-            var audioSampleRate = streamInfo.SampleRate;
+            var audioFormat = GetAudioFormat(streamInfo);
+            var audioChannelLayout = GetAudioChannelLayout(streamInfo);
+            var audioSampleRate = GetAudioSampleRate(streamInfo);
             var audioSamples = (ushort)Max(MinimumBufferSize, 2 << ((int)Log2(audioSampleRate / MaximumCallbacksPerSecond)));
             var audioSpec = new AudioDeviceSpec(
                 audioSampleRate,
@@ -265,8 +266,21 @@ namespace FFmpegSharp.Extensions.Framework
             }
         }
 
-        private static AudioChannelLayout GetAudioChannelLayout(AVChannelLayout channelLayout)
+        private static AudioChannelLayout GetAudioChannelLayout(AVCodecContext codecContext)
         {
+            var channelLayout = codecContext.ChannelLayout;
+            if (channelLayout <= 0)
+            {
+                if (codecContext.ChannelCount != 0)
+                {
+                    channelLayout = AVUtil.GetDefaultChannelLayout(codecContext.ChannelCount);
+                }
+                else
+                {
+                    channelLayout = AVChannelLayout.Stereo;
+                }
+            }
+
             switch (channelLayout)
             {
                 case AVChannelLayout.Mono:
@@ -286,9 +300,14 @@ namespace FFmpegSharp.Extensions.Framework
             }
         }
 
-        private static AudioFormat GetAudioFormat(AVSampleFormat sampleFormat)
+        private int GetAudioSampleRate(AVCodecContext codecContext)
         {
-            var packedSampleFormat = sampleFormat.ToPackedFormat();
+            return codecContext.SampleRate;
+        }
+
+        private static AudioFormat GetAudioFormat(AVCodecContext codecContext)
+        {
+            var packedSampleFormat = codecContext.SampleFormat.ToPackedFormat();
             switch (packedSampleFormat)
             {
                 case AVSampleFormat.Unsigned8:

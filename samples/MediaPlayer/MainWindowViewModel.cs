@@ -58,7 +58,7 @@ namespace MediaPlayer
             var result = openFileDialog.ShowDialog();
             if (result.HasValue && result.Value)
             {
-                _mediaSource = new Uri(openFileDialog.FileName);
+                MediaSource = new Uri(openFileDialog.FileName);
             }
         }
 
