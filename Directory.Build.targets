@@ -23,12 +23,12 @@
   </PropertyGroup>
 
   <!-- Settings that are only set for executables -->
-  <PropertyGroup Condition="'$(OutputType)' != 'Library'">
+  <PropertyGroup Condition="'$(OutputType)' != 'Library' And '$(UseWPF)' != True">
     <PublishTrimmed>true</PublishTrimmed>
   </PropertyGroup>
 
   <!-- Settings that are only set for libraries -->
-  <PropertyGroup Condition="'$(OutputType)' == 'Library'">
+  <PropertyGroup Condition="'$(OutputType)' == 'Library' And '$(UseWPF)' != True">
     <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
     <IsTrimmable>true</IsTrimmable>
   </PropertyGroup>
