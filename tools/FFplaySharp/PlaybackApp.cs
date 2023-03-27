@@ -51,6 +51,7 @@ namespace FFplaySharp
             _mediaDemultiplexer = new MediaDemultiplexer(_options.InputFile);
             _mediaDemultiplexer.BestAudioOutput!.StreamInfo.Discard = AVDiscard.Default;
             _mediaDemultiplexer.BestAudioOutput.Connect(_packetizedElementaryAudioStream);
+            _mediaDemultiplexer.Start();
 
             _elementaryAudioStream = new MediaStream<AVFrame>(16);
 
@@ -58,13 +59,11 @@ namespace FFplaySharp
             _audioDecoder = new AudioDecoder(audioDecoderOptions);
             _audioDecoder.AudioInput.Connect(_packetizedElementaryAudioStream, _mediaDemultiplexer.BestAudioOutput.StreamInfo);
             _audioDecoder.AudioOutput.Connect(_elementaryAudioStream);
+            _audioDecoder.Start();
 
             _audioRenderer = new AudioRenderer();
             _audioRenderer.Volume = AudioRenderer.MaxVolume;
             _audioRenderer.AudioInput.Connect(_elementaryAudioStream, _audioDecoder.AudioOutput.StreamInfo);
-
-            _mediaDemultiplexer.Start();
-            _audioDecoder.Start();
             _audioRenderer.Start();
         }
 
