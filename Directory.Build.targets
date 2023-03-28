@@ -13,7 +13,7 @@
   <!-- Settings that append the existing setting value -->
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);$(OS)</DefineConstants>
-    <NoWarn>$(NoWarn);NU5105</NoWarn>
+    <NoWarn>$(NoWarn);NU5105;NU5104</NoWarn>
   </PropertyGroup>
 
   <!-- Settings that allow testing and packing to work by default -->
