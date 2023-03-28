@@ -25,8 +25,7 @@
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
         Title="FFmpegSharp Media Player"
-        Height="88"
-        Width="512">
+        SizeToContent="WidthAndHeight">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -45,86 +44,79 @@
 
         <local:MediaControl x:Name="MediaControl" Grid.Row="1" Source="{Binding MediaSource}"/>
 
-        <DockPanel Grid.Row="2" >
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
             <Button Command="{x:Static local:MediaCommands.FastBackward}" 
                     CommandTarget="{Binding ElementName=MediaControl}"
-                    Margin="5,5,0,5" 
-                    DockPanel.Dock="Left">
+                    Margin="5,5,0,5">
                 <Button.Content>
                     <Rectangle Fill="{StaticResource FastBackwardIcon}"
-                               Height="16"
-                               Width="16"/>
+                               Height="24"
+                               Width="24"/>
                 </Button.Content>
             </Button>
 
             <RepeatButton Command="{x:Static local:MediaCommands.StepBackward}" 
                           CommandTarget="{Binding ElementName=MediaControl}"
-                          Margin="5,5,0,5" 
-                          DockPanel.Dock="Left">
+                          Margin="5,5,0,5">
                 <RepeatButton.Content>
                     <Rectangle Fill="{StaticResource StepBackwardIcon}"
-                               Height="16"
-                               Width="16"/>
+                               Height="24"
+                               Width="24"/>
                 </RepeatButton.Content>
             </RepeatButton>
 
             <Button Command="{x:Static local:MediaCommands.Play}" 
                     CommandTarget="{Binding ElementName=MediaControl}"
-                    Margin="5,5,0,5" 
-                    DockPanel.Dock="Left">
+                    Margin="5,5,0,5">
                 <Button.Content>
                     <Rectangle Fill="{StaticResource PlayIcon}"
-                               Height="16"
-                               Width="16"/>
+                               Height="24"
+                               Width="24"/>
                 </Button.Content>
             </Button>
 
             <Button Command="{x:Static local:MediaCommands.Stop}" 
                     CommandTarget="{Binding ElementName=MediaControl}"
-                    Margin="5,5,0,5"
-                    DockPanel.Dock="Left">
+                    Margin="5,5,0,5">
                 <Button.Content>
                     <Rectangle Fill="{StaticResource StopIcon}"
-                               Height="16"
-                               Width="16"/>
+                               Height="24"
+                               Width="24"/>
                 </Button.Content>
             </Button>
 
             <Button Command="{x:Static local:MediaCommands.Pause}" 
                     CommandTarget="{Binding ElementName=MediaControl}"
-                    Margin="5,5,0,5" 
-                    DockPanel.Dock="Left">
+                    Margin="5,5,0,5">
                 <Button.Content>
                     <Rectangle Fill="{StaticResource PauseIcon}"
-                               Height="16"
-                               Width="16"/>
+                               Height="24"
+                               Width="24"/>
                 </Button.Content>
             </Button>
 
             <RepeatButton Command="{x:Static local:MediaCommands.StepForward}" 
                           CommandTarget="{Binding ElementName=MediaControl}"
-                          Margin="5,5,0,5" 
-                          DockPanel.Dock="Left">
+                          Margin="5,5,0,5">
                 <RepeatButton.Content>
                     <Rectangle Fill="{StaticResource StepForwardIcon}" 
-                               Height="16"
-                               Width="16"/>
+                               Height="24"
+                               Width="24"/>
                 </RepeatButton.Content>
             </RepeatButton>
 
             <Button Command="{x:Static local:MediaCommands.FastForward}" 
                     CommandTarget="{Binding ElementName=MediaControl}"
-                    Margin="5,5,0,5" 
-                    DockPanel.Dock="Left">
+                    Margin="5,5,0,5">
                 <Button.Content>
                     <Rectangle Fill="{StaticResource FastForwardIcon}"
-                               Height="16"
-                               Width="16"/>
+                               Height="24"
+                               Width="24"/>
                 </Button.Content>
             </Button>
 
-            <Slider Margin="5,5,0,5"/>
+            <Slider Margin="5,5,0,5" Width="256" VerticalAlignment="Center" />
 
-        </DockPanel>
+        </StackPanel>
     </Grid>
 </Window>
