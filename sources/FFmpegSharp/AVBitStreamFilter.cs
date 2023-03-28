@@ -34,7 +34,7 @@ namespace FFmpegSharp
 
         private readonly Interop.AVBitStreamFilter* _handle;
 
-        public string Name => new string(_handle->name);
+        public string Name => new(_handle->name);
 
         public AVBitStreamFilter(Interop.AVBitStreamFilter* handle)
         {

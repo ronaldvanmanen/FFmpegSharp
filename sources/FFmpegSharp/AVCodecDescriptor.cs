@@ -109,7 +109,7 @@ namespace FFmpegSharp
             GC.SuppressFinalize(this);
         }
 
-        private void Dispose(bool disposing)
+        private void Dispose(bool _)
         {
             if (_ownsHandle && _handle != null)
             {

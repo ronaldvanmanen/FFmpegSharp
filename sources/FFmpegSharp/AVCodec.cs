@@ -39,9 +39,9 @@ namespace FFmpegSharp
 
         public AVCodecCapabilities Capabilities => (AVCodecCapabilities)_handle->capabilities;
 
-        public string Name => new string(_handle->name);
+        public string Name => new(_handle->name);
 
-        public string LongName => new string(_handle->long_name);
+        public string LongName => new(_handle->long_name);
 
         public bool IsDecoder => av_codec_is_decoder(_handle) != 0;
 

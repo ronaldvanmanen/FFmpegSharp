@@ -15,6 +15,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
@@ -81,7 +82,7 @@ namespace FFmpegSharp.Interop
             {
                 var resolvers = resolveLibrary.GetInvocationList();
 
-                foreach (DllImportResolver resolver in resolvers)
+                foreach (var resolver in resolvers.Cast<DllImportResolver>())
                 {
                     nativeLibrary = resolver(libraryName, assembly, searchPath);
 

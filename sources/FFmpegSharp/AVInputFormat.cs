@@ -77,9 +77,9 @@ namespace FFmpegSharp
             }
         }
 
-        public string Name => new string(_handle->name);
+        public string Name => new(_handle->name);
 
-        public string LongName => new string(_handle->long_name);
+        public string LongName => new(_handle->long_name);
 
         public AVClass? PrivateClass
         {
@@ -104,7 +104,7 @@ namespace FFmpegSharp
 
                 Interop.AVDeviceInfoList* deviceInfoList = null;
 
-                AVError.ThrowOnFailure(
+                AVError.ThrowOnError(
                     avdevice_list_input_sources(_handle, null, null, &deviceInfoList)
                 );
 

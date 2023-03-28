@@ -26,6 +26,6 @@ namespace FFmpegSharp
             return (_current = av_pix_fmt_desc_next(_current)) != null;
         }
 
-        public AVPixelFormatDescriptor Current => new AVPixelFormatDescriptor(_current);
+        public AVPixelFormatDescriptor Current => new(_current);
     }
 }

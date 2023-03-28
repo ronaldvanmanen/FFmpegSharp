@@ -31,6 +31,6 @@ namespace FFmpegSharp
             }
         }
 
-        public AVCodec Current => new AVCodec(_current);
+        public AVCodec Current => new(_current);
     }
 }

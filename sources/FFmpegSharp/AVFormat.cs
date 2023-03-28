@@ -13,6 +13,7 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
+using static FFmpegSharp.AVError;
 using static FFmpegSharp.Interop.FFmpeg;
 
 namespace FFmpegSharp
@@ -22,6 +23,16 @@ namespace FFmpegSharp
         public static void RegisterAll()
         {
             av_register_all();
+        }
+
+        public static void NetworkInit()
+        {
+            ThrowOnError(avformat_network_init());
+        }
+
+        public static void NetworkDeinit()
+        {
+            ThrowOnError(avformat_network_deinit());
         }
     }
 }

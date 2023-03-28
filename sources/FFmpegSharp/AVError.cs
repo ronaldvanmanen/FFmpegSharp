@@ -40,12 +40,23 @@ namespace FFmpegSharp
         : base(info, context)
         { }
 
-        public static void ThrowOnFailure(int returnCode)
+        public static void ThrowOnError(int returnCode)
         {
             if (returnCode < 0)
             {
                 throw new AVError(returnCode);
             }
+        }
+
+        public static bool ReturnOnFailure(int returnCode, out AVError? error)
+        {
+            if (returnCode < 0)
+            {
+                error = new AVError(returnCode);
+                return true;
+            }
+            error = null;
+            return false;
         }
 
         private static unsafe string GetErrorMessage(int errorCode)

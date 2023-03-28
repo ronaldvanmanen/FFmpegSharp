@@ -43,7 +43,7 @@ namespace FFmpegSharp
                 }
             }
 
-            public string Current => new string(_current);
+            public string Current => new(_current);
         }
 
         public static IEnumerable<string> InputProtocolNames

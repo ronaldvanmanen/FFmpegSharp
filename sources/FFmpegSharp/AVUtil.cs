@@ -19,6 +19,16 @@ namespace FFmpegSharp
 {
     public static unsafe class AVUtil
     {
-        public static string BuildConfiguration => new string(avutil_configuration());
+        public static string BuildConfiguration => new(avutil_configuration());
+
+        public static int GetBufferSize(int channelCount, int sampleCount, AVSampleFormat sampleFormat, bool align)
+        {
+            return av_samples_get_buffer_size(null, channelCount, sampleCount, (Interop.AVSampleFormat)sampleFormat, align ? 0 : 1);
+        }
+
+        public static AVChannelLayout GetDefaultChannelLayout(int channelCount)
+        {
+            return (AVChannelLayout)av_get_default_channel_layout(channelCount);
+        }
     }
 }

@@ -19,6 +19,11 @@ namespace FFmpegSharp
 {
     public static unsafe class AVSampleFormatExtensions
     {
+        public static AVSampleFormat ToPackedFormat(this AVSampleFormat format)
+        {
+            return (AVSampleFormat)av_get_packed_sample_fmt((Interop.AVSampleFormat)format);
+        }
+
         public static string? AsString(this AVSampleFormat format)
         {
             const int formatStringBufferSize = 128;

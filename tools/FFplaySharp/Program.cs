@@ -17,27 +17,49 @@ using System;
 using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using FFmpegSharp;
+using Microsoft.Extensions.Logging;
 using static System.Linq.Enumerable;
 
 namespace FFplaySharp
 {
     internal static class Program
     {
+        private static readonly ILogger _logger;
+
+        static Program()
+        {
+            var loggerFactory = LoggerFactory.Create(
+                builder => builder.AddConsole());
+            _logger = loggerFactory.CreateLogger("FFplaySharp");
+        }
+
         static int Main(string[] args)
         {
-            AVCodec.RegisterAll();
-            AVDevice.RegisterAll();
-            AVFilter.RegisterAll();
-            AVFormat.RegisterAll();
+            try
+            {
+                Initialize();
+                var exitCode = Run(args);
+                return exitCode;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occured while running FFplaySharp.");
 
+                return -1;
+            }
+            finally
+            {
+                Deinitialize();
+            }
+        }
+
+        private static int Run(string[] args)
+        {
             var rootCommand = new RootCommand("Simple media player based on FFplay");
-
-            rootCommand.SetHandler(() => { });
 
             var commandLineBuilder = new CommandLineBuilder(rootCommand)
                 .UseHelp()
@@ -69,9 +91,40 @@ namespace FFplaySharp
                 .UseShowSourcesOption()
                 .UseShowSinksOption();
 
-            var commandLineParser = commandLineBuilder.Build();
+            var optionsBinder = new PlaybackOptionsBinder();
+            commandLineBuilder.Command.AddComposite(optionsBinder);
+            rootCommand.SetHandler(context =>
+            {
+                var options = context.GetValueFor(optionsBinder);
+                if (options is null)
+                {
+                    _logger.LogError("Required argument(s) and/or option(s) missing.");
+                    context.ExitCode = -1;
+                    return;
+                }
+                else
+                {
+                    var exitCode = PlaybackInput(options);
+                    context.ExitCode = exitCode;
+                    return;
+                }
+            });
 
-            return commandLineParser.Invoke(args);
+            return commandLineBuilder.Build().Invoke(args);
+        }
+
+        private static void Initialize()
+        {
+            AVCodec.RegisterAll();
+            AVDevice.RegisterAll();
+            AVFilter.RegisterAll();
+            AVFormat.RegisterAll();
+            AVFormat.NetworkInit();
+        }
+
+        private static void Deinitialize()
+        {
+            AVFormat.NetworkDeinit();
         }
 
         private static CommandLineBuilder UseShowVersionOption(this CommandLineBuilder builder)
@@ -457,6 +510,22 @@ namespace FFplaySharp
             foreach (var device in devices)
             {
                 PrintDeviceSinks(device);
+            }
+        }
+
+        private static int PlaybackInput(PlaybackOptions options)
+        {
+            try
+            {
+                var app = new PlaybackApp(options);
+                options.CancellationToken.Register(app.Quit);
+                return app.Run();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occured while running FFplaySharp.");
+
+                return -1;
             }
         }
 

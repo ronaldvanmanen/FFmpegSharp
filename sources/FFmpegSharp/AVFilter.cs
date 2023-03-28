@@ -35,15 +35,15 @@ namespace FFmpegSharp
 
         private readonly Interop.AVFilter* _handle;
 
-        public string Name => new string(_handle->name);
+        public string Name => new(_handle->name);
 
-        public string Description => new string(_handle->description);
+        public string Description => new(_handle->description);
 
         public AVFilterFlags Flags => (AVFilterFlags)_handle->flags;
 
-        public AVFilterPadCollection Inputs => new AVFilterPadCollection(_handle->inputs);
+        public AVFilterPadCollection Inputs => new(_handle->inputs);
 
-        public AVFilterPadCollection Outputs => new AVFilterPadCollection(_handle->outputs);
+        public AVFilterPadCollection Outputs => new(_handle->outputs);
 
         public bool CanProcessCommand => _handle->process_command != null;
 

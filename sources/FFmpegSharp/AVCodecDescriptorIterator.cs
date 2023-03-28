@@ -26,6 +26,6 @@ namespace FFmpegSharp
             return (_current = avcodec_descriptor_next(_current)) != null;
         }
 
-        public AVCodecDescriptor Current => new AVCodecDescriptor(_current, false);
+        public AVCodecDescriptor Current => new(_current, false);
     }
 }

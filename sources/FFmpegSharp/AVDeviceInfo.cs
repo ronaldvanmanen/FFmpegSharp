@@ -31,8 +31,8 @@ namespace FFmpegSharp
             _handle = handle;
         }
 
-        public string Name => new string(_handle->device_name);
+        public string Name => new(_handle->device_name);
 
-        public string Description => new string(_handle->device_description);
+        public string Description => new(_handle->device_description);
     }
 }

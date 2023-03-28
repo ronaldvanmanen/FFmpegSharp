@@ -26,6 +26,6 @@ namespace FFmpegSharp
             return (_current = av_output_video_device_next(_current)) != null;
         }
 
-        public AVOutputFormat Current => new AVOutputFormat(_current);
+        public AVOutputFormat Current => new(_current);
     }
 }
