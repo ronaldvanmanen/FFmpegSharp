@@ -104,6 +104,7 @@ namespace MediaPlayer
 
         public void Pause()
         {
+            _audioRenderer.Stop();
         }
 
         public void StepForward()
