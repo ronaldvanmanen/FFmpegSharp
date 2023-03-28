@@ -173,7 +173,7 @@ namespace MediaPlayer
 
         private static void CanExecuteStepForward(object sender, CanExecuteRoutedEventArgs eventArgs)
         {
-            eventArgs.CanExecute = true;
+            eventArgs.CanExecute = false;
         }
 
         private static void ExecuteStepBackward(object source, ExecutedRoutedEventArgs eventArgs)
@@ -186,7 +186,7 @@ namespace MediaPlayer
 
         private static void CanExecuteStepBackward(object sender, CanExecuteRoutedEventArgs eventArgs)
         {
-            eventArgs.CanExecute = true;
+            eventArgs.CanExecute = false;
         }
 
         private static void ExecuteFastForward(object source, ExecutedRoutedEventArgs eventArgs)
@@ -199,7 +199,7 @@ namespace MediaPlayer
 
         private static void CanExecuteFastForward(object sender, CanExecuteRoutedEventArgs eventArgs)
         {
-            eventArgs.CanExecute = true;
+            eventArgs.CanExecute = false;
         }
 
         private static void ExecuteFastBackward(object source, ExecutedRoutedEventArgs eventArgs)
@@ -212,7 +212,7 @@ namespace MediaPlayer
 
         private static void CanExecuteFastBackward(object sender, CanExecuteRoutedEventArgs eventArgs)
         {
-            eventArgs.CanExecute = true;
+            eventArgs.CanExecute = false;
         }
 
         private static void SourceChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs eventArgs)
