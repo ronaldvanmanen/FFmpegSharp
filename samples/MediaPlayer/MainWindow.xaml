@@ -47,7 +47,8 @@
         <StackPanel Grid.Row="2" Orientation="Horizontal">
             <Button Command="{x:Static local:MediaCommands.FastBackward}" 
                     CommandTarget="{Binding ElementName=MediaControl}"
-                    Margin="5,5,0,5">
+                    Margin="5,5,0,5"
+                    Style="{StaticResource ButtonStyle}">
                 <Button.Content>
                     <Rectangle Fill="{StaticResource FastBackwardIcon}"
                                Height="24"
@@ -57,7 +58,8 @@
 
             <RepeatButton Command="{x:Static local:MediaCommands.StepBackward}" 
                           CommandTarget="{Binding ElementName=MediaControl}"
-                          Margin="5,5,0,5">
+                          Margin="5,5,0,5"
+                          Style="{StaticResource RepeatButtonStyle}">
                 <RepeatButton.Content>
                     <Rectangle Fill="{StaticResource StepBackwardIcon}"
                                Height="24"
@@ -67,7 +69,8 @@
 
             <Button Command="{x:Static local:MediaCommands.Play}" 
                     CommandTarget="{Binding ElementName=MediaControl}"
-                    Margin="5,5,0,5">
+                    Margin="5,5,0,5"
+                    Style="{StaticResource ButtonStyle}">
                 <Button.Content>
                     <Rectangle Fill="{StaticResource PlayIcon}"
                                Height="24"
@@ -77,7 +80,8 @@
 
             <Button Command="{x:Static local:MediaCommands.Stop}" 
                     CommandTarget="{Binding ElementName=MediaControl}"
-                    Margin="5,5,0,5">
+                    Margin="5,5,0,5"
+                    Style="{StaticResource ButtonStyle}">
                 <Button.Content>
                     <Rectangle Fill="{StaticResource StopIcon}"
                                Height="24"
@@ -87,7 +91,8 @@
 
             <Button Command="{x:Static local:MediaCommands.Pause}" 
                     CommandTarget="{Binding ElementName=MediaControl}"
-                    Margin="5,5,0,5">
+                    Margin="5,5,0,5"
+                    Style="{StaticResource ButtonStyle}">
                 <Button.Content>
                     <Rectangle Fill="{StaticResource PauseIcon}"
                                Height="24"
@@ -97,7 +102,8 @@
 
             <RepeatButton Command="{x:Static local:MediaCommands.StepForward}" 
                           CommandTarget="{Binding ElementName=MediaControl}"
-                          Margin="5,5,0,5">
+                          Margin="5,5,0,5"
+                          Style="{StaticResource RepeatButtonStyle}">
                 <RepeatButton.Content>
                     <Rectangle Fill="{StaticResource StepForwardIcon}" 
                                Height="24"
@@ -107,7 +113,8 @@
 
             <Button Command="{x:Static local:MediaCommands.FastForward}" 
                     CommandTarget="{Binding ElementName=MediaControl}"
-                    Margin="5,5,0,5">
+                    Margin="5,5,0,5"
+                    Style="{StaticResource ButtonStyle}">
                 <Button.Content>
                     <Rectangle Fill="{StaticResource FastForwardIcon}"
                                Height="24"
