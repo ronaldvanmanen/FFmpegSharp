@@ -61,6 +61,17 @@
                 </Button.Content>
             </Button>
 
+            <Button Command="{x:Static local:MediaCommands.Stop}" 
+                    CommandTarget="{Binding ElementName=MediaControl}"
+                    Margin="5,5,0,5"
+                    DockPanel.Dock="Left">
+                <Button.Content>
+                    <Rectangle Fill="{StaticResource StopIcon}"
+                               Height="16"
+                               Width="16"/>
+                </Button.Content>
+            </Button>
+
             <Button Command="{x:Static local:MediaCommands.Pause}" 
                     CommandTarget="{Binding ElementName=MediaControl}"
                     Margin="5,5,0,5" 
