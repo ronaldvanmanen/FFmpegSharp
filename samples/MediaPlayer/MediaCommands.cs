@@ -27,69 +27,48 @@ namespace MediaPlayer
         /// </summary>
         static MediaCommands()
         {
-            Play = new RoutedCommand("Play", typeof(MediaCommands));
-            Stop = new RoutedCommand("Stop", typeof(MediaCommands));
-            Pause = new RoutedCommand("Pause", typeof(MediaCommands));
-            StepForward = new RoutedCommand("StepForward", typeof(MediaCommands));
-            StepBackward = new RoutedCommand("StepBackward", typeof(MediaCommands));
-            FastForward = new RoutedCommand("FastForward", typeof(MediaCommands));
-            FastBackward = new RoutedCommand("FastBackward", typeof(MediaCommands));
+            Play = new RoutedCommand(nameof(Play), typeof(MediaCommands));
+            Stop = new RoutedCommand(nameof(Stop), typeof(MediaCommands));
+            Pause = new RoutedCommand(nameof(Pause), typeof(MediaCommands));
+            StepForward = new RoutedCommand(nameof(StepForward), typeof(MediaCommands));
+            StepBackward = new RoutedCommand(nameof(StepBackward), typeof(MediaCommands));
+            FastForward = new RoutedCommand(nameof(FastForward), typeof(MediaCommands));
+            FastBackward = new RoutedCommand(nameof(FastBackward), typeof(MediaCommands));
         }
 
         /// <summary>
         ///     Gets the command that signals the <see cref="MediaPlayer"/> to start playing.
         /// </summary>
-        public static RoutedCommand Play
-        {
-            get; private set;
-        }
+        public static RoutedCommand Play { get; }
 
         /// <summary>
         ///     Gets the command that signals the <see cref="MediaPlayer"/> to stop playing.
         /// </summary>
-        public static RoutedCommand Stop
-        {
-            get; private set;
-        }
+        public static RoutedCommand Stop { get; }
 
         /// <summary>
         ///     Gets the command that signals the <see cref="MediaPlayer"/> to pause playing.
         /// </summary>
-        public static RoutedCommand Pause
-        {
-            get; private set;
-        }
+        public static RoutedCommand Pause { get; }
 
         /// <summary>
         ///     Gets the command that signals the <see cref="MediaPlayer"/> to skip to the next frame.
         /// </summary>
-        public static RoutedCommand StepForward
-        {
-            get; private set;
-        }
+        public static RoutedCommand StepForward { get; }
 
         /// <summary>
         ///     Gets the command that signals the <see cref="MediaPlayer"/> to skip to the next frame.
         /// </summary>
-        public static RoutedCommand StepBackward
-        {
-            get; private set;
-        }
+        public static RoutedCommand StepBackward { get; }
 
         /// <summary>
         ///     Gets the command that signals the <see cref="MediaPlayer"/> to skip to the next frame.
         /// </summary>
-        public static RoutedCommand FastForward
-        {
-            get; private set;
-        }
+        public static RoutedCommand FastForward { get; }
 
         /// <summary>
         ///     Gets the command that signals the <see cref="MediaPlayer"/> to skip to the next frame.
         /// </summary>
-        public static RoutedCommand FastBackward
-        {
-            get; private set;
-        }
+        public static RoutedCommand FastBackward { get; }
     }
 }
