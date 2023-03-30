@@ -26,14 +26,19 @@ namespace FFmpegSharp.Extensions.Framework
         {
             private readonly MediaDemultiplexer _owner;
 
-            private readonly AVStream _streamInfo;
+            private readonly AVStream _stream;
 
-            public AVStream StreamInfo => _streamInfo;
+            private PacketizedElementaryStreamInfo _streamInfo;
 
-            public OutputPort(MediaDemultiplexer owner, AVStream streamInfo)
+            public IPacketizedElementaryStreamInfo StreamInfo => _streamInfo ??= new PacketizedElementaryStreamInfo(_stream);
+
+            public AVDiscard Discard { get => _stream.Discard; set => _stream.Discard = value; }
+
+            public OutputPort(MediaDemultiplexer owner, AVStream stream)
             {
                 _owner = owner ?? throw new ArgumentNullException(nameof(owner));
-                _streamInfo = streamInfo ?? throw new ArgumentNullException(nameof(streamInfo));
+                _stream = stream ?? throw new ArgumentNullException(nameof(stream));
+                _streamInfo = null!;
             }
 
             public void Connect(MediaStream<AVPacket> stream)
@@ -66,7 +71,7 @@ namespace FFmpegSharp.Extensions.Framework
                 {
                     return _outputs[index];
                 }
-                return _outputs.FirstOrDefault(e => e.StreamInfo.CodecParameters.CodecType == AVMediaType.Audio);
+                return _outputs.FirstOrDefault(e => e.StreamInfo.CodecInfo.CodecType == AVMediaType.Audio);
             }
         }
 

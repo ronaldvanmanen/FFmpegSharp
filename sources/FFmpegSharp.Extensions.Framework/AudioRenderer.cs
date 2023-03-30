@@ -14,10 +14,8 @@
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.IO;
 using System.Threading;
 using FFmpegSharp.Extensions.Collections;
-using FFmpegSharp.Interop;
 using SDL2Sharp;
 using SDL2Sharp.Extensions;
 using static System.Math;
@@ -35,7 +33,7 @@ namespace FFmpegSharp.Extensions.Framework
                 _owner = owner ?? throw new ArgumentNullException(nameof(owner));
             }
 
-            public void Connect(MediaStream<AVFrame> stream, AVCodecContext streamInfo)
+            public void Connect(MediaStream<AVFrame> stream, IElementaryAudioStreamInfo streamInfo)
             {
                 _owner.OnInputConnected(stream, streamInfo);
             }
@@ -195,7 +193,7 @@ namespace FFmpegSharp.Extensions.Framework
             }
         }
 
-        private void OnInputConnected(MediaStream<AVFrame> stream, AVCodecContext streamInfo)
+        private void OnInputConnected(MediaStream<AVFrame> stream, IElementaryAudioStreamInfo streamInfo)
         {
             var audioFormat = GetAudioFormat(streamInfo);
             var audioChannelLayout = GetAudioChannelLayout(streamInfo);
@@ -266,7 +264,7 @@ namespace FFmpegSharp.Extensions.Framework
             }
         }
 
-        private static AudioChannelLayout GetAudioChannelLayout(AVCodecContext codecContext)
+        private static AudioChannelLayout GetAudioChannelLayout(IElementaryAudioStreamInfo codecContext)
         {
             var channelLayout = codecContext.ChannelLayout;
             if (channelLayout <= 0)
@@ -300,12 +298,12 @@ namespace FFmpegSharp.Extensions.Framework
             }
         }
 
-        private int GetAudioSampleRate(AVCodecContext codecContext)
+        private int GetAudioSampleRate(IElementaryAudioStreamInfo codecContext)
         {
             return codecContext.SampleRate;
         }
 
-        private static AudioFormat GetAudioFormat(AVCodecContext codecContext)
+        private static AudioFormat GetAudioFormat(IElementaryAudioStreamInfo codecContext)
         {
             var packedSampleFormat = codecContext.SampleFormat.ToPackedFormat();
             switch (packedSampleFormat)

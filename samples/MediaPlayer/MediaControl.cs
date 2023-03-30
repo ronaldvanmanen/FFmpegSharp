@@ -75,7 +75,7 @@ namespace MediaPlayer
             }
 
             _demultiplexedAudioStream = new MediaStream<AVPacket>(256);
-            _mediaDemultiplexer.BestAudioOutput.StreamInfo.Discard = AVDiscard.Default;
+            _mediaDemultiplexer.BestAudioOutput.Discard = AVDiscard.Default;
             _mediaDemultiplexer.BestAudioOutput.Connect(_demultiplexedAudioStream);
             _mediaDemultiplexer.Start();
 

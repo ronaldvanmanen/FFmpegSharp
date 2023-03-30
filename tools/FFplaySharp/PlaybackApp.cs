@@ -49,7 +49,7 @@ namespace FFplaySharp
             _packetizedElementaryAudioStream = new MediaStream<AVPacket>(256);
 
             _mediaDemultiplexer = new MediaDemultiplexer(_options.InputFile);
-            _mediaDemultiplexer.BestAudioOutput!.StreamInfo.Discard = AVDiscard.Default;
+            _mediaDemultiplexer.BestAudioOutput!.Discard = AVDiscard.Default;
             _mediaDemultiplexer.BestAudioOutput.Connect(_packetizedElementaryAudioStream);
             _mediaDemultiplexer.Start();
 

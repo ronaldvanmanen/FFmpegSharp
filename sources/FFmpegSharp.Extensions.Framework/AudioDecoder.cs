@@ -15,7 +15,6 @@
 
 using System;
 using System.Threading;
-using FFmpegSharp.Interop;
 using static FFmpegSharp.Interop.FFmpeg;
 
 namespace FFmpegSharp.Extensions.Framework
@@ -31,7 +30,7 @@ namespace FFmpegSharp.Extensions.Framework
                 _owner = owner ?? throw new ArgumentNullException(nameof(owner));
             }
 
-            public void Connect(MediaStream<AVPacket> stream, AVStream streamInfo)
+            public void Connect(MediaStream<AVPacket> stream, IPacketizedElementaryStreamInfo streamInfo)
             {
                 _owner.OnInputConnected(stream, streamInfo);
             }
@@ -46,11 +45,14 @@ namespace FFmpegSharp.Extensions.Framework
         {
             private readonly AudioDecoder _owner;
 
-            public AVCodecContext StreamInfo => _owner._codecContext;
+            private ElementaryAudioStreamInfo _streamInfo;
+
+            public IElementaryAudioStreamInfo StreamInfo => _streamInfo ??= new ElementaryAudioStreamInfo(_owner._codecContext);
 
             public AudioOutputPort(AudioDecoder owner)
             {
                 _owner = owner ?? throw new ArgumentNullException(nameof(owner));
+                _streamInfo = null!;
             }
 
             public void Connect(MediaStream<AVFrame> stream)
@@ -201,10 +203,10 @@ namespace FFmpegSharp.Extensions.Framework
             }
         }
 
-        private void OnInputConnected(MediaStream<AVPacket> stream, AVStream streamInfo)
+        private void OnInputConnected(MediaStream<AVPacket> stream, IPacketizedElementaryStreamInfo streamInfo)
         {
-            _codec = AVCodec.FindDecoder(streamInfo.CodecParameters.CodecID) ?? throw new InvalidOperationException();
-            _codecContext = new AVCodecContext(streamInfo.CodecParameters);
+            _codec = AVCodec.FindDecoder(streamInfo.CodecInfo.CodecID) ?? throw new InvalidOperationException();
+            _codecContext = new AVCodecContext(streamInfo.CodecInfo.ToCodecParameters());
             _codecContext.PacketTimeBase = streamInfo.TimeBase;
             _codecContext.Flags2 |= _options.Fast ? AVCodecFlags2.Fast : AVCodecFlags2.None;
             _codecContext.Open(_codec, new AVDictionary

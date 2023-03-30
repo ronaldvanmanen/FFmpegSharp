@@ -14,7 +14,6 @@
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using FFmpegSharp.Interop;
 using static FFmpegSharp.Interop.FFmpeg;
 
 namespace FFmpegSharp
@@ -53,17 +52,17 @@ namespace FFmpegSharp
 
         public AVRational SampleAspectRatio => _handle->sample_aspect_ratio;
 
-        public AVFieldOrder FieldOrder => _handle->field_order;
+        public AVFieldOrder FieldOrder => (AVFieldOrder)_handle->field_order;
 
-        public AVColorRange ColorRange => _handle->color_range;
+        public AVColorRange ColorRange => (AVColorRange)_handle->color_range;
 
-        public AVColorPrimaries ColorPrimaries => _handle->color_primaries;
+        public AVColorPrimaries ColorPrimaries => (AVColorPrimaries)_handle->color_primaries;
 
-        public AVColorTransferCharacteristic ColorTransferCharacteristic => _handle->color_trc;
+        public AVColorTransferCharacteristic ColorTransferCharacteristic => (AVColorTransferCharacteristic)_handle->color_trc;
 
-        public AVColorSpace ColorSpace => _handle->color_space;
+        public AVColorSpace ColorSpace => (AVColorSpace)_handle->color_space;
 
-        public AVChromaLocation ChromaLocation => _handle->chroma_location;
+        public AVChromaLocation ChromaLocation => (AVChromaLocation)_handle->chroma_location;
 
         public int VideoDelay => _handle->video_delay;
 
