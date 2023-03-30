@@ -23,10 +23,23 @@ namespace FFmpegSharp
 
         private AVCodecParameters _codecParameters;
 
-        public AVCodecParameters CodecParameters =>
-            _codecParameters ??= new AVCodecParameters(_handle->codecpar, false);
+        private AVDictionary _metadata;
 
         public int Index => _handle->index;
+
+        public int Id => _handle->id;
+
+        public AVTimeBase TimeBase => new(_handle->time_base);
+
+        public AVTimeStamp StartTime => new AVTimeStamp(_handle->start_time);
+
+        public AVTimeStamp Duration => new AVTimeStamp(_handle->duration);
+
+        public AVTimeStamp EndTime => new AVTimeStamp(_handle->start_time + _handle->duration);
+
+        public long FrameCount => _handle->nb_frames;
+
+        public AVDisposition Disposition => (AVDisposition)_handle->disposition;
 
         public AVDiscard Discard
         {
@@ -35,7 +48,14 @@ namespace FFmpegSharp
             set => _handle->discard = (Interop.AVDiscard)value;
         }
 
-        public AVTimeBase TimeBase => new(_handle->time_base);
+        public AVRational SampleAspectRatio => _handle->sample_aspect_ratio;
+
+        public AVDictionary Metadata => _metadata ??= new AVDictionary(_handle->metadata);
+
+        public AVRational AverageFrameRate => _handle->avg_frame_rate;
+
+        public AVCodecParameters CodecParameters =>
+            _codecParameters ??= new AVCodecParameters(_handle->codecpar, false);
 
         public AVStream(Interop.AVStream* handle)
         {
@@ -46,6 +66,7 @@ namespace FFmpegSharp
 
             _handle = handle;
             _codecParameters = null!;
+            _metadata = null!;
         }
 
         public static implicit operator Interop.AVStream*(AVStream value)

@@ -23,6 +23,10 @@ namespace FFmpegSharp
 
         private readonly AVRational _value;
 
+        public AVTimeBase(int numerator, int denominator)
+        : this(new AVRational(numerator, denominator))
+        { }
+
         public AVTimeBase(AVRational value)
         {
             _value = value;
@@ -81,6 +85,11 @@ namespace FFmpegSharp
         public static explicit operator AVRational(AVTimeBase value)
         {
             return value._value;
+        }
+
+        public static explicit operator double(AVTimeBase value)
+        {
+            return (double)value._value;
         }
     }
 }

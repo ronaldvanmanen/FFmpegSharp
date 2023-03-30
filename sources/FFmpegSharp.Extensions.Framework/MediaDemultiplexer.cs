@@ -62,6 +62,10 @@ namespace FFmpegSharp.Extensions.Framework
 
         private Thread _thread;
 
+        public AVRelativeTime StartTime => _formatContext.StartTime;
+
+        public AVRelativeTime EndTime => _formatContext.EndTime;
+
         public OutputPort? BestAudioOutput
         {
             get

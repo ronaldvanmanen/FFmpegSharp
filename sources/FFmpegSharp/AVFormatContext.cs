@@ -25,6 +25,10 @@ namespace FFmpegSharp
 
         private AVStreamCollection _streams = null!;
 
+        public AVRelativeTime StartTime => AVRelativeTime.FromMicroSeconds(_handle->start_time);
+
+        public AVRelativeTime EndTime => AVRelativeTime.FromMicroSeconds(_handle->start_time + _handle->duration);
+
         public AVStreamCollection Streams => _streams ??= new AVStreamCollection(_handle->streams, _handle->nb_streams);
 
         public AVFormatContext(string uri)

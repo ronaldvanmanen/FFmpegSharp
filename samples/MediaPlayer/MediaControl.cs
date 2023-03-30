@@ -17,6 +17,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 using FFmpegSharp;
 using FFmpegSharp.Extensions.Framework;
 
@@ -24,6 +25,27 @@ namespace MediaPlayer
 {
     public class MediaControl : Control
     {
+        public static readonly DependencyProperty StartTimeProperty =
+            DependencyProperty.RegisterAttached(
+                nameof(StartTime),
+                typeof(AVRelativeTime),
+                typeof(MediaControl),
+                new FrameworkPropertyMetadata(AVRelativeTime.Undefined, FrameworkPropertyMetadataOptions.None));
+
+        public static readonly DependencyProperty EndTimeProperty =
+            DependencyProperty.RegisterAttached(
+                nameof(EndTime),
+                typeof(AVRelativeTime),
+                typeof(MediaControl),
+                new FrameworkPropertyMetadata(AVRelativeTime.Undefined, FrameworkPropertyMetadataOptions.None));
+
+        public static readonly DependencyProperty CurrentTimeProperty =
+            DependencyProperty.RegisterAttached(
+                nameof(CurrentTime),
+                typeof(AVRelativeTime),
+                typeof(MediaControl),
+                new FrameworkPropertyMetadata(AVRelativeTime.Undefined, FrameworkPropertyMetadataOptions.None));
+
         public static readonly DependencyProperty SourceProperty =
             DependencyProperty.RegisterAttached(
                 nameof(Source),
@@ -40,6 +62,30 @@ namespace MediaPlayer
         private AudioDecoder _audioDecoder = null!;
 
         private AudioRenderer _audioRenderer = null!;
+
+        private DispatcherTimer _dispatcherTimer = null!;
+
+        public AVRelativeTime StartTime
+        {
+            get => (AVRelativeTime)GetValue(StartTimeProperty);
+
+            private set => SetValue(StartTimeProperty, value);
+        }
+
+        public AVRelativeTime EndTime
+        {
+            get => (AVRelativeTime)GetValue(EndTimeProperty);
+
+            private set => SetValue(EndTimeProperty, value);
+        }
+
+        public AVRelativeTime CurrentTime
+        {
+            get => (AVRelativeTime)GetValue(CurrentTimeProperty);
+
+            private set => SetValue(CurrentTimeProperty, value);
+        }
+
 
         public Uri Source
         {
@@ -61,13 +107,17 @@ namespace MediaPlayer
             CommandManager.RegisterClassCommandBinding(typeof(MediaControl), new CommandBinding(MediaCommands.FastBackward, ExecuteFastBackward, CanExecuteFastBackward));
         }
 
-        public MediaControl()
-        {
-        }
-
         public void Load(Uri source)
         {
-            _mediaDemultiplexer = new MediaDemultiplexer(source.IsFile ? source.LocalPath : source.ToString());
+            var uri = source.IsFile ? source.LocalPath : source.ToString();
+            var options = new MediaDemultiplexer.Options
+            {
+                FindStreamInfo = true,
+                GeneratePts = false,
+                InjectGlobalSideData = true,
+            };
+
+            _mediaDemultiplexer = new MediaDemultiplexer(uri, options);
 
             if (_mediaDemultiplexer.BestAudioOutput is null)
             {
@@ -82,13 +132,23 @@ namespace MediaPlayer
             _decodedAudioStream = new MediaStream<AVFrame>(16);
 
             _audioDecoder = new AudioDecoder();
-            _audioDecoder.AudioInput.Connect(_demultiplexedAudioStream, _mediaDemultiplexer.BestAudioOutput.StreamInfo);
+            _audioDecoder.AudioInput.Connect(_demultiplexedAudioStream,
+                _mediaDemultiplexer.BestAudioOutput.StreamInfo);
             _audioDecoder.AudioOutput.Connect(_decodedAudioStream);
             _audioDecoder.Start();
 
             _audioRenderer = new AudioRenderer();
             _audioRenderer.Volume = AudioRenderer.MaxVolume;
-            _audioRenderer.AudioInput.Connect(_decodedAudioStream, _audioDecoder.AudioOutput.StreamInfo);
+            _audioRenderer.AudioInput.Connect(_decodedAudioStream,
+                _audioDecoder.AudioOutput.StreamInfo);
+
+            _audioRenderer.Start();
+
+            _dispatcherTimer = new DispatcherTimer(DispatcherPriority.Render);
+            _dispatcherTimer.Tick += Tick;
+            _dispatcherTimer.Interval = TimeSpan.FromMilliseconds(20);
+            _dispatcherTimer.Start();
+
         }
 
         public void Play()
@@ -122,6 +182,13 @@ namespace MediaPlayer
         public void FastBackward()
         {
 
+        }
+
+        private void Tick(object? sender, EventArgs e)
+        {
+            StartTime = _mediaDemultiplexer.StartTime;
+            EndTime = _mediaDemultiplexer.EndTime;
+            CurrentTime = _audioRenderer.Clock.Time;
         }
 
         private static void ExecutePlay(object source, ExecutedRoutedEventArgs eventArgs)

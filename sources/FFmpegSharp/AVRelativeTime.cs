@@ -126,5 +126,10 @@ namespace FFmpegSharp
         {
             return new AVRelativeTime(left._seconds - right._seconds);
         }
+
+        public static explicit operator double(AVRelativeTime value)
+        {
+            return value._seconds;
+        }
     }
 }

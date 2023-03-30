@@ -15,6 +15,7 @@
 
 using System;
 using System.Threading;
+using FFmpegSharp;
 using static FFmpegSharp.Interop.FFmpeg;
 
 namespace FFmpegSharp.Extensions.Framework
@@ -167,6 +168,20 @@ namespace FFmpegSharp.Extensions.Framework
 
                         if (_codecContext.TryReceive(ref frame, out var error))
                         {
+                            if (frame.Pts != AVTimeStamp.Undefined)
+                            {
+                                // Adjust presentation timestamp using packet timebase and sample rate:
+                                //
+                                //   pts = pts * packet time base * sample rate)
+                                //
+                                // or
+                                //
+                                //   pts = pts * packet time base / (1 / sample rate)
+                                var packetTimeBase = _codecContext.PacketTimeBase;
+                                var sampleTimeBase = new AVTimeBase(1, frame.SampleRate);
+                                frame.Pts = frame.Pts.Rescale(packetTimeBase, sampleTimeBase);
+                            }
+
                             if (frame.ChannelLayout == 0)
                             {
                                 if (_codecContext.ChannelLayout != 0)

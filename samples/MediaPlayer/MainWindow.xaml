@@ -122,7 +122,13 @@
                 </Button.Content>
             </Button>
 
-            <Slider Margin="5,5,0,5" Width="256" VerticalAlignment="Center" />
+            <Slider IsEnabled="False"
+                    Margin="5,5,0,5"
+                    Minimum="{Binding ElementName=MediaControl, Path=StartTime, Mode=OneWay, Converter={StaticResource AVRelativeTimeToDoubleConverter}}"
+                    Maximum="{Binding ElementName=MediaControl, Path=EndTime, Mode=OneWay, Converter={StaticResource AVRelativeTimeToDoubleConverter}}"
+                    Value="{Binding ElementName=MediaControl, Path=CurrentTime, Mode=OneWay, Converter={StaticResource AVRelativeTimeToDoubleConverter}}"
+                    Width="256"
+                    VerticalAlignment="Center" />
 
         </StackPanel>
     </Grid>
