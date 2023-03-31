@@ -14,6 +14,7 @@
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -107,6 +108,12 @@ namespace FFmpegSharp.Extensions.Windows.Controls
             CommandManager.RegisterClassCommandBinding(typeof(MediaControl), new CommandBinding(MediaCommands.FastBackward, ExecuteFastBackward, CanExecuteFastBackward));
         }
 
+        public MediaControl()
+        {
+            Loaded += OnLoaded;
+            Unloaded += OnUnloaded;
+        }
+
         public void Load(Uri source)
         {
             var uri = source.IsFile ? source.LocalPath : source.ToString();
@@ -145,7 +152,7 @@ namespace FFmpegSharp.Extensions.Windows.Controls
             _audioRenderer.Start();
 
             _dispatcherTimer = new DispatcherTimer(DispatcherPriority.Render);
-            _dispatcherTimer.Tick += Tick;
+            _dispatcherTimer.Tick += OnTick;
             _dispatcherTimer.Interval = TimeSpan.FromMilliseconds(20);
             _dispatcherTimer.Start();
 
@@ -172,7 +179,6 @@ namespace FFmpegSharp.Extensions.Windows.Controls
 
         public void StepBackward()
         {
-
         }
 
         public void FastForward()
@@ -181,10 +187,34 @@ namespace FFmpegSharp.Extensions.Windows.Controls
 
         public void FastBackward()
         {
-
         }
 
-        private void Tick(object? sender, EventArgs e)
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            var window = Window.GetWindow(this);
+            if (window is not null)
+            {
+                window.Closing += OnClosing;
+            }
+        }
+
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            var window = Window.GetWindow(this);
+            if (window is not null)
+            {
+                window.Closing -= OnClosing;
+            }
+        }
+
+        private void OnClosing(object? sender, CancelEventArgs e)
+        {
+            _mediaDemultiplexer?.Stop();
+            _audioDecoder?.Stop();
+            _audioRenderer?.Stop();
+        }
+
+        private void OnTick(object? sender, EventArgs e)
         {
             StartTime = _mediaDemultiplexer.StartTime;
             EndTime = _mediaDemultiplexer.EndTime;
