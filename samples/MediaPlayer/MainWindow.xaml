@@ -21,6 +21,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ffewd="clr-namespace:FFmpegSharp.Extensions.Windows.Controls;assembly=FFmpegSharp.Extensions.Windows"
+        xmlns:ffewi="clr-namespace:FFmpegSharp.Extensions.Windows.Input;assembly=FFmpegSharp.Extensions.Windows"
         xmlns:local="clr-namespace:MediaPlayer"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
@@ -42,10 +44,10 @@
             </MenuItem>
         </Menu>
 
-        <local:MediaControl x:Name="MediaControl" Grid.Row="1" Source="{Binding MediaSource}"/>
+        <ffewd:MediaControl x:Name="MediaControl" Grid.Row="1" Source="{Binding MediaSource}"/>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal">
-            <Button Command="{x:Static local:MediaCommands.FastBackward}" 
+            <Button Command="{x:Static ffewi:MediaCommands.FastBackward}" 
                     CommandTarget="{Binding ElementName=MediaControl}"
                     Margin="5,5,0,5"
                     Style="{StaticResource ButtonStyle}">
@@ -56,7 +58,7 @@
                 </Button.Content>
             </Button>
 
-            <RepeatButton Command="{x:Static local:MediaCommands.StepBackward}" 
+            <RepeatButton Command="{x:Static ffewi:MediaCommands.StepBackward}" 
                           CommandTarget="{Binding ElementName=MediaControl}"
                           Margin="5,5,0,5"
                           Style="{StaticResource RepeatButtonStyle}">
@@ -67,7 +69,7 @@
                 </RepeatButton.Content>
             </RepeatButton>
 
-            <Button Command="{x:Static local:MediaCommands.Play}" 
+            <Button Command="{x:Static ffewi:MediaCommands.Play}" 
                     CommandTarget="{Binding ElementName=MediaControl}"
                     Margin="5,5,0,5"
                     Style="{StaticResource ButtonStyle}">
@@ -78,7 +80,7 @@
                 </Button.Content>
             </Button>
 
-            <Button Command="{x:Static local:MediaCommands.Stop}" 
+            <Button Command="{x:Static ffewi:MediaCommands.Stop}" 
                     CommandTarget="{Binding ElementName=MediaControl}"
                     Margin="5,5,0,5"
                     Style="{StaticResource ButtonStyle}">
@@ -89,7 +91,7 @@
                 </Button.Content>
             </Button>
 
-            <Button Command="{x:Static local:MediaCommands.Pause}" 
+            <Button Command="{x:Static ffewi:MediaCommands.Pause}" 
                     CommandTarget="{Binding ElementName=MediaControl}"
                     Margin="5,5,0,5"
                     Style="{StaticResource ButtonStyle}">
@@ -100,7 +102,7 @@
                 </Button.Content>
             </Button>
 
-            <RepeatButton Command="{x:Static local:MediaCommands.StepForward}" 
+            <RepeatButton Command="{x:Static ffewi:MediaCommands.StepForward}" 
                           CommandTarget="{Binding ElementName=MediaControl}"
                           Margin="5,5,0,5"
                           Style="{StaticResource RepeatButtonStyle}">
@@ -111,7 +113,7 @@
                 </RepeatButton.Content>
             </RepeatButton>
 
-            <Button Command="{x:Static local:MediaCommands.FastForward}" 
+            <Button Command="{x:Static ffewi:MediaCommands.FastForward}" 
                     CommandTarget="{Binding ElementName=MediaControl}"
                     Margin="5,5,0,5"
                     Style="{StaticResource ButtonStyle}">

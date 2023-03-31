@@ -15,7 +15,7 @@
 
 using System.Windows.Input;
 
-namespace MediaPlayer
+namespace FFmpegSharp.Extensions.Windows.Input
 {
     /// <summary>
     ///     Defines all media related commands.
@@ -27,12 +27,13 @@ namespace MediaPlayer
         /// </summary>
         static MediaCommands()
         {
-            Play = new RoutedCommand(nameof(Play), typeof(MediaCommands));
-            Stop = new RoutedCommand(nameof(Stop), typeof(MediaCommands));
-            Pause = new RoutedCommand(nameof(Pause), typeof(MediaCommands));
+            Stop = System.Windows.Input.MediaCommands.Stop;
+            Play = System.Windows.Input.MediaCommands.Play;
+            Pause = System.Windows.Input.MediaCommands.Pause;
+            FastForward = System.Windows.Input.MediaCommands.FastForward;
+
             StepForward = new RoutedCommand(nameof(StepForward), typeof(MediaCommands));
             StepBackward = new RoutedCommand(nameof(StepBackward), typeof(MediaCommands));
-            FastForward = new RoutedCommand(nameof(FastForward), typeof(MediaCommands));
             FastBackward = new RoutedCommand(nameof(FastBackward), typeof(MediaCommands));
         }
 

@@ -135,7 +135,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{C041
 		samples\Directory.Build.targets = samples\Directory.Build.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaPlayer", "samples\MediaPlayer\MediaPlayer.csproj", "{5AC16D7E-60E2-410C-A5AE-87D564426B0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediaPlayer", "samples\MediaPlayer\MediaPlayer.csproj", "{5AC16D7E-60E2-410C-A5AE-87D564426B0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFmpegSharp.Extensions.Windows", "sources\FFmpegSharp.Extensions.Windows\FFmpegSharp.Extensions.Windows.csproj", "{28015DE6-99E2-4E77-9848-2C57DCF441FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -171,6 +173,10 @@ Global
 		{5AC16D7E-60E2-410C-A5AE-87D564426B0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AC16D7E-60E2-410C-A5AE-87D564426B0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AC16D7E-60E2-410C-A5AE-87D564426B0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28015DE6-99E2-4E77-9848-2C57DCF441FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28015DE6-99E2-4E77-9848-2C57DCF441FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28015DE6-99E2-4E77-9848-2C57DCF441FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28015DE6-99E2-4E77-9848-2C57DCF441FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -192,6 +198,7 @@ Global
 		{F9A2F6CA-183A-4A19-8C21-455D1F517ED3} = {39FC87FE-AABB-4285-AEDE-92C45C2EB77D}
 		{BE3ECA2B-C8BC-417F-AFB7-09F4F5FBAFA0} = {39FC87FE-AABB-4285-AEDE-92C45C2EB77D}
 		{5AC16D7E-60E2-410C-A5AE-87D564426B0C} = {C041BE4A-319C-4A4B-9DD7-91A59C7FCC16}
+		{28015DE6-99E2-4E77-9848-2C57DCF441FE} = {39FC87FE-AABB-4285-AEDE-92C45C2EB77D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2DE946DB-0256-49EC-A290-9C2E96A609D9}

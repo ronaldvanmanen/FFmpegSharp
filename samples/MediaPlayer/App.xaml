@@ -19,7 +19,7 @@
 <Application x:Class="MediaPlayer.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:MediaPlayer">
+             xmlns:ffewd="clr-namespace:FFmpegSharp.Extensions.Windows.Data;assembly=FFmpegSharp.Extensions.Windows">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -40,7 +40,7 @@
                         </Style.Triggers>
                     </Style>
 
-                    <local:AVRelativeTimeToDoubleConverter x:Key="AVRelativeTimeToDoubleConverter"/>
+                    <ffewd:AVRelativeTimeToDoubleConverter x:Key="AVRelativeTimeToDoubleConverter"/>
                 </ResourceDictionary>
                 <ResourceDictionary Source="/FastBackwardIcon.xaml"/>
                 <ResourceDictionary Source="/FastForwardIcon.xaml"/>

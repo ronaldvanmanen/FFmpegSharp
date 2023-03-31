@@ -16,9 +16,8 @@
 using System;
 using System.Globalization;
 using System.Windows.Data;
-using FFmpegSharp;
 
-namespace MediaPlayer
+namespace FFmpegSharp.Extensions.Windows.Data
 {
     [ValueConversion(typeof(AVRelativeTime), typeof(double))]
     public sealed class AVRelativeTimeToDoubleConverter : IValueConverter

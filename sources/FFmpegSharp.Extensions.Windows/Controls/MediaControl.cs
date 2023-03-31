@@ -18,12 +18,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
-using FFmpegSharp;
 using FFmpegSharp.Extensions.Framework;
+using MediaCommands = FFmpegSharp.Extensions.Windows.Input.MediaCommands;
 
-namespace MediaPlayer
+namespace FFmpegSharp.Extensions.Windows.Controls
 {
-    public class MediaControl : Control
+    public sealed class MediaControl : Control
     {
         public static readonly DependencyProperty StartTimeProperty =
             DependencyProperty.RegisterAttached(

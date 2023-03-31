@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\sources\FFmpegSharp.Extensions.Framework\FFmpegSharp.Extensions.Framework.csproj" />
+    <ProjectReference Include="..\..\sources\FFmpegSharp.Extensions.Windows\FFmpegSharp.Extensions.Windows.csproj" />
     <ProjectReference Include="..\..\sources\FFmpegSharp\FFmpegSharp.csproj" />
   </ItemGroup>
 
