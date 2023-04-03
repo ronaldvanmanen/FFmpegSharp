@@ -62,6 +62,8 @@ namespace FFmpegSharp.Extensions.Framework
 
         private Thread _thread;
 
+        private bool _disposed;
+
         public AVRelativeTime StartTime => _formatContext.StartTime;
 
         public AVRelativeTime EndTime => _formatContext.EndTime;
@@ -90,15 +92,31 @@ namespace FFmpegSharp.Extensions.Framework
             _outputStreams = new Dictionary<int, MediaStream<AVPacket>>();
             _cancellationTokenSource = null!;
             _thread = null!;
+            _disposed = false;
         }
 
         public void Dispose()
         {
-            _formatContext?.Dispose();
+            if (!_disposed)
+            {
+                try
+                {
+                    _formatContext?.Dispose();
+                    _outputs.Clear();
+                    _outputStreams.Clear();
+                    _cancellationTokenSource?.Dispose();
+                }
+                finally
+                {
+                    _disposed = true;
+                }
+            }
         }
 
         public void Start()
         {
+            ThrowIfDisposed();
+
             if (_cancellationTokenSource is not null)
             {
                 return;
@@ -112,6 +130,8 @@ namespace FFmpegSharp.Extensions.Framework
 
         public void Stop()
         {
+            ThrowIfDisposed();
+
             if (_cancellationTokenSource is null)
             {
                 return;
@@ -231,12 +251,24 @@ namespace FFmpegSharp.Extensions.Framework
 
         private void OnOutputConnected(OutputPort output, MediaStream<AVPacket> outputStream)
         {
+            ThrowIfDisposed();
+
             _outputStreams.Add(output.StreamInfo.Index, outputStream);
         }
 
         private void OnOutputDisconnected(OutputPort output)
         {
+            ThrowIfDisposed();
+
             _outputStreams.Remove(output.StreamInfo.Index);
+        }
+
+        private void ThrowIfDisposed()
+        {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
         }
     }
 }
