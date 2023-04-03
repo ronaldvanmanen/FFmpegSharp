@@ -19,13 +19,19 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
-using FFmpegSharp.Extensions.Framework;
 using MediaCommands = FFmpegSharp.Extensions.Windows.Input.MediaCommands;
 
 namespace FFmpegSharp.Extensions.Windows.Controls
 {
     public sealed class MediaControl : Control
     {
+        public static readonly DependencyProperty SourceProperty =
+            DependencyProperty.RegisterAttached(
+                nameof(Source),
+                typeof(Uri),
+                typeof(MediaControl),
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.None, SourceChanged));
+
         public static readonly DependencyProperty StartTimeProperty =
             DependencyProperty.RegisterAttached(
                 nameof(StartTime),
@@ -47,24 +53,16 @@ namespace FFmpegSharp.Extensions.Windows.Controls
                 typeof(MediaControl),
                 new FrameworkPropertyMetadata(AVRelativeTime.Undefined, FrameworkPropertyMetadataOptions.None));
 
-        public static readonly DependencyProperty SourceProperty =
-            DependencyProperty.RegisterAttached(
-                nameof(Source),
-                typeof(Uri),
-                typeof(MediaControl),
-                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.None, SourceChanged));
+        private readonly DispatcherTimer _dispatcherTimer;
 
-        private MediaStream<AVPacket> _demultiplexedAudioStream = null!;
+        private MediaSession _mediaSession;
 
-        private MediaDemultiplexer _mediaDemultiplexer = null!;
+        public Uri Source
+        {
+            get => (Uri)GetValue(SourceProperty);
 
-        private MediaStream<AVFrame> _decodedAudioStream = null!;
-
-        private AudioDecoder _audioDecoder = null!;
-
-        private AudioRenderer _audioRenderer = null!;
-
-        private DispatcherTimer _dispatcherTimer = null!;
+            set => SetValue(SourceProperty, value);
+        }
 
         public AVRelativeTime StartTime
         {
@@ -87,13 +85,19 @@ namespace FFmpegSharp.Extensions.Windows.Controls
             private set => SetValue(CurrentTimeProperty, value);
         }
 
+        public bool CanPlay => Source is not null;
 
-        public Uri Source
-        {
-            get => (Uri)GetValue(SourceProperty);
+        public bool CanStop => _mediaSession is not null;
 
-            set => SetValue(SourceProperty, value);
-        }
+        public bool CanPause => _mediaSession is not null;
+
+        public bool CanStepForward => false;
+
+        public bool CanStepBackward => false;
+
+        public bool CanFastForward => false;
+
+        public bool CanFastBackward => false;
 
         static MediaControl()
         {
@@ -112,65 +116,47 @@ namespace FFmpegSharp.Extensions.Windows.Controls
         {
             Loaded += OnLoaded;
             Unloaded += OnUnloaded;
-        }
-
-        public void Load(Uri source)
-        {
-            var uri = source.IsFile ? source.LocalPath : source.ToString();
-            var options = new MediaDemultiplexer.Options
-            {
-                FindStreamInfo = true,
-                GeneratePts = false,
-                InjectGlobalSideData = true,
-            };
-
-            _mediaDemultiplexer = new MediaDemultiplexer(uri, options);
-
-            if (_mediaDemultiplexer.BestAudioOutput is null)
-            {
-                return;
-            }
-
-            _demultiplexedAudioStream = new MediaStream<AVPacket>(256);
-            _mediaDemultiplexer.BestAudioOutput.Discard = AVDiscard.Default;
-            _mediaDemultiplexer.BestAudioOutput.Connect(_demultiplexedAudioStream);
-            _mediaDemultiplexer.Start();
-
-            _decodedAudioStream = new MediaStream<AVFrame>(16);
-
-            _audioDecoder = new AudioDecoder();
-            _audioDecoder.AudioInput.Connect(_demultiplexedAudioStream,
-                _mediaDemultiplexer.BestAudioOutput.StreamInfo);
-            _audioDecoder.AudioOutput.Connect(_decodedAudioStream);
-            _audioDecoder.Start();
-
-            _audioRenderer = new AudioRenderer();
-            _audioRenderer.Volume = AudioRenderer.MaxVolume;
-            _audioRenderer.AudioInput.Connect(_decodedAudioStream,
-                _audioDecoder.AudioOutput.StreamInfo);
-
-            _audioRenderer.Start();
 
             _dispatcherTimer = new DispatcherTimer(DispatcherPriority.Render);
             _dispatcherTimer.Tick += OnTick;
             _dispatcherTimer.Interval = TimeSpan.FromMilliseconds(20);
-            _dispatcherTimer.Start();
-
+            _mediaSession = null!;
         }
 
         public void Play()
         {
-            _audioRenderer.Start();
+            if (_mediaSession is not null)
+            {
+                _mediaSession.Play();
+            }
+            else
+            {
+                if (Source is not null)
+                {
+                    _dispatcherTimer.Start();
+                    _mediaSession = new MediaSession(Source);
+                    _mediaSession.Play();
+                }
+            }
         }
 
         public void Stop()
         {
-            _audioRenderer.Stop();
+            if (_mediaSession is null)
+            {
+                return;
+            }
+
+            _dispatcherTimer.Stop();
+            _mediaSession.Stop();
+            _mediaSession.Dispose();
+            _mediaSession = null!;
         }
+
 
         public void Pause()
         {
-            _audioRenderer.Stop();
+            _mediaSession?.Pause();
         }
 
         public void StepForward()
@@ -209,16 +195,23 @@ namespace FFmpegSharp.Extensions.Windows.Controls
 
         private void OnClosing(object? sender, CancelEventArgs e)
         {
-            _mediaDemultiplexer?.Stop();
-            _audioDecoder?.Stop();
-            _audioRenderer?.Stop();
+            Stop();
         }
 
         private void OnTick(object? sender, EventArgs e)
         {
-            StartTime = _mediaDemultiplexer.StartTime;
-            EndTime = _mediaDemultiplexer.EndTime;
-            CurrentTime = _audioRenderer.Clock.Time;
+            if (_mediaSession is not null)
+            {
+                StartTime = _mediaSession.StartTime;
+                EndTime = _mediaSession.EndTime;
+                CurrentTime = _mediaSession.CurrentTime;
+            }
+            else
+            {
+                StartTime = AVRelativeTime.Undefined;
+                EndTime = AVRelativeTime.Undefined;
+                CurrentTime = AVRelativeTime.Undefined;
+            }
         }
 
         private static void ExecutePlay(object source, ExecutedRoutedEventArgs eventArgs)
@@ -229,9 +222,12 @@ namespace FFmpegSharp.Extensions.Windows.Controls
             }
         }
 
-        private static void CanExecutePlay(object sender, CanExecuteRoutedEventArgs eventArgs)
+        private static void CanExecutePlay(object source, CanExecuteRoutedEventArgs eventArgs)
         {
-            eventArgs.CanExecute = true;
+            if (source is MediaControl mediaControl)
+            {
+                eventArgs.CanExecute = mediaControl.CanPlay;
+            }
         }
 
         private static void ExecuteStop(object source, ExecutedRoutedEventArgs eventArgs)
@@ -242,9 +238,12 @@ namespace FFmpegSharp.Extensions.Windows.Controls
             }
         }
 
-        private static void CanExecuteStop(object sender, CanExecuteRoutedEventArgs eventArgs)
+        private static void CanExecuteStop(object source, CanExecuteRoutedEventArgs eventArgs)
         {
-            eventArgs.CanExecute = true;
+            if (source is MediaControl mediaControl)
+            {
+                eventArgs.CanExecute = mediaControl.CanStop;
+            }
         }
 
         private static void ExecutePause(object source, ExecutedRoutedEventArgs eventArgs)
@@ -255,9 +254,12 @@ namespace FFmpegSharp.Extensions.Windows.Controls
             }
         }
 
-        private static void CanExecutePause(object sender, CanExecuteRoutedEventArgs eventArgs)
+        private static void CanExecutePause(object source, CanExecuteRoutedEventArgs eventArgs)
         {
-            eventArgs.CanExecute = true;
+            if (source is MediaControl mediaControl)
+            {
+                eventArgs.CanExecute = mediaControl.CanPause;
+            }
         }
 
         private static void ExecuteStepForward(object source, ExecutedRoutedEventArgs eventArgs)
@@ -268,9 +270,12 @@ namespace FFmpegSharp.Extensions.Windows.Controls
             }
         }
 
-        private static void CanExecuteStepForward(object sender, CanExecuteRoutedEventArgs eventArgs)
+        private static void CanExecuteStepForward(object source, CanExecuteRoutedEventArgs eventArgs)
         {
-            eventArgs.CanExecute = false;
+            if (source is MediaControl mediaControl)
+            {
+                eventArgs.CanExecute = mediaControl.CanStepForward;
+            }
         }
 
         private static void ExecuteStepBackward(object source, ExecutedRoutedEventArgs eventArgs)
@@ -281,9 +286,12 @@ namespace FFmpegSharp.Extensions.Windows.Controls
             }
         }
 
-        private static void CanExecuteStepBackward(object sender, CanExecuteRoutedEventArgs eventArgs)
+        private static void CanExecuteStepBackward(object source, CanExecuteRoutedEventArgs eventArgs)
         {
-            eventArgs.CanExecute = false;
+            if (source is MediaControl mediaControl)
+            {
+                eventArgs.CanExecute = mediaControl.CanStepBackward;
+            }
         }
 
         private static void ExecuteFastForward(object source, ExecutedRoutedEventArgs eventArgs)
@@ -294,9 +302,12 @@ namespace FFmpegSharp.Extensions.Windows.Controls
             }
         }
 
-        private static void CanExecuteFastForward(object sender, CanExecuteRoutedEventArgs eventArgs)
+        private static void CanExecuteFastForward(object source, CanExecuteRoutedEventArgs eventArgs)
         {
-            eventArgs.CanExecute = false;
+            if (source is MediaControl mediaControl)
+            {
+                eventArgs.CanExecute = mediaControl.CanFastForward;
+            }
         }
 
         private static void ExecuteFastBackward(object source, ExecutedRoutedEventArgs eventArgs)
@@ -307,18 +318,26 @@ namespace FFmpegSharp.Extensions.Windows.Controls
             }
         }
 
-        private static void CanExecuteFastBackward(object sender, CanExecuteRoutedEventArgs eventArgs)
+        private static void CanExecuteFastBackward(object source, CanExecuteRoutedEventArgs eventArgs)
         {
-            eventArgs.CanExecute = false;
+            if (source is MediaControl mediaControl)
+            {
+                eventArgs.CanExecute = mediaControl.CanFastBackward;
+            }
         }
 
         private static void SourceChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs eventArgs)
         {
             if (dependencyObject is MediaControl mediaControl)
             {
-                if (eventArgs.NewValue is Uri source)
+                if (eventArgs.OldValue is not null)
                 {
-                    mediaControl.Load(source);
+                    mediaControl.Stop();
+                }
+
+                if (eventArgs.NewValue is not null)
+                {
+                    mediaControl.Play();
                 }
             }
         }
