@@ -24,63 +24,295 @@ namespace FFmpegSharp
 
         private readonly bool _ownsHandle;
 
-        public AVMediaType CodecType => (AVMediaType)_handle->codec_type;
+        public AVMediaType CodecType
+        {
+            get
+            {
+                ThrowIfDisposed();
 
-        public AVCodecID CodecID => (AVCodecID)_handle->codec_id;
+                return (AVMediaType)_handle->codec_type;
+            }
+        }
 
-        public uint CodecTag => _handle->codec_tag;
+        public AVCodecID CodecID
+        {
+            get
+            {
+                ThrowIfDisposed();
 
-        public byte* ExtraData => _handle->extradata;
+                return (AVCodecID)_handle->codec_id;
+            }
+        }
 
-        public int ExtraDataSize => _handle->extradata_size;
+        public uint CodecTag
+        {
+            get
+            {
+                ThrowIfDisposed();
 
-        public int Format => _handle->format;
+                return _handle->codec_tag;
+            }
+        }
 
-        public long BitRate => _handle->bit_rate;
+        public byte* ExtraData
+        {
+            get
+            {
+                ThrowIfDisposed();
 
-        public int BitsPerCodecSample => _handle->bits_per_coded_sample;
+                return _handle->extradata;
+            }
+        }
 
-        public int BitsPerRawSample => _handle->bits_per_raw_sample;
+        public int ExtraDataSize
+        {
+            get
+            {
+                ThrowIfDisposed();
 
-        public int Profile => _handle->profile;
+                return _handle->extradata_size;
+            }
+        }
 
-        public int Level => _handle->level;
+        public int Format
+        {
+            get
+            {
+                ThrowIfDisposed();
 
-        public int Width => _handle->width;
+                return _handle->format;
+            }
+        }
 
-        public int Height => _handle->height;
+        public long BitRate
+        {
+            get
+            {
+                ThrowIfDisposed();
 
-        public AVRational SampleAspectRatio => _handle->sample_aspect_ratio;
+                return _handle->bit_rate;
+            }
+        }
 
-        public AVFieldOrder FieldOrder => (AVFieldOrder)_handle->field_order;
+        public int BitsPerCodecSample
+        {
+            get
+            {
+                ThrowIfDisposed();
 
-        public AVColorRange ColorRange => (AVColorRange)_handle->color_range;
+                return _handle->bits_per_coded_sample;
+            }
+        }
 
-        public AVColorPrimaries ColorPrimaries => (AVColorPrimaries)_handle->color_primaries;
+        public int BitsPerRawSample
+        {
+            get
+            {
+                ThrowIfDisposed();
 
-        public AVColorTransferCharacteristic ColorTransferCharacteristic => (AVColorTransferCharacteristic)_handle->color_trc;
+                return _handle->bits_per_raw_sample;
+            }
+        }
 
-        public AVColorSpace ColorSpace => (AVColorSpace)_handle->color_space;
+        public int Profile
+        {
+            get
+            {
+                ThrowIfDisposed();
 
-        public AVChromaLocation ChromaLocation => (AVChromaLocation)_handle->chroma_location;
+                return _handle->profile;
+            }
+        }
 
-        public int VideoDelay => _handle->video_delay;
+        public int Level
+        {
+            get
+            {
+                ThrowIfDisposed();
 
-        public ulong ChannelLayout => _handle->channel_layout;
+                return _handle->level;
+            }
+        }
 
-        public int Channels => _handle->channels;
+        public int Width
+        {
+            get
+            {
+                ThrowIfDisposed();
 
-        public int SampleRate => _handle->sample_rate;
+                return _handle->width;
+            }
+        }
 
-        public int BlockAlign => _handle->block_align;
+        public int Height
+        {
+            get
+            {
+                ThrowIfDisposed();
 
-        public int FrameSize => _handle->frame_size;
+                return _handle->height;
+            }
+        }
 
-        public int InitialPadding => _handle->initial_padding;
+        public AVRational SampleAspectRatio
+        {
+            get
+            {
+                ThrowIfDisposed();
 
-        public int TrailingPadding => _handle->trailing_padding;
+                return _handle->sample_aspect_ratio;
+            }
+        }
 
-        public int SeekPreroll => _handle->seek_preroll;
+        public AVFieldOrder FieldOrder
+        {
+            get
+            {
+                ThrowIfDisposed();
+
+                return (AVFieldOrder)_handle->field_order;
+            }
+        }
+
+        public AVColorRange ColorRange
+        {
+            get
+            {
+                ThrowIfDisposed();
+
+                return (AVColorRange)_handle->color_range;
+            }
+        }
+
+        public AVColorPrimaries ColorPrimaries
+        {
+            get
+            {
+                ThrowIfDisposed();
+
+                return (AVColorPrimaries)_handle->color_primaries;
+            }
+        }
+
+        public AVColorTransferCharacteristic ColorTransferCharacteristic
+        {
+            get
+            {
+                ThrowIfDisposed();
+
+                return (AVColorTransferCharacteristic)_handle->color_trc;
+            }
+        }
+
+        public AVColorSpace ColorSpace
+        {
+            get
+            {
+                ThrowIfDisposed();
+
+                return (AVColorSpace)_handle->color_space;
+            }
+        }
+
+        public AVChromaLocation ChromaLocation
+        {
+            get
+            {
+                ThrowIfDisposed();
+
+                return (AVChromaLocation)_handle->chroma_location;
+            }
+        }
+
+        public int VideoDelay
+        {
+            get
+            {
+                ThrowIfDisposed();
+
+                return _handle->video_delay;
+            }
+        }
+
+        public ulong ChannelLayout
+        {
+            get
+            {
+                ThrowIfDisposed();
+
+                return _handle->channel_layout;
+            }
+        }
+
+        public int Channels
+        {
+            get
+            {
+                ThrowIfDisposed();
+
+                return _handle->channels;
+            }
+        }
+
+        public int SampleRate
+        {
+            get
+            {
+                ThrowIfDisposed();
+
+                return _handle->sample_rate;
+            }
+        }
+
+        public int BlockAlign
+        {
+            get
+            {
+                ThrowIfDisposed();
+
+                return _handle->block_align;
+            }
+        }
+
+        public int FrameSize
+        {
+            get
+            {
+                ThrowIfDisposed();
+
+                return _handle->frame_size;
+            }
+        }
+
+        public int InitialPadding
+        {
+            get
+            {
+                ThrowIfDisposed();
+
+                return _handle->initial_padding;
+            }
+        }
+
+        public int TrailingPadding
+        {
+            get
+            {
+                ThrowIfDisposed();
+
+                return _handle->trailing_padding;
+            }
+        }
+
+        public int SeekPreroll
+        {
+            get
+            {
+                ThrowIfDisposed();
+
+                return _handle->seek_preroll;
+            }
+        }
 
         public AVCodecParameters()
         : this(avcodec_parameters_alloc(), true)
@@ -129,6 +361,14 @@ namespace FFmpegSharp
                 {
                     avcodec_parameters_free(handle);
                 }
+            }
+        }
+
+        private void ThrowIfDisposed()
+        {
+            if (_handle == null)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
             }
         }
 

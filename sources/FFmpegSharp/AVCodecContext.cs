@@ -141,6 +141,8 @@ namespace FFmpegSharp
 
         public void Open(AVCodec codec, AVDictionary? options, out AVDictionary? unknownOptions)
         {
+            ThrowIfDisposed();
+
             if (codec is null)
             {
                 throw new ArgumentNullException(nameof(codec));
@@ -182,6 +184,8 @@ namespace FFmpegSharp
 
         public void FlushBuffers()
         {
+            ThrowIfDisposed();
+
             avcodec_flush_buffers(_handle);
         }
 
@@ -195,6 +199,8 @@ namespace FFmpegSharp
 
         public bool TrySend(in AVPacket packet, [NotNullWhen(false)] out AVError? error)
         {
+            ThrowIfDisposed();
+
             var returnCode = avcodec_send_packet(_handle, packet);
             var success = !ReturnOnFailure(returnCode, out error);
             return success;
@@ -210,9 +216,19 @@ namespace FFmpegSharp
 
         public bool TryReceive(ref AVFrame frame, [NotNullWhen(false)] out AVError? error)
         {
+            ThrowIfDisposed();
+
             var returnCode = avcodec_receive_frame(_handle, frame);
             var success = !ReturnOnFailure(returnCode, out error);
             return success;
+        }
+
+        private void ThrowIfDisposed()
+        {
+            if (_handle == null)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
         }
 
         public static explicit operator Interop.AVCodecContext*(AVCodecContext value)

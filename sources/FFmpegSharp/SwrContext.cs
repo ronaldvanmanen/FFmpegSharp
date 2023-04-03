@@ -59,6 +59,8 @@ namespace FFmpegSharp
 
         public void Configure(AVFrame output, AVFrame input)
         {
+            ThrowIfDisposed();
+
             ThrowOnError(
                 swr_config_frame(_handle, output, input)
             );
@@ -66,9 +68,19 @@ namespace FFmpegSharp
 
         public int Convert(AVFrame output, AVFrame input)
         {
+            ThrowIfDisposed();
+
             var retval = swr_convert_frame(_handle, output, input);
             ThrowOnError(retval);
             return retval;
+        }
+
+        private void ThrowIfDisposed()
+        {
+            if (_handle == null)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
         }
     }
 }

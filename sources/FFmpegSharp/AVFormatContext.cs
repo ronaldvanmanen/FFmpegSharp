@@ -25,11 +25,35 @@ namespace FFmpegSharp
 
         private AVStreamCollection _streams = null!;
 
-        public AVRelativeTime StartTime => AVRelativeTime.FromMicroSeconds(_handle->start_time);
+        public AVRelativeTime StartTime
+        {
+            get
+            {
+                ThrowIfDisposed();
 
-        public AVRelativeTime EndTime => AVRelativeTime.FromMicroSeconds(_handle->start_time + _handle->duration);
+                return AVRelativeTime.FromMicroSeconds(_handle->start_time);
+            }
+        }
 
-        public AVStreamCollection Streams => _streams ??= new AVStreamCollection(_handle->streams, _handle->nb_streams);
+        public AVRelativeTime EndTime
+        {
+            get
+            {
+                ThrowIfDisposed();
+
+                return AVRelativeTime.FromMicroSeconds(_handle->start_time + _handle->duration);
+            }
+        }
+
+        public AVStreamCollection Streams
+        {
+            get
+            {
+                ThrowIfDisposed();
+
+                return _streams ??= new AVStreamCollection(_handle->streams, _handle->nb_streams);
+            }
+        }
 
         public AVFormatContext(string uri)
         : this(uri, null)
@@ -89,6 +113,8 @@ namespace FFmpegSharp
 
         public int FindBestStream(AVMediaType type)
         {
+            ThrowIfDisposed();
+
             var retval = av_find_best_stream(_handle, (Interop.AVMediaType)type, -1, -1, null, 0);
             if (retval == AVERROR_STREAM_NOT_FOUND)
             {
@@ -100,6 +126,8 @@ namespace FFmpegSharp
 
         public void FindStreamInfo()
         {
+            ThrowIfDisposed();
+
             AVError.ThrowOnError(
                 avformat_find_stream_info(_handle, null)
             );
@@ -107,11 +135,15 @@ namespace FFmpegSharp
 
         public void InjectGlobalSideData()
         {
+            ThrowIfDisposed();
+
             av_format_inject_global_side_data(_handle);
         }
 
         public bool Read(ref AVPacket packet)
         {
+            ThrowIfDisposed();
+
             var retval = av_read_frame(_handle, packet);
             if (retval == 0)
             {
@@ -124,6 +156,14 @@ namespace FFmpegSharp
             else
             {
                 throw new AVError(retval);
+            }
+        }
+
+        private void ThrowIfDisposed()
+        {
+            if (_handle == null)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
             }
         }
     }

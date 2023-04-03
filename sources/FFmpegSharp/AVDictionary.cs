@@ -194,12 +194,16 @@ namespace FFmpegSharp
 
         private ValueCollection _values = null!;
 
+        private bool _disposed;
+
         public Interop.AVDictionary* Handle => _handle;
 
         public string this[string key]
         {
             get
             {
+                ThrowIfDisposed();
+
                 using var marshaledKey = new MarshaledString(key);
                 var entry = av_dict_get(_handle, marshaledKey, null, 0);
                 var value = new string(entry->value);
@@ -207,6 +211,8 @@ namespace FFmpegSharp
             }
             set
             {
+                ThrowIfDisposed();
+
                 fixed (Interop.AVDictionary** handle = &_handle)
                 {
                     using var marshaledKey = new MarshaledString(key);
@@ -218,9 +224,25 @@ namespace FFmpegSharp
             }
         }
 
-        public ICollection<string> Keys => _keys ??= new KeyCollection(this);
+        public ICollection<string> Keys
+        {
+            get
+            {
+                ThrowIfDisposed();
 
-        public ICollection<string> Values => _values ??= new ValueCollection(this);
+                return _keys ??= new KeyCollection(this);
+            }
+        }
+
+        public ICollection<string> Values
+        {
+            get
+            {
+                ThrowIfDisposed();
+
+                return _values ??= new ValueCollection(this);
+            }
+        }
 
         public int Count => _handle != null ? av_dict_count(_handle) : 0;
 
@@ -229,6 +251,7 @@ namespace FFmpegSharp
         public AVDictionary()
         {
             _handle = null;
+            _disposed = false;
         }
 
         public AVDictionary(AVDictionary other)
@@ -242,8 +265,10 @@ namespace FFmpegSharp
             {
                 AVError.ThrowOnError(
                   av_dict_copy(handle, other.Handle, 0)
-              );
+                );
             }
+
+            _disposed = false;
         }
 
         public AVDictionary(Interop.AVDictionary* handle)
@@ -254,6 +279,7 @@ namespace FFmpegSharp
             }
 
             _handle = handle;
+            _disposed = false;
         }
 
         ~AVDictionary()
@@ -269,11 +295,25 @@ namespace FFmpegSharp
 
         private void Dispose(bool _)
         {
-            Clear();
+            if (_disposed)
+            {
+                return;
+            }
+
+            try
+            {
+                Clear();
+            }
+            finally
+            {
+                _disposed = true;
+            }
         }
 
         public bool TryGetValue(string key, [MaybeNullWhen(false)] out string value)
         {
+            ThrowIfDisposed();
+
             if (key is null)
             {
                 throw new ArgumentNullException(nameof(key));
@@ -292,6 +332,8 @@ namespace FFmpegSharp
 
         public bool Contains(KeyValuePair<string, string> item)
         {
+            ThrowIfDisposed();
+
             using var marshaledKey = new MarshaledString(item.Key);
             var entry = av_dict_get(_handle, marshaledKey, null, AV_DICT_MATCH_CASE);
             if (entry == null)
@@ -305,6 +347,8 @@ namespace FFmpegSharp
 
         public bool ContainsKey(string key)
         {
+            ThrowIfDisposed();
+
             if (key is null)
             {
                 throw new ArgumentNullException(nameof(key));
@@ -317,6 +361,8 @@ namespace FFmpegSharp
 
         public bool ContainsValue(string value)
         {
+            ThrowIfDisposed();
+
             var enumerator = GetEnumerator();
             while (enumerator.MoveNext())
             {
@@ -330,6 +376,8 @@ namespace FFmpegSharp
 
         public void Add(string key, string value)
         {
+            ThrowIfDisposed();
+
             if (key is null)
             {
                 throw new ArgumentNullException(nameof(key));
@@ -358,6 +406,8 @@ namespace FFmpegSharp
 
         public bool Remove(string key)
         {
+            ThrowIfDisposed();
+
             if (key is null)
             {
                 throw new ArgumentNullException(nameof(key));
@@ -373,16 +423,18 @@ namespace FFmpegSharp
 
         public bool Remove(KeyValuePair<string, string> item)
         {
-            fixed (Interop.AVDictionary** dictionary = &_handle)
+            if (Contains(item))
             {
-                using var marshaledKey = new MarshaledString(item.Key);
-                var result = av_dict_set(dictionary, marshaledKey, null, AV_DICT_MATCH_CASE);
-                return result >= 0;
+                return Remove(item.Key);
             }
+
+            return false;
         }
 
         public void Clear()
         {
+            ThrowIfDisposed();
+
             if (_handle != null)
             {
                 fixed (Interop.AVDictionary** dictionary = &_handle)
@@ -394,6 +446,8 @@ namespace FFmpegSharp
 
         public void CopyTo(KeyValuePair<string, string>[] array, int arrayIndex)
         {
+            ThrowIfDisposed();
+
             if (array is null)
             {
                 throw new ArgumentNullException(nameof(array));
@@ -428,6 +482,8 @@ namespace FFmpegSharp
 
         public IEnumerator<KeyValuePair<string, string>> GetEnumerator()
         {
+            ThrowIfDisposed();
+
             var iterator = new AVDictionaryIterator(_handle);
             var enumerator = new AVDictionaryEnumerator(iterator);
             return enumerator;
@@ -436,6 +492,14 @@ namespace FFmpegSharp
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        private void ThrowIfDisposed()
+        {
+            if (_handle == null)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
         }
 
         public static implicit operator Interop.AVDictionary*(AVDictionary value)

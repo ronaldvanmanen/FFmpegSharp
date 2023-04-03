@@ -26,7 +26,15 @@ namespace FFmpegSharp
 
         private readonly bool _ownsHandle;
 
-        public int StreamIndex => _handle->stream_index;
+        public int StreamIndex
+        {
+            get
+            {
+                ThrowIfDisposed();
+
+                return _handle->stream_index;
+            }
+        }
 
         public AVPacket()
         : this(av_packet_alloc(), true)
@@ -67,6 +75,8 @@ namespace FFmpegSharp
 
         public void Ref(AVPacket source)
         {
+            ThrowIfDisposed();
+
             AVError.ThrowOnError(
                 av_packet_ref(_handle, source._handle)
             );
@@ -74,12 +84,24 @@ namespace FFmpegSharp
 
         public void MoveRef(ref AVPacket destination)
         {
+            ThrowIfDisposed();
+
             av_packet_move_ref(destination._handle, _handle);
         }
 
         public void Unref()
         {
+            ThrowIfDisposed();
+
             av_packet_unref(_handle);
+        }
+
+        private void ThrowIfDisposed()
+        {
+            if (_handle == null)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
         }
 
         public static implicit operator Interop.AVPacket*(AVPacket value)
