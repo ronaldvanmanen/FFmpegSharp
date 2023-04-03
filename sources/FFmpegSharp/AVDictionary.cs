@@ -496,7 +496,7 @@ namespace FFmpegSharp
 
         private void ThrowIfDisposed()
         {
-            if (_handle == null)
+            if (_disposed)
             {
                 throw new ObjectDisposedException(GetType().FullName);
             }
