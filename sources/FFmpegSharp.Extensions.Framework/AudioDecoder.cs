@@ -20,7 +20,7 @@ using static FFmpegSharp.Interop.FFmpeg;
 
 namespace FFmpegSharp.Extensions.Framework
 {
-    public sealed partial class AudioDecoder
+    public sealed partial class AudioDecoder : IDisposable
     {
         public sealed class AudioInputPort
         {
@@ -85,6 +85,8 @@ namespace FFmpegSharp.Extensions.Framework
 
         private Thread _thread;
 
+        private bool _disposed;
+
         public AudioInputPort AudioInput => _audioInput;
 
         public AudioOutputPort AudioOutput => _audioOutput;
@@ -104,10 +106,28 @@ namespace FFmpegSharp.Extensions.Framework
             _codecContext = null!;
             _cancellationTokenSource = null!;
             _thread = null!;
+            _disposed = false;
+        }
+
+        public void Dispose()
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            _codecContext?.Dispose();
+            _codecContext = null!;
+            _cancellationTokenSource?.Dispose();
+            _cancellationTokenSource = null!;
+            _thread = null!;
+            _disposed = true;
         }
 
         public void Start()
         {
+            ThrowIfDisposed();
+
             if (_cancellationTokenSource is not null)
             {
                 return;
@@ -121,15 +141,24 @@ namespace FFmpegSharp.Extensions.Framework
 
         public void Stop()
         {
+            ThrowIfDisposed();
+
             if (_cancellationTokenSource is null)
             {
                 return;
             }
 
-            _cancellationTokenSource.Cancel();
-            _thread.Join();
-            _thread = null!;
-            _cancellationTokenSource = null!;
+            try
+            {
+                _cancellationTokenSource.Cancel();
+                _thread.Join();
+                _cancellationTokenSource.Dispose();
+            }
+            finally
+            {
+                _thread = null!;
+                _cancellationTokenSource = null!;
+            }
         }
 
         private void Decode(object? userState)
@@ -220,6 +249,8 @@ namespace FFmpegSharp.Extensions.Framework
 
         private void OnInputConnected(MediaStream<AVPacket> stream, IPacketizedElementaryStreamInfo streamInfo)
         {
+            ThrowIfDisposed();
+
             _codec = AVCodec.FindDecoder(streamInfo.CodecInfo.CodecID) ?? throw new InvalidOperationException();
             _codecContext = new AVCodecContext(streamInfo.CodecInfo.ToCodecParameters());
             _codecContext.PacketTimeBase = streamInfo.TimeBase;
@@ -233,6 +264,8 @@ namespace FFmpegSharp.Extensions.Framework
 
         private void OnInputDisconnected()
         {
+            ThrowIfDisposed();
+
             _codec = null!;
             _codecContext.Dispose();
             _codecContext = null!;
@@ -241,12 +274,24 @@ namespace FFmpegSharp.Extensions.Framework
 
         private void OnOutputConnected(MediaStream<AVFrame> stream)
         {
+            ThrowIfDisposed();
+
             _audioOutputStream = stream ?? throw new ArgumentNullException(nameof(stream));
         }
 
         private void OnOutputDisconnected()
         {
+            ThrowIfDisposed();
+
             _audioOutputStream = null!;
+        }
+
+        private void ThrowIfDisposed()
+        {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
         }
     }
 }

@@ -22,7 +22,7 @@ using static System.Math;
 
 namespace FFmpegSharp.Extensions.Framework
 {
-    public sealed class AudioRenderer : IPresentationClockSource
+    public sealed class AudioRenderer : IPresentationClockSource, IDisposable
     {
         public sealed class AudioInputPort
         {
@@ -78,6 +78,8 @@ namespace FFmpegSharp.Extensions.Framework
 
         private CancellationTokenSource _cancellationTokenSource;
 
+        private bool _disposed;
+
         public IClock Clock => _internalClock;
 
         public AudioInputPort AudioInput => _audioInput;
@@ -120,10 +122,32 @@ namespace FFmpegSharp.Extensions.Framework
             _cancellationTokenSource = null!;
             _volume = 0;
             _muted = false;
+            _disposed = false;
+        }
+
+        public void Dispose()
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            try
+            {
+                _audioConverter?.Dispose();
+                _audioDevice?.Dispose();
+                _cancellationTokenSource?.Dispose();
+            }
+            finally
+            {
+                _disposed = true;
+            }
         }
 
         public void Start()
         {
+            ThrowIfDisposed();
+
             if (_cancellationTokenSource is not null)
             {
                 return;
@@ -135,14 +159,23 @@ namespace FFmpegSharp.Extensions.Framework
 
         public void Stop()
         {
+            ThrowIfDisposed();
+
             if (_cancellationTokenSource is null)
             {
                 return;
             }
 
-            _cancellationTokenSource.Cancel();
-            _audioDevice.Pause();
-            _cancellationTokenSource = null!;
+            try
+            {
+                _cancellationTokenSource.Cancel();
+                _audioDevice.Pause();
+                _cancellationTokenSource.Dispose();
+            }
+            finally
+            {
+                _cancellationTokenSource = null!;
+            }
         }
 
         private void OnAudioDeviceCallback(object userdata, Span<byte> stream)
@@ -209,6 +242,8 @@ namespace FFmpegSharp.Extensions.Framework
 
         private void OnInputConnected(MediaStream<AVFrame> stream, IElementaryAudioStreamInfo streamInfo)
         {
+            ThrowIfDisposed();
+
             var audioFormat = GetAudioFormat(streamInfo);
             var audioChannelLayout = GetAudioChannelLayout(streamInfo);
             var audioSampleRate = GetAudioSampleRate(streamInfo);
@@ -231,6 +266,8 @@ namespace FFmpegSharp.Extensions.Framework
 
         private void OnInputDisconnected()
         {
+            ThrowIfDisposed();
+
             _audioConverter.Dispose();
             _audioDevice.Dispose();
             _audioChannelLayout = 0;
@@ -238,6 +275,14 @@ namespace FFmpegSharp.Extensions.Framework
             _audioSampleRate = 0;
             _audioBuffer = null!;
             _audioInputStream = null!;
+        }
+
+        private void ThrowIfDisposed()
+        {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
         }
 
         private static int GetSampleRate(int sampleRate)
