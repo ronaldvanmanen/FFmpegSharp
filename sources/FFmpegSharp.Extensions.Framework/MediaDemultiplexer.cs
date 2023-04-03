@@ -137,10 +137,17 @@ namespace FFmpegSharp.Extensions.Framework
                 return;
             }
 
-            _cancellationTokenSource.Cancel();
-            _thread.Join();
-            _thread = null!;
-            _cancellationTokenSource = null!;
+            try
+            {
+                _cancellationTokenSource.Cancel();
+                _thread.Join();
+                _cancellationTokenSource.Dispose();
+            }
+            finally
+            {
+                _thread = null!;
+                _cancellationTokenSource = null!;
+            }
         }
 
         private void Demultiplex(object? userState)
