@@ -26,8 +26,8 @@
         xmlns:local="clr-namespace:MediaPlayer"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
-        Title="FFmpegSharp Media Player"
-        SizeToContent="WidthAndHeight">
+        SizeToContent="WidthAndHeight"
+        Title="FFmpegSharp Media Player">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -46,8 +46,9 @@
 
         <ffewd:MediaControl x:Name="MediaControl" Grid.Row="1" Source="{Binding MediaSource}"/>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal">
-            <Button Command="{x:Static ffewi:MediaCommands.FastBackward}" 
+        <DockPanel Grid.Row="2">
+            <Button DockPanel.Dock="Left"
+                    Command="{x:Static ffewi:MediaCommands.FastBackward}" 
                     CommandTarget="{Binding ElementName=MediaControl}"
                     Margin="5,5,0,5"
                     Style="{StaticResource ButtonStyle}">
@@ -58,7 +59,8 @@
                 </Button.Content>
             </Button>
 
-            <RepeatButton Command="{x:Static ffewi:MediaCommands.StepBackward}" 
+            <RepeatButton DockPanel.Dock="Left"
+                          Command="{x:Static ffewi:MediaCommands.StepBackward}" 
                           CommandTarget="{Binding ElementName=MediaControl}"
                           Margin="5,5,0,5"
                           Style="{StaticResource RepeatButtonStyle}">
@@ -69,7 +71,8 @@
                 </RepeatButton.Content>
             </RepeatButton>
 
-            <Button Command="{x:Static ffewi:MediaCommands.Play}" 
+            <Button DockPanel.Dock="Left"
+                    Command="{x:Static ffewi:MediaCommands.Play}" 
                     CommandTarget="{Binding ElementName=MediaControl}"
                     Margin="5,5,0,5"
                     Style="{StaticResource ButtonStyle}">
@@ -80,7 +83,8 @@
                 </Button.Content>
             </Button>
 
-            <Button Command="{x:Static ffewi:MediaCommands.Stop}" 
+            <Button DockPanel.Dock="Left"
+                    Command="{x:Static ffewi:MediaCommands.Stop}" 
                     CommandTarget="{Binding ElementName=MediaControl}"
                     Margin="5,5,0,5"
                     Style="{StaticResource ButtonStyle}">
@@ -91,7 +95,8 @@
                 </Button.Content>
             </Button>
 
-            <Button Command="{x:Static ffewi:MediaCommands.Pause}" 
+            <Button DockPanel.Dock="Left"
+                    Command="{x:Static ffewi:MediaCommands.Pause}" 
                     CommandTarget="{Binding ElementName=MediaControl}"
                     Margin="5,5,0,5"
                     Style="{StaticResource ButtonStyle}">
@@ -102,7 +107,8 @@
                 </Button.Content>
             </Button>
 
-            <RepeatButton Command="{x:Static ffewi:MediaCommands.StepForward}" 
+            <RepeatButton DockPanel.Dock="Left"
+                          Command="{x:Static ffewi:MediaCommands.StepForward}" 
                           CommandTarget="{Binding ElementName=MediaControl}"
                           Margin="5,5,0,5"
                           Style="{StaticResource RepeatButtonStyle}">
@@ -113,7 +119,8 @@
                 </RepeatButton.Content>
             </RepeatButton>
 
-            <Button Command="{x:Static ffewi:MediaCommands.FastForward}" 
+            <Button DockPanel.Dock="Left"
+                    Command="{x:Static ffewi:MediaCommands.FastForward}" 
                     CommandTarget="{Binding ElementName=MediaControl}"
                     Margin="5,5,0,5"
                     Style="{StaticResource ButtonStyle}">
@@ -124,14 +131,54 @@
                 </Button.Content>
             </Button>
 
+            <Slider DockPanel.Dock="Right"
+                    IsEnabled="True"
+                    Margin="5,5,0,5"
+                    Minimum="0.0"
+                    Maximum="1.0"
+                    Value="{Binding ElementName=MediaControl, Path=Volume, Mode=TwoWay}"
+                    MinWidth="64"
+                    VerticalAlignment="Center" />
+
+            <ToggleButton DockPanel.Dock="Right"
+                          Command="{x:Static ffewi:MediaCommands.MuteVolume}" 
+                          CommandTarget="{Binding ElementName=MediaControl}"
+                          IsChecked="{Binding ElementName=MediaControl, Path=IsMuted, Mode=OneWay}"
+                          Margin="5,5,0,5">
+                <ToggleButton.Style>
+                    <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource ToggleButtonStyle}">
+                        <Style.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <Rectangle Fill="{StaticResource MuteVolumeIcon}"
+                                                   Height="24"
+                                                   Width="24"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <Rectangle Fill="{StaticResource UnmuteVolumeIcon}"
+                                                   Height="24"
+                                                   Width="24"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ToggleButton.Style>
+            </ToggleButton>
+
             <Slider IsEnabled="False"
                     Margin="5,5,0,5"
                     Minimum="{Binding ElementName=MediaControl, Path=StartTime, Mode=OneWay, Converter={StaticResource AVRelativeTimeToDoubleConverter}}"
                     Maximum="{Binding ElementName=MediaControl, Path=EndTime, Mode=OneWay, Converter={StaticResource AVRelativeTimeToDoubleConverter}}"
                     Value="{Binding ElementName=MediaControl, Path=CurrentTime, Mode=OneWay, Converter={StaticResource AVRelativeTimeToDoubleConverter}}"
-                    Width="256"
+                    MinWidth="128"
                     VerticalAlignment="Center" />
 
-        </StackPanel>
+        </DockPanel>
     </Grid>
 </Window>

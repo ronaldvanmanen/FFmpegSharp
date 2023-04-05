@@ -30,7 +30,7 @@ namespace FFmpegSharp.Extensions.Windows.Controls
                 nameof(Source),
                 typeof(Uri),
                 typeof(MediaControl),
-                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.None, SourceChanged));
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.None, SourcePropertyChanged));
 
         public static readonly DependencyProperty StartTimeProperty =
             DependencyProperty.RegisterAttached(
@@ -52,6 +52,20 @@ namespace FFmpegSharp.Extensions.Windows.Controls
                 typeof(AVRelativeTime),
                 typeof(MediaControl),
                 new FrameworkPropertyMetadata(AVRelativeTime.Undefined, FrameworkPropertyMetadataOptions.None));
+
+        public static readonly DependencyProperty VolumeProperty =
+            DependencyProperty.RegisterAttached(
+                nameof(Volume),
+                typeof(double),
+                typeof(MediaControl),
+                new FrameworkPropertyMetadata(0.5d, FrameworkPropertyMetadataOptions.None, VolumePropertyChanged));
+
+        public static readonly DependencyProperty IsMutedProperty =
+            DependencyProperty.RegisterAttached(
+                nameof(IsMuted),
+                typeof(bool),
+                typeof(MediaControl),
+                new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.None, IsMutedChanged));
 
         private readonly DispatcherTimer _dispatcherTimer;
 
@@ -85,19 +99,39 @@ namespace FFmpegSharp.Extensions.Windows.Controls
             private set => SetValue(CurrentTimeProperty, value);
         }
 
+        public double Volume
+        {
+            get => (double)GetValue(VolumeProperty);
+
+            set => SetValue(VolumeProperty, value);
+        }
+
+        public bool IsMuted
+        {
+            get => (bool)GetValue(IsMutedProperty);
+
+            set => SetValue(IsMutedProperty, value);
+        }
+
         public bool CanPlay => Source is not null;
 
         public bool CanStop => _mediaSession is not null;
 
         public bool CanPause => _mediaSession is not null;
 
-        public bool CanStepForward => false;
+        public bool CanStepForward => _mediaSession is not null;
 
-        public bool CanStepBackward => false;
+        public bool CanStepBackward => _mediaSession is not null;
 
-        public bool CanFastForward => false;
+        public bool CanFastForward => _mediaSession is not null;
 
-        public bool CanFastBackward => false;
+        public bool CanFastBackward => _mediaSession is not null;
+
+        public bool CanMuteVolume => _mediaSession is not null;
+
+        public bool CanIncreaseVolume => _mediaSession is not null;
+
+        public bool CanDecreaseVolume => _mediaSession is not null;
 
         static MediaControl()
         {
@@ -110,6 +144,9 @@ namespace FFmpegSharp.Extensions.Windows.Controls
             CommandManager.RegisterClassCommandBinding(typeof(MediaControl), new CommandBinding(MediaCommands.StepBackward, ExecuteStepBackward, CanExecuteStepBackward));
             CommandManager.RegisterClassCommandBinding(typeof(MediaControl), new CommandBinding(MediaCommands.FastForward, ExecuteFastForward, CanExecuteFastForward));
             CommandManager.RegisterClassCommandBinding(typeof(MediaControl), new CommandBinding(MediaCommands.FastBackward, ExecuteFastBackward, CanExecuteFastBackward));
+            CommandManager.RegisterClassCommandBinding(typeof(MediaControl), new CommandBinding(MediaCommands.MuteVolume, ExecuteMuteVolume, CanExecuteMuteVolume));
+            CommandManager.RegisterClassCommandBinding(typeof(MediaControl), new CommandBinding(MediaCommands.IncreaseVolume, ExecuteIncreaseVolume, CanExecuteIncreaseVolume));
+            CommandManager.RegisterClassCommandBinding(typeof(MediaControl), new CommandBinding(MediaCommands.DecreaseVolume, ExecuteDecreaseVolume, CanExecuteDecreaseVolume));
         }
 
         public MediaControl()
@@ -153,7 +190,6 @@ namespace FFmpegSharp.Extensions.Windows.Controls
             _mediaSession = null!;
         }
 
-
         public void Pause()
         {
             _mediaSession?.Pause();
@@ -175,7 +211,32 @@ namespace FFmpegSharp.Extensions.Windows.Controls
         {
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
+        public void MuteVolume()
+        {
+            IsMuted = !IsMuted;
+        }
+
+        public void IncreaseVolume()
+        {
+            Volume += 0.05d;
+        }
+
+        public void DecreaseVolume()
+        {
+            Volume -= 0.05d;
+        }
+
+        private void SetVolume(double volume)
+        {
+            _mediaSession.Volume = volume;
+        }
+
+        private void SetIsMuted(bool muted)
+        {
+            _mediaSession.IsMuted = muted;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs eventArgs)
         {
             var window = Window.GetWindow(this);
             if (window is not null)
@@ -184,7 +245,7 @@ namespace FFmpegSharp.Extensions.Windows.Controls
             }
         }
 
-        private void OnUnloaded(object sender, RoutedEventArgs e)
+        private void OnUnloaded(object sender, RoutedEventArgs eventArgs)
         {
             var window = Window.GetWindow(this);
             if (window is not null)
@@ -193,12 +254,12 @@ namespace FFmpegSharp.Extensions.Windows.Controls
             }
         }
 
-        private void OnClosing(object? sender, CancelEventArgs e)
+        private void OnClosing(object? sender, CancelEventArgs eventArgs)
         {
             Stop();
         }
 
-        private void OnTick(object? sender, EventArgs e)
+        private void OnTick(object? sender, EventArgs eventArgs)
         {
             if (_mediaSession is not null)
             {
@@ -214,119 +275,167 @@ namespace FFmpegSharp.Extensions.Windows.Controls
             }
         }
 
-        private static void ExecutePlay(object source, ExecutedRoutedEventArgs eventArgs)
+        private static void ExecutePlay(object sender, ExecutedRoutedEventArgs eventArgs)
         {
-            if (source is MediaControl mediaControl)
+            if (sender is MediaControl mediaControl)
             {
                 mediaControl.Play();
             }
         }
 
-        private static void CanExecutePlay(object source, CanExecuteRoutedEventArgs eventArgs)
+        private static void CanExecutePlay(object sender, CanExecuteRoutedEventArgs eventArgs)
         {
-            if (source is MediaControl mediaControl)
+            if (sender is MediaControl mediaControl)
             {
                 eventArgs.CanExecute = mediaControl.CanPlay;
             }
         }
 
-        private static void ExecuteStop(object source, ExecutedRoutedEventArgs eventArgs)
+        private static void ExecuteStop(object sender, ExecutedRoutedEventArgs eventArgs)
         {
-            if (source is MediaControl mediaControl)
+            if (sender is MediaControl mediaControl)
             {
                 mediaControl.Stop();
             }
         }
 
-        private static void CanExecuteStop(object source, CanExecuteRoutedEventArgs eventArgs)
+        private static void CanExecuteStop(object sender, CanExecuteRoutedEventArgs eventArgs)
         {
-            if (source is MediaControl mediaControl)
+            if (sender is MediaControl mediaControl)
             {
                 eventArgs.CanExecute = mediaControl.CanStop;
             }
         }
 
-        private static void ExecutePause(object source, ExecutedRoutedEventArgs eventArgs)
+        private static void ExecutePause(object sender, ExecutedRoutedEventArgs eventArgs)
         {
-            if (source is MediaControl mediaControl)
+            if (sender is MediaControl mediaControl)
             {
                 mediaControl.Pause();
             }
         }
 
-        private static void CanExecutePause(object source, CanExecuteRoutedEventArgs eventArgs)
+        private static void CanExecutePause(object sender, CanExecuteRoutedEventArgs eventArgs)
         {
-            if (source is MediaControl mediaControl)
+            if (sender is MediaControl mediaControl)
             {
                 eventArgs.CanExecute = mediaControl.CanPause;
             }
         }
 
-        private static void ExecuteStepForward(object source, ExecutedRoutedEventArgs eventArgs)
+        private static void ExecuteStepForward(object sender, ExecutedRoutedEventArgs eventArgs)
         {
-            if (source is MediaControl mediaControl)
+            if (sender is MediaControl mediaControl)
             {
                 mediaControl.StepForward();
             }
         }
 
-        private static void CanExecuteStepForward(object source, CanExecuteRoutedEventArgs eventArgs)
+        private static void CanExecuteStepForward(object sender, CanExecuteRoutedEventArgs eventArgs)
         {
-            if (source is MediaControl mediaControl)
+            if (sender is MediaControl mediaControl)
             {
                 eventArgs.CanExecute = mediaControl.CanStepForward;
             }
         }
 
-        private static void ExecuteStepBackward(object source, ExecutedRoutedEventArgs eventArgs)
+        private static void ExecuteStepBackward(object sender, ExecutedRoutedEventArgs eventArgs)
         {
-            if (source is MediaControl mediaControl)
+            if (sender is MediaControl mediaControl)
             {
                 mediaControl.StepBackward();
             }
         }
 
-        private static void CanExecuteStepBackward(object source, CanExecuteRoutedEventArgs eventArgs)
+        private static void CanExecuteStepBackward(object sender, CanExecuteRoutedEventArgs eventArgs)
         {
-            if (source is MediaControl mediaControl)
+            if (sender is MediaControl mediaControl)
             {
                 eventArgs.CanExecute = mediaControl.CanStepBackward;
             }
         }
 
-        private static void ExecuteFastForward(object source, ExecutedRoutedEventArgs eventArgs)
+        private static void ExecuteFastForward(object sender, ExecutedRoutedEventArgs eventArgs)
         {
-            if (source is MediaControl mediaControl)
+            if (sender is MediaControl mediaControl)
             {
                 mediaControl.FastForward();
             }
         }
 
-        private static void CanExecuteFastForward(object source, CanExecuteRoutedEventArgs eventArgs)
+        private static void CanExecuteFastForward(object sender, CanExecuteRoutedEventArgs eventArgs)
         {
-            if (source is MediaControl mediaControl)
+            if (sender is MediaControl mediaControl)
             {
                 eventArgs.CanExecute = mediaControl.CanFastForward;
             }
         }
 
-        private static void ExecuteFastBackward(object source, ExecutedRoutedEventArgs eventArgs)
+        private static void ExecuteFastBackward(object sender, ExecutedRoutedEventArgs eventArgs)
         {
-            if (source is MediaControl mediaControl)
+            if (sender is MediaControl mediaControl)
             {
                 mediaControl.FastBackward();
             }
         }
 
-        private static void CanExecuteFastBackward(object source, CanExecuteRoutedEventArgs eventArgs)
+        private static void CanExecuteFastBackward(object sender, CanExecuteRoutedEventArgs eventArgs)
         {
-            if (source is MediaControl mediaControl)
+            if (sender is MediaControl mediaControl)
             {
                 eventArgs.CanExecute = mediaControl.CanFastBackward;
             }
         }
 
-        private static void SourceChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs eventArgs)
+        private static void ExecuteMuteVolume(object sender, ExecutedRoutedEventArgs eventArgs)
+        {
+            if (sender is MediaControl mediaControl)
+            {
+                mediaControl.MuteVolume();
+            }
+        }
+
+        private static void CanExecuteMuteVolume(object sender, CanExecuteRoutedEventArgs eventArgs)
+        {
+            if (sender is MediaControl mediaControl)
+            {
+                eventArgs.CanExecute = mediaControl.CanMuteVolume;
+            }
+        }
+
+        private static void ExecuteIncreaseVolume(object sender, ExecutedRoutedEventArgs eventArgs)
+        {
+            if (sender is MediaControl mediaControl)
+            {
+                mediaControl.IncreaseVolume();
+            }
+        }
+
+        private static void CanExecuteIncreaseVolume(object sender, CanExecuteRoutedEventArgs eventArgs)
+        {
+            if (sender is MediaControl mediaControl)
+            {
+                eventArgs.CanExecute = mediaControl.CanIncreaseVolume;
+            }
+        }
+
+        private static void ExecuteDecreaseVolume(object sender, ExecutedRoutedEventArgs eventArgs)
+        {
+            if (sender is MediaControl mediaControl)
+            {
+                mediaControl.DecreaseVolume();
+            }
+        }
+
+        private static void CanExecuteDecreaseVolume(object sender, CanExecuteRoutedEventArgs eventArgs)
+        {
+            if (sender is MediaControl mediaControl)
+            {
+                eventArgs.CanExecute = mediaControl.CanDecreaseVolume;
+            }
+        }
+
+        private static void SourcePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs eventArgs)
         {
             if (dependencyObject is MediaControl mediaControl)
             {
@@ -339,6 +448,22 @@ namespace FFmpegSharp.Extensions.Windows.Controls
                 {
                     mediaControl.Play();
                 }
+            }
+        }
+
+        private static void VolumePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs eventArgs)
+        {
+            if (dependencyObject is MediaControl mediaControl)
+            {
+                mediaControl.SetVolume((double)eventArgs.NewValue);
+            }
+        }
+
+        private static void IsMutedChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs eventArgs)
+        {
+            if (dependencyObject is MediaControl mediaControl)
+            {
+                mediaControl.SetIsMuted((bool)eventArgs.NewValue);
             }
         }
     }

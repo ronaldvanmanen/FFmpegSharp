@@ -44,10 +44,6 @@ namespace FFmpegSharp.Extensions.Framework
             }
         }
 
-        public const int MinVolume = 0;
-
-        public const int MaxVolume = SDL2Sharp.Interop.SDL.SDL_MIX_MAXVOLUME;
-
         private const int MinimumBufferSize = 512;
 
         private const int MaximumCallbacksPerSecond = 30;
@@ -72,7 +68,7 @@ namespace FFmpegSharp.Extensions.Framework
 
         private int _audioSampleRate;
 
-        private int _volume;
+        private double _volume;
 
         private bool _muted;
 
@@ -84,27 +80,27 @@ namespace FFmpegSharp.Extensions.Framework
 
         public AudioInputPort AudioInput => _audioInput;
 
-        public int Volume
+        public double Volume
         {
             get => _volume;
 
             set
             {
-                if (_volume < MinVolume)
+                if (_volume < 0d)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value), value, $"value cannot be less than {MinVolume}");
+                    throw new ArgumentOutOfRangeException(nameof(value), value, $"value cannot be less than {0d}");
                 }
 
-                if (_volume > MaxVolume)
+                if (_volume > 1d)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value), value, $"value cannot be greater than {MaxVolume}");
+                    throw new ArgumentOutOfRangeException(nameof(value), value, $"value cannot be greater than {1d}");
                 }
 
                 _volume = value;
             }
         }
 
-        public bool Muted
+        public bool IsMuted
         {
             get => _muted;
 
@@ -120,7 +116,7 @@ namespace FFmpegSharp.Extensions.Framework
             _audioDevice = null!;
             _audioBuffer = null!;
             _cancellationTokenSource = null!;
-            _volume = 0;
+            _volume = 0.5d;
             _muted = false;
             _disposed = false;
         }
@@ -222,7 +218,8 @@ namespace FFmpegSharp.Extensions.Framework
                     stream.Fill(0);
                     var mixBuffer = new Span<byte>(new byte[stream.Length]);
                     _audioBuffer.Dequeue(mixBuffer);
-                    stream.MixAudioFormat(mixBuffer, _audioDevice.ObtainedSpec.Format, _volume);
+                    var volume = (int)(_volume * SDL2Sharp.Interop.SDL.SDL_MIX_MAXVOLUME);
+                    stream.MixAudioFormat(mixBuffer, _audioDevice.ObtainedSpec.Format, volume);
                 }
                 else
                 {

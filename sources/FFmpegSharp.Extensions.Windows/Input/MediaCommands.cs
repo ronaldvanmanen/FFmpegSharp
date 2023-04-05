@@ -27,49 +27,66 @@ namespace FFmpegSharp.Extensions.Windows.Input
         /// </summary>
         static MediaCommands()
         {
-            Stop = System.Windows.Input.MediaCommands.Stop;
             Play = System.Windows.Input.MediaCommands.Play;
+            Stop = System.Windows.Input.MediaCommands.Stop;
             Pause = System.Windows.Input.MediaCommands.Pause;
-            FastForward = System.Windows.Input.MediaCommands.FastForward;
-
             StepForward = new RoutedCommand(nameof(StepForward), typeof(MediaCommands));
             StepBackward = new RoutedCommand(nameof(StepBackward), typeof(MediaCommands));
+            FastForward = System.Windows.Input.MediaCommands.FastForward;
             FastBackward = new RoutedCommand(nameof(FastBackward), typeof(MediaCommands));
+            MuteVolume = System.Windows.Input.MediaCommands.MuteVolume;
+            IncreaseVolume = System.Windows.Input.MediaCommands.IncreaseVolume;
+            DecreaseVolume = System.Windows.Input.MediaCommands.DecreaseVolume;
         }
 
         /// <summary>
-        ///     Gets the command that signals the <see cref="MediaPlayer"/> to start playing.
+        ///     Gets the value that represents the Play command.
         /// </summary>
         public static RoutedCommand Play { get; }
 
         /// <summary>
-        ///     Gets the command that signals the <see cref="MediaPlayer"/> to stop playing.
+        ///     Gets the value that represents the Stop command.
         /// </summary>
         public static RoutedCommand Stop { get; }
 
         /// <summary>
-        ///     Gets the command that signals the <see cref="MediaPlayer"/> to pause playing.
+        ///     Gets the value that represents the Pause command.
         /// </summary>
         public static RoutedCommand Pause { get; }
 
         /// <summary>
-        ///     Gets the command that signals the <see cref="MediaPlayer"/> to skip to the next frame.
+        ///     Gets the value that represents the Step Forward command.
         /// </summary>
         public static RoutedCommand StepForward { get; }
 
         /// <summary>
-        ///     Gets the command that signals the <see cref="MediaPlayer"/> to skip to the next frame.
+        ///     Gets the value that represents the Step Backward command.
         /// </summary>
         public static RoutedCommand StepBackward { get; }
 
         /// <summary>
-        ///     Gets the command that signals the <see cref="MediaPlayer"/> to skip to the next frame.
+        ///     Gets the value that represents the Fast Forward command.
         /// </summary>
         public static RoutedCommand FastForward { get; }
 
         /// <summary>
-        ///     Gets the command that signals the <see cref="MediaPlayer"/> to skip to the next frame.
+        ///     Gets the value that represents the Step Backward command.
         /// </summary>
         public static RoutedCommand FastBackward { get; }
+
+        /// <summary>
+        ///     Gets the value that represents the Mute Volume command.
+        /// </summary>
+        public static RoutedUICommand MuteVolume { get; }
+
+        /// <summary>
+        ///     Gets the value that represents the Increase Volume command.
+        /// </summary>
+        public static RoutedUICommand IncreaseVolume { get; }
+
+        /// <summary>
+        ///     Gets the value that represents the Decrease Volume command.
+        /// </summary>
+        public static RoutedUICommand DecreaseVolume { get; }
     }
 }

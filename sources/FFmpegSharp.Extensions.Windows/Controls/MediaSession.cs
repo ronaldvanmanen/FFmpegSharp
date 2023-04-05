@@ -15,6 +15,7 @@
 
 using FFmpegSharp.Extensions.Framework;
 using System;
+using static System.Math;
 
 namespace FFmpegSharp.Extensions.Windows.Controls
 {
@@ -37,6 +38,20 @@ namespace FFmpegSharp.Extensions.Windows.Controls
         public AVRelativeTime EndTime => _mediaDemultiplexer.EndTime;
 
         public AVRelativeTime CurrentTime => _audioRenderer.Clock.Time;
+
+        public double Volume
+        {
+            get => _audioRenderer.Volume;
+
+            set => _audioRenderer.Volume = Max(0d, Min(value, 1d));
+        }
+
+        public bool IsMuted
+        {
+            get => _audioRenderer.IsMuted;
+
+            set => _audioRenderer.IsMuted = value;
+        }
 
         public MediaSession(Uri source)
         {
@@ -69,7 +84,6 @@ namespace FFmpegSharp.Extensions.Windows.Controls
             _audioDecoder.Start();
 
             _audioRenderer = new AudioRenderer();
-            _audioRenderer.Volume = AudioRenderer.MaxVolume;
             _audioRenderer.AudioInput.Connect(_decodedAudioStream,
                 _audioDecoder.AudioOutput.StreamInfo);
 
@@ -116,6 +130,11 @@ namespace FFmpegSharp.Extensions.Windows.Controls
             _mediaDemultiplexer?.Stop();
             _audioDecoder?.Stop();
             _audioRenderer?.Stop();
+        }
+
+        public void MuteVolume()
+        {
+            _audioRenderer.IsMuted = !_audioRenderer.IsMuted;
         }
 
         private void ThrowIfDisposed()

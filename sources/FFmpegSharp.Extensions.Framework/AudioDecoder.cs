@@ -15,7 +15,6 @@
 
 using System;
 using System.Threading;
-using FFmpegSharp;
 using static FFmpegSharp.Interop.FFmpeg;
 
 namespace FFmpegSharp.Extensions.Framework

@@ -32,7 +32,15 @@
                         </Style.Triggers>
                     </Style>
 
-                    <Style x:Key="RepeatButtonStyle" TargetType="{x:Type RepeatButton}">
+                    <Style x:Key="RepeatButtonStyle" TargetType="{x:Type RepeatButton}" BasedOn="{StaticResource {x:Type RepeatButton}}">
+                        <Style.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.5" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+
+                    <Style x:Key="ToggleButtonStyle" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource {x:Type ToggleButton}}">
                         <Style.Triggers>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter Property="Opacity" Value="0.5" />
@@ -44,11 +52,13 @@
                 </ResourceDictionary>
                 <ResourceDictionary Source="/FastBackwardIcon.xaml"/>
                 <ResourceDictionary Source="/FastForwardIcon.xaml"/>
+                <ResourceDictionary Source="/MuteVolumeIcon.xaml"/>
                 <ResourceDictionary Source="/PauseIcon.xaml"/>
                 <ResourceDictionary Source="/PlayIcon.xaml"/>
                 <ResourceDictionary Source="/StepForwardIcon.xaml"/>
                 <ResourceDictionary Source="/StepBackwardIcon.xaml"/>
                 <ResourceDictionary Source="/StopIcon.xaml"/>
+                <ResourceDictionary Source="/UnmuteVolumeIcon.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

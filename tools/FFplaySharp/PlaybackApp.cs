@@ -62,7 +62,6 @@ namespace FFplaySharp
             _audioDecoder.Start();
 
             _audioRenderer = new AudioRenderer();
-            _audioRenderer.Volume = AudioRenderer.MaxVolume;
             _audioRenderer.AudioInput.Connect(_elementaryAudioStream, _audioDecoder.AudioOutput.StreamInfo);
             _audioRenderer.Start();
         }
