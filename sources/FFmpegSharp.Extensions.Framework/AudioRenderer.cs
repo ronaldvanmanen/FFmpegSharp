@@ -16,13 +16,14 @@
 using System;
 using System.Threading;
 using FFmpegSharp.Extensions.Collections;
+using FFmpegSharp.Extensions.ComponentModel;
 using SDL2Sharp;
 using SDL2Sharp.Extensions;
 using static System.Math;
 
 namespace FFmpegSharp.Extensions.Framework
 {
-    public sealed class AudioRenderer : IPresentationClockSource, IDisposable
+    public sealed class AudioRenderer : ObservableObject, IPresentationClockSource, IDisposable
     {
         public sealed class AudioInputPort
         {

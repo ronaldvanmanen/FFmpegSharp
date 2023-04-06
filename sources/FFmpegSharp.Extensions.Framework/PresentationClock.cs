@@ -14,10 +14,12 @@
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.ComponentModel;
+using FFmpegSharp.Extensions.ComponentModel;
 
 namespace FFmpegSharp.Extensions.Framework
 {
-    public sealed class PresentationClock : IPresentationClock
+    public sealed class PresentationClock : ObservableObject, IPresentationClock
     {
         private IPresentationClockSource? _timeSource;
 
@@ -26,10 +28,16 @@ namespace FFmpegSharp.Extensions.Framework
             get => _timeSource;
             set
             {
-                if (_timeSource != value)
+                if (_timeSource == value)
                 {
-                    _timeSource = value;
+                    return;
                 }
+
+                OnPropertyChanging();
+                UnregisterEventHandlers();
+                _timeSource = value;
+                RegisterEventHandlers();
+                OnPropertyChanged();
             }
         }
 
@@ -54,6 +62,86 @@ namespace FFmpegSharp.Extensions.Framework
                     throw new InvalidOperationException("The clock does not have a presentation time source");
                 }
                 return _timeSource.Clock.Time;
+            }
+        }
+
+        private void RegisterEventHandlers()
+        {
+            if (_timeSource is not null)
+            {
+                if (_timeSource.Clock is not null)
+                {
+                    _timeSource.Clock.PropertyChanging += TimeSourceClockPropertyChanging;
+                    _timeSource.Clock.PropertyChanged += TimeSourceClockPropertyChanged;
+                }
+
+                _timeSource.PropertyChanging += TimeSourcePropertyChanging;
+                _timeSource.PropertyChanged += TimeSourcePropertyChanged;
+            }
+        }
+
+        private void UnregisterEventHandlers()
+        {
+            if (_timeSource is not null)
+            {
+                if (_timeSource.Clock is not null)
+                {
+                    _timeSource.Clock.PropertyChanging -= TimeSourceClockPropertyChanging;
+                    _timeSource.Clock.PropertyChanged -= TimeSourceClockPropertyChanged;
+                }
+
+                _timeSource.PropertyChanging -= TimeSourcePropertyChanging;
+                _timeSource.PropertyChanged -= TimeSourcePropertyChanged;
+            }
+        }
+
+        private void TimeSourcePropertyChanging(object? sender, PropertyChangingEventArgs e)
+        {
+            if (sender is IPresentationClockSource timeSource)
+            {
+                if (e.PropertyName == nameof(IPresentationClockSource.Clock))
+                {
+                    timeSource.Clock.PropertyChanged -= TimeSourceClockPropertyChanged;
+                }
+            }
+        }
+
+        private void TimeSourcePropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (sender is IPresentationClockSource timeSource)
+            {
+                if (e.PropertyName == nameof(IPresentationClockSource.Clock))
+                {
+                    timeSource.Clock.PropertyChanged += TimeSourceClockPropertyChanged;
+                }
+            }
+        }
+
+        private void TimeSourceClockPropertyChanging(object? sender, PropertyChangingEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(IClock.Time):
+                    OnPropertyChanging(nameof(Time));
+                    return;
+
+                case nameof(IClock.Paused):
+                    OnPropertyChanging(nameof(Paused));
+                    return;
+            }
+        }
+
+        private void TimeSourceClockPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(IClock.Time):
+                    OnPropertyChanged(nameof(Time));
+                    return;
+
+                case nameof(IClock.Paused):
+                    OnPropertyChanged(nameof(Paused));
+                    return;
             }
         }
     }

@@ -13,9 +13,11 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
+using FFmpegSharp.Extensions.ComponentModel;
+
 namespace FFmpegSharp.Extensions.Framework
 {
-    public interface IClock
+    public interface IClock : IObservableObject
     {
         AVRelativeTime Time { get; }
 

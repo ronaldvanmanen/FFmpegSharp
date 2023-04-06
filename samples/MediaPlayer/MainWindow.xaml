@@ -175,7 +175,7 @@
                     Margin="5,5,0,5"
                     Minimum="{Binding ElementName=MediaControl, Path=StartTime, Mode=OneWay, Converter={StaticResource AVRelativeTimeToDoubleConverter}}"
                     Maximum="{Binding ElementName=MediaControl, Path=EndTime, Mode=OneWay, Converter={StaticResource AVRelativeTimeToDoubleConverter}}"
-                    Value="{Binding ElementName=MediaControl, Path=CurrentTime, Mode=OneWay, Converter={StaticResource AVRelativeTimeToDoubleConverter}}"
+                    Value="{Binding ElementName=MediaControl, Path=Position, Mode=OneWay, Converter={StaticResource AVRelativeTimeToDoubleConverter}}"
                     MinWidth="128"
                     VerticalAlignment="Center" />
 

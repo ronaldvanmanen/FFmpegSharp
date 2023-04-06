@@ -18,7 +18,6 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Threading;
 using MediaCommands = FFmpegSharp.Extensions.Windows.Input.MediaCommands;
 
 namespace FFmpegSharp.Extensions.Windows.Controls
@@ -46,9 +45,9 @@ namespace FFmpegSharp.Extensions.Windows.Controls
                 typeof(MediaControl),
                 new FrameworkPropertyMetadata(AVRelativeTime.Undefined, FrameworkPropertyMetadataOptions.None));
 
-        public static readonly DependencyProperty CurrentTimeProperty =
+        public static readonly DependencyProperty PositionProperty =
             DependencyProperty.RegisterAttached(
-                nameof(CurrentTime),
+                nameof(Position),
                 typeof(AVRelativeTime),
                 typeof(MediaControl),
                 new FrameworkPropertyMetadata(AVRelativeTime.Undefined, FrameworkPropertyMetadataOptions.None));
@@ -66,8 +65,6 @@ namespace FFmpegSharp.Extensions.Windows.Controls
                 typeof(bool),
                 typeof(MediaControl),
                 new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.None, IsMutedChanged));
-
-        private readonly DispatcherTimer _dispatcherTimer;
 
         private MediaSession _mediaSession;
 
@@ -92,11 +89,11 @@ namespace FFmpegSharp.Extensions.Windows.Controls
             private set => SetValue(EndTimeProperty, value);
         }
 
-        public AVRelativeTime CurrentTime
+        public AVRelativeTime Position
         {
-            get => (AVRelativeTime)GetValue(CurrentTimeProperty);
+            get => (AVRelativeTime)GetValue(PositionProperty);
 
-            private set => SetValue(CurrentTimeProperty, value);
+            private set => SetValue(PositionProperty, value);
         }
 
         public double Volume
@@ -153,10 +150,6 @@ namespace FFmpegSharp.Extensions.Windows.Controls
         {
             Loaded += OnLoaded;
             Unloaded += OnUnloaded;
-
-            _dispatcherTimer = new DispatcherTimer(DispatcherPriority.Render);
-            _dispatcherTimer.Tick += OnTick;
-            _dispatcherTimer.Interval = TimeSpan.FromMilliseconds(20);
             _mediaSession = null!;
         }
 
@@ -170,8 +163,8 @@ namespace FFmpegSharp.Extensions.Windows.Controls
             {
                 if (Source is not null)
                 {
-                    _dispatcherTimer.Start();
                     _mediaSession = new MediaSession(Source);
+                    _mediaSession.PropertyChanged += HandleMediaSessionPropertyChanged;
                     _mediaSession.Play();
                 }
             }
@@ -184,8 +177,8 @@ namespace FFmpegSharp.Extensions.Windows.Controls
                 return;
             }
 
-            _dispatcherTimer.Stop();
             _mediaSession.Stop();
+            _mediaSession.PropertyChanged -= HandleMediaSessionPropertyChanged;
             _mediaSession.Dispose();
             _mediaSession = null!;
         }
@@ -259,20 +252,23 @@ namespace FFmpegSharp.Extensions.Windows.Controls
             Stop();
         }
 
-        private void OnTick(object? sender, EventArgs eventArgs)
+        private void HandleMediaSessionPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (_mediaSession is not null)
+            if (sender is not MediaSession mediaSession)
             {
-                StartTime = _mediaSession.StartTime;
-                EndTime = _mediaSession.EndTime;
-                CurrentTime = _mediaSession.CurrentTime;
+                return;
             }
-            else
+
+            var startTime = mediaSession.StartTime;
+            var endTime = mediaSession.EndTime;
+            var position = mediaSession.Position;
+
+            Dispatcher.BeginInvoke(() =>
             {
-                StartTime = AVRelativeTime.Undefined;
-                EndTime = AVRelativeTime.Undefined;
-                CurrentTime = AVRelativeTime.Undefined;
-            }
+                StartTime = startTime;
+                EndTime = endTime;
+                Position = position;
+            });
         }
 
         private static void ExecutePlay(object sender, ExecutedRoutedEventArgs eventArgs)

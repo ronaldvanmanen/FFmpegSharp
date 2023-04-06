@@ -13,13 +13,15 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
+using FFmpegSharp.Extensions.ComponentModel;
 using FFmpegSharp.Extensions.Framework;
 using System;
+using System.ComponentModel;
 using static System.Math;
 
 namespace FFmpegSharp.Extensions.Windows.Controls
 {
-    internal sealed class MediaSession : IDisposable
+    internal sealed class MediaSession : ObservableObject, IDisposable
     {
         private readonly MediaStream<AVPacket> _demultiplexedAudioStream;
 
@@ -37,7 +39,7 @@ namespace FFmpegSharp.Extensions.Windows.Controls
 
         public AVRelativeTime EndTime => _mediaDemultiplexer.EndTime;
 
-        public AVRelativeTime CurrentTime => _audioRenderer.Clock.Time;
+        public AVRelativeTime Position => _audioRenderer.Clock.Time;
 
         public double Volume
         {
@@ -78,15 +80,13 @@ namespace FFmpegSharp.Extensions.Windows.Controls
             _decodedAudioStream = new MediaStream<AVFrame>(16);
 
             _audioDecoder = new AudioDecoder();
-            _audioDecoder.AudioInput.Connect(_demultiplexedAudioStream,
-                _mediaDemultiplexer.BestAudioOutput.StreamInfo);
+            _audioDecoder.AudioInput.Connect(_demultiplexedAudioStream, _mediaDemultiplexer.BestAudioOutput.StreamInfo);
             _audioDecoder.AudioOutput.Connect(_decodedAudioStream);
             _audioDecoder.Start();
 
             _audioRenderer = new AudioRenderer();
-            _audioRenderer.AudioInput.Connect(_decodedAudioStream,
-                _audioDecoder.AudioOutput.StreamInfo);
-
+            _audioRenderer.AudioInput.Connect(_decodedAudioStream, _audioDecoder.AudioOutput.StreamInfo);
+            _audioRenderer.Clock.PropertyChanged += HandleClockPropertyChanged;
             _disposed = false;
         }
 
@@ -101,6 +101,7 @@ namespace FFmpegSharp.Extensions.Windows.Controls
             {
                 _mediaDemultiplexer.Dispose();
                 _audioDecoder.Dispose();
+                _audioRenderer.Clock.PropertyChanged -= HandleClockPropertyChanged;
                 _audioRenderer.Dispose();
             }
             finally
@@ -135,6 +136,14 @@ namespace FFmpegSharp.Extensions.Windows.Controls
         public void MuteVolume()
         {
             _audioRenderer.IsMuted = !_audioRenderer.IsMuted;
+        }
+
+        private void HandleClockPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(IClock.Time))
+            {
+                OnPropertyChanged(nameof(Position));
+            }
         }
 
         private void ThrowIfDisposed()

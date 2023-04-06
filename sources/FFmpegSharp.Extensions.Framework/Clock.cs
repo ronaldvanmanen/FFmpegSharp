@@ -13,9 +13,11 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
+using FFmpegSharp.Extensions.ComponentModel;
+
 namespace FFmpegSharp.Extensions.Framework
 {
-    public sealed class Clock : IClock
+    public sealed class Clock : ObservableObject, IClock
     {
         private AVRelativeTime _pts;
 
@@ -27,7 +29,12 @@ namespace FFmpegSharp.Extensions.Framework
         {
             get => _paused;
 
-            set => _paused = value;
+            set
+            {
+                OnPropertyChanging();
+                _paused = value;
+                OnPropertyChanged();
+            }
         }
 
         public AVRelativeTime Time
@@ -56,8 +63,10 @@ namespace FFmpegSharp.Extensions.Framework
 
         public void SetTimeAt(AVRelativeTime pts, AVRelativeTime time)
         {
+            OnPropertyChanging(nameof(Time));
             _pts = pts;
             _ptsDrift = pts - time;
+            OnPropertyChanged(nameof(Time));
         }
 
         public void SetTime(AVRelativeTime pts)

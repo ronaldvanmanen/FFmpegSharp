@@ -13,12 +13,11 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
-using FFmpegSharp.Extensions.ComponentModel;
+using System.ComponentModel;
 
-namespace FFmpegSharp.Extensions.Framework
+namespace FFmpegSharp.Extensions.ComponentModel
 {
-    public interface IPresentationClockSource : IObservableObject
+    public interface IObservableObject : INotifyPropertyChanged, INotifyPropertyChanging
     {
-        IClock Clock { get; }
     }
 }
