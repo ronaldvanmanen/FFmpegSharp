@@ -18,6 +18,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using FFmpegSharp.Extensions.Framework;
 using MediaCommands = FFmpegSharp.Extensions.Windows.Input.MediaCommands;
 
 namespace FFmpegSharp.Extensions.Windows.Controls
@@ -66,7 +67,7 @@ namespace FFmpegSharp.Extensions.Windows.Controls
                 typeof(MediaControl),
                 new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.None, IsMutedChanged));
 
-        private MediaSession _mediaSession;
+        private MediaPlayer _mediaPlayer;
 
         public Uri Source
         {
@@ -112,23 +113,23 @@ namespace FFmpegSharp.Extensions.Windows.Controls
 
         public bool CanPlay => Source is not null;
 
-        public bool CanStop => _mediaSession is not null;
+        public bool CanStop => _mediaPlayer is not null;
 
-        public bool CanPause => _mediaSession is not null;
+        public bool CanPause => _mediaPlayer is not null;
 
-        public bool CanStepForward => _mediaSession is not null;
+        public bool CanStepForward => _mediaPlayer is not null;
 
-        public bool CanStepBackward => _mediaSession is not null;
+        public bool CanStepBackward => _mediaPlayer is not null;
 
-        public bool CanFastForward => _mediaSession is not null;
+        public bool CanFastForward => _mediaPlayer is not null;
 
-        public bool CanFastBackward => _mediaSession is not null;
+        public bool CanFastBackward => _mediaPlayer is not null;
 
-        public bool CanMuteVolume => _mediaSession is not null;
+        public bool CanMuteVolume => _mediaPlayer is not null;
 
-        public bool CanIncreaseVolume => _mediaSession is not null;
+        public bool CanIncreaseVolume => _mediaPlayer is not null;
 
-        public bool CanDecreaseVolume => _mediaSession is not null;
+        public bool CanDecreaseVolume => _mediaPlayer is not null;
 
         static MediaControl()
         {
@@ -150,42 +151,42 @@ namespace FFmpegSharp.Extensions.Windows.Controls
         {
             Loaded += OnLoaded;
             Unloaded += OnUnloaded;
-            _mediaSession = null!;
+            _mediaPlayer = null!;
         }
 
         public void Play()
         {
-            if (_mediaSession is not null)
+            if (_mediaPlayer is not null)
             {
-                _mediaSession.Play();
+                _mediaPlayer.Play();
             }
             else
             {
                 if (Source is not null)
                 {
-                    _mediaSession = new MediaSession(Source);
-                    _mediaSession.PropertyChanged += HandleMediaSessionPropertyChanged;
-                    _mediaSession.Play();
+                    _mediaPlayer = new MediaPlayer(Source);
+                    _mediaPlayer.PropertyChanged += OnMediaPlayerPropertyChanged;
+                    _mediaPlayer.Play();
                 }
             }
         }
 
         public void Stop()
         {
-            if (_mediaSession is null)
+            if (_mediaPlayer is null)
             {
                 return;
             }
 
-            _mediaSession.Stop();
-            _mediaSession.PropertyChanged -= HandleMediaSessionPropertyChanged;
-            _mediaSession.Dispose();
-            _mediaSession = null!;
+            _mediaPlayer.Stop();
+            _mediaPlayer.PropertyChanged -= OnMediaPlayerPropertyChanged;
+            _mediaPlayer.Dispose();
+            _mediaPlayer = null!;
         }
 
         public void Pause()
         {
-            _mediaSession?.Pause();
+            _mediaPlayer?.Pause();
         }
 
         public void StepForward()
@@ -221,12 +222,12 @@ namespace FFmpegSharp.Extensions.Windows.Controls
 
         private void SetVolume(double volume)
         {
-            _mediaSession.Volume = volume;
+            _mediaPlayer.Volume = volume;
         }
 
         private void SetIsMuted(bool muted)
         {
-            _mediaSession.IsMuted = muted;
+            _mediaPlayer.IsMuted = muted;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs eventArgs)
@@ -252,16 +253,16 @@ namespace FFmpegSharp.Extensions.Windows.Controls
             Stop();
         }
 
-        private void HandleMediaSessionPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void OnMediaPlayerPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (sender is not MediaSession mediaSession)
+            if (sender is not MediaPlayer mediaPlayer)
             {
                 return;
             }
 
-            var startTime = mediaSession.StartTime;
-            var endTime = mediaSession.EndTime;
-            var position = mediaSession.Position;
+            var startTime = mediaPlayer.StartTime;
+            var endTime = mediaPlayer.EndTime;
+            var position = mediaPlayer.Position;
 
             Dispatcher.BeginInvoke(() =>
             {

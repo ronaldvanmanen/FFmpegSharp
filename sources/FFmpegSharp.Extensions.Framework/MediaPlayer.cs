@@ -14,14 +14,13 @@
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
 using FFmpegSharp.Extensions.ComponentModel;
-using FFmpegSharp.Extensions.Framework;
 using System;
 using System.ComponentModel;
 using static System.Math;
 
-namespace FFmpegSharp.Extensions.Windows.Controls
+namespace FFmpegSharp.Extensions.Framework
 {
-    internal sealed class MediaSession : ObservableObject, IDisposable
+    public sealed class MediaPlayer : ObservableObject, IDisposable
     {
         private readonly MediaStream<AVPacket> _demultiplexedAudioStream;
 
@@ -55,7 +54,7 @@ namespace FFmpegSharp.Extensions.Windows.Controls
             set => _audioRenderer.IsMuted = value;
         }
 
-        public MediaSession(Uri source)
+        public MediaPlayer(Uri source)
         {
             var uri = source.IsFile ? source.LocalPath : source.ToString();
             var options = new MediaDemultiplexer.Options
@@ -86,7 +85,7 @@ namespace FFmpegSharp.Extensions.Windows.Controls
 
             _audioRenderer = new AudioRenderer();
             _audioRenderer.AudioInput.Connect(_decodedAudioStream, _audioDecoder.AudioOutput.StreamInfo);
-            _audioRenderer.Clock.PropertyChanged += HandleClockPropertyChanged;
+            _audioRenderer.Clock.PropertyChanged += OnClockPropertyChanged;
             _disposed = false;
         }
 
@@ -101,7 +100,7 @@ namespace FFmpegSharp.Extensions.Windows.Controls
             {
                 _mediaDemultiplexer.Dispose();
                 _audioDecoder.Dispose();
-                _audioRenderer.Clock.PropertyChanged -= HandleClockPropertyChanged;
+                _audioRenderer.Clock.PropertyChanged -= OnClockPropertyChanged;
                 _audioRenderer.Dispose();
             }
             finally
@@ -138,7 +137,7 @@ namespace FFmpegSharp.Extensions.Windows.Controls
             _audioRenderer.IsMuted = !_audioRenderer.IsMuted;
         }
 
-        private void HandleClockPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void OnClockPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(IClock.Time))
             {
