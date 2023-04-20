@@ -55,10 +55,5 @@ namespace FFmpegSharp
             }
             _handle = handle;
         }
-
-        public static void RegisterAll()
-        {
-            avfilter_register_all();
-        }
     }
 }

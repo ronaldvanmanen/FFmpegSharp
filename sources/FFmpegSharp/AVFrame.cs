@@ -64,13 +64,13 @@ namespace FFmpegSharp
             {
                 ThrowIfDisposed();
 
-                return new(_handle->pkt_pts);
+                return new(_handle->pts);
             }
             set
             {
                 ThrowIfDisposed();
 
-                _handle->pkt_pts = (long)value;
+                _handle->pts = (long)value;
             }
         }
 

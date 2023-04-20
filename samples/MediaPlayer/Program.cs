@@ -30,8 +30,6 @@ namespace MediaPlayer
 
                 AVCodec.RegisterAll();
                 AVDevice.RegisterAll();
-                AVFilter.RegisterAll();
-                AVFormat.RegisterAll();
                 AVFormat.NetworkInit();
 
                 var application = new App();

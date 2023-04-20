@@ -20,11 +20,6 @@ namespace FFmpegSharp
 {
     public static class AVFormat
     {
-        public static void RegisterAll()
-        {
-            av_register_all();
-        }
-
         public static void NetworkInit()
         {
             ThrowOnError(avformat_network_init());
