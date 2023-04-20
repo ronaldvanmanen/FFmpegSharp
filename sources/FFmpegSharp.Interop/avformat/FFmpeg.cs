@@ -115,7 +115,7 @@ namespace FFmpegSharp.Interop
         public static extern int avio_feof(AVIOContext* s);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern int avio_printf(AVIOContext* s, [NativeTypeName("const char *")] sbyte* fmt);
+        public static extern int avio_printf(AVIOContext* s, [NativeTypeName("const char *")] sbyte* fmt, __arglist);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void avio_print_string_array(AVIOContext* s, [NativeTypeName("const char *[]")] sbyte** strings);
@@ -225,16 +225,20 @@ namespace FFmpegSharp.Interop
         public static extern int av_append_packet(AVIOContext* s, AVPacket* pkt, int size);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern AVRational av_stream_get_r_frame_rate([NativeTypeName("const AVStream *")] AVStream* s);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_stream_set_r_frame_rate(AVStream* s, AVRational r);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("char *")]
+        [Obsolete]
         public static extern sbyte* av_stream_get_recommended_encoder_configuration([NativeTypeName("const AVStream *")] AVStream* s);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_stream_set_recommended_encoder_configuration(AVStream* s, [NativeTypeName("char *")] sbyte* configuration);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -246,56 +250,73 @@ namespace FFmpegSharp.Interop
         public static extern long av_stream_get_end_pts([NativeTypeName("const AVStream *")] AVStream* st);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int av_format_get_probe_score([NativeTypeName("const AVFormatContext *")] AVFormatContext* s);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern AVCodec* av_format_get_video_codec([NativeTypeName("const AVFormatContext *")] AVFormatContext* s);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_format_set_video_codec(AVFormatContext* s, AVCodec* c);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern AVCodec* av_format_get_audio_codec([NativeTypeName("const AVFormatContext *")] AVFormatContext* s);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_format_set_audio_codec(AVFormatContext* s, AVCodec* c);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern AVCodec* av_format_get_subtitle_codec([NativeTypeName("const AVFormatContext *")] AVFormatContext* s);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_format_set_subtitle_codec(AVFormatContext* s, AVCodec* c);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern AVCodec* av_format_get_data_codec([NativeTypeName("const AVFormatContext *")] AVFormatContext* s);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_format_set_data_codec(AVFormatContext* s, AVCodec* c);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int av_format_get_metadata_header_padding([NativeTypeName("const AVFormatContext *")] AVFormatContext* s);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_format_set_metadata_header_padding(AVFormatContext* s, int c);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void* av_format_get_opaque([NativeTypeName("const AVFormatContext *")] AVFormatContext* s);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_format_set_opaque(AVFormatContext* s, void* opaque);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("av_format_control_message")]
+        [Obsolete]
         public static extern delegate* unmanaged[Cdecl]<AVFormatContext*, int, void*, nuint, int> av_format_get_control_message_cb([NativeTypeName("const AVFormatContext *")] AVFormatContext* s);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_format_set_control_message_cb(AVFormatContext* s, [NativeTypeName("av_format_control_message")] delegate* unmanaged[Cdecl]<AVFormatContext*, int, void*, nuint, int> callback);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("AVOpenCallback")]
+        [Obsolete]
         public static extern delegate* unmanaged[Cdecl]<AVFormatContext*, AVIOContext**, sbyte*, int, AVIOInterruptCB*, AVDictionary**, int> av_format_get_open_cb([NativeTypeName("const AVFormatContext *")] AVFormatContext* s);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_format_set_open_cb(AVFormatContext* s, [NativeTypeName("AVOpenCallback")] delegate* unmanaged[Cdecl]<AVFormatContext*, AVIOContext**, sbyte*, int, AVIOInterruptCB*, AVDictionary**, int> callback);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -318,12 +339,15 @@ namespace FFmpegSharp.Interop
         public static extern sbyte* avformat_license();
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_register_all();
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_register_input_format(AVInputFormat* format);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_register_output_format(AVOutputFormat* format);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -333,9 +357,11 @@ namespace FFmpegSharp.Interop
         public static extern int avformat_network_deinit();
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern AVInputFormat* av_iformat_next([NativeTypeName("const AVInputFormat *")] AVInputFormat* f);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern AVOutputFormat* av_oformat_next([NativeTypeName("const AVOutputFormat *")] AVOutputFormat* f);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -398,6 +424,7 @@ namespace FFmpegSharp.Interop
         public static extern int avformat_open_input(AVFormatContext** ps, [NativeTypeName("const char *")] sbyte* url, AVInputFormat* fmt, AVDictionary** options);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int av_demuxer_open(AVFormatContext* ic);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -552,6 +579,7 @@ namespace FFmpegSharp.Interop
         public static extern int avformat_queue_attached_pictures(AVFormatContext* s);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int av_apply_bitstream_filters(AVCodecContext* codec, AVPacket* pkt, AVBitStreamFilterContext* bsfc);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]

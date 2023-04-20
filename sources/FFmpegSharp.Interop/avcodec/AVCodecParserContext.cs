@@ -13,6 +13,8 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+
 namespace FFmpegSharp.Interop
 {
     public unsafe partial struct AVCodecParserContext
@@ -51,13 +53,13 @@ namespace FFmpegSharp.Interop
 
         public int cur_frame_start_index;
 
-        [NativeTypeName("int64_t [4]")]
+        [NativeTypeName("int64_t[4]")]
         public fixed long cur_frame_offset[4];
 
-        [NativeTypeName("int64_t [4]")]
+        [NativeTypeName("int64_t[4]")]
         public fixed long cur_frame_pts[4];
 
-        [NativeTypeName("int64_t [4]")]
+        [NativeTypeName("int64_t[4]")]
         public fixed long cur_frame_dts[4];
 
         public int flags;
@@ -65,12 +67,13 @@ namespace FFmpegSharp.Interop
         [NativeTypeName("int64_t")]
         public long offset;
 
-        [NativeTypeName("int64_t [4]")]
+        [NativeTypeName("int64_t[4]")]
         public fixed long cur_frame_end[4];
 
         public int key_frame;
 
         [NativeTypeName("int64_t")]
+        [Obsolete]
         public long convergence_duration;
 
         public int dts_sync_point;
@@ -79,7 +82,7 @@ namespace FFmpegSharp.Interop
 
         public int pts_dts_delta;
 
-        [NativeTypeName("int64_t [4]")]
+        [NativeTypeName("int64_t[4]")]
         public fixed long cur_frame_pos[4];
 
         [NativeTypeName("int64_t")]

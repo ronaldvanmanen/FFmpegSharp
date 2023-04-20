@@ -13,6 +13,8 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+
 namespace FFmpegSharp.Interop
 {
     public partial struct AVComponentDescriptor
@@ -27,10 +29,13 @@ namespace FFmpegSharp.Interop
 
         public int depth;
 
+        [Obsolete]
         public int step_minus1;
 
+        [Obsolete]
         public int depth_minus1;
 
+        [Obsolete]
         public int offset_plus1;
     }
 }

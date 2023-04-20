@@ -13,6 +13,8 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+
 namespace FFmpegSharp.Interop
 {
     public unsafe partial struct AVCodecContext
@@ -88,12 +90,14 @@ namespace FFmpegSharp.Interop
 
         public float b_quant_factor;
 
+        [Obsolete]
         public int b_frame_strategy;
 
         public float b_quant_offset;
 
         public int has_b_frames;
 
+        [Obsolete]
         public int mpeg_quant;
 
         public float i_quant_factor;
@@ -112,6 +116,7 @@ namespace FFmpegSharp.Interop
 
         public int slice_count;
 
+        [Obsolete]
         public int prediction_method;
 
         public int* slice_offset;
@@ -130,6 +135,7 @@ namespace FFmpegSharp.Interop
 
         public int last_predictor_count;
 
+        [Obsolete]
         public int pre_me;
 
         public int me_pre_cmp;
@@ -150,8 +156,10 @@ namespace FFmpegSharp.Interop
         [NativeTypeName("uint16_t *")]
         public ushort* inter_matrix;
 
+        [Obsolete]
         public int scenechange_threshold;
 
+        [Obsolete]
         public int noise_reduction;
 
         public int intra_dc_precision;
@@ -164,20 +172,24 @@ namespace FFmpegSharp.Interop
 
         public int mb_lmax;
 
+        [Obsolete]
         public int me_penalty_compensation;
 
         public int bidir_refine;
 
+        [Obsolete]
         public int brd_scale;
 
         public int keyint_min;
 
         public int refs;
 
+        [Obsolete]
         public int chromaoffset;
 
         public int mv0_threshold;
 
+        [Obsolete]
         public int b_sensitivity;
 
         [NativeTypeName("enum AVColorPrimaries")]
@@ -230,6 +242,7 @@ namespace FFmpegSharp.Interop
         [NativeTypeName("int (*)(struct AVCodecContext *, AVFrame *, int)")]
         public delegate* unmanaged[Cdecl]<AVCodecContext*, AVFrame*, int, int> get_buffer2;
 
+        [Obsolete]
         public int refcounted_frames;
 
         public float qcompress;
@@ -260,48 +273,68 @@ namespace FFmpegSharp.Interop
 
         public int rc_initial_buffer_occupancy;
 
+        [Obsolete]
         public int coder_type;
 
+        [Obsolete]
         public int context_model;
 
+        [Obsolete]
         public int frame_skip_threshold;
 
+        [Obsolete]
         public int frame_skip_factor;
 
+        [Obsolete]
         public int frame_skip_exp;
 
+        [Obsolete]
         public int frame_skip_cmp;
 
         public int trellis;
 
+        [Obsolete]
         public int min_prediction_order;
 
+        [Obsolete]
         public int max_prediction_order;
 
         [NativeTypeName("int64_t")]
+        [Obsolete]
         public long timecode_frame_start;
 
         [NativeTypeName("void (*)(struct AVCodecContext *, void *, int, int)")]
+        [Obsolete]
         public delegate* unmanaged[Cdecl]<AVCodecContext*, void*, int, int, void> rtp_callback;
 
+        [Obsolete]
         public int rtp_payload_size;
 
+        [Obsolete]
         public int mv_bits;
 
+        [Obsolete]
         public int header_bits;
 
+        [Obsolete]
         public int i_tex_bits;
 
+        [Obsolete]
         public int p_tex_bits;
 
+        [Obsolete]
         public int i_count;
 
+        [Obsolete]
         public int p_count;
 
+        [Obsolete]
         public int skip_count;
 
+        [Obsolete]
         public int misc_bits;
 
+        [Obsolete]
         public int frame_bits;
 
         [NativeTypeName("char *")]
@@ -328,7 +361,7 @@ namespace FFmpegSharp.Interop
 
         public void* hwaccel_context;
 
-        [NativeTypeName("uint64_t [8]")]
+        [NativeTypeName("uint64_t[8]")]
         public fixed ulong error[8];
 
         public int dct_algo;
@@ -341,6 +374,7 @@ namespace FFmpegSharp.Interop
 
         public int lowres;
 
+        [Obsolete]
         public AVFrame* coded_frame;
 
         public int thread_count;
@@ -349,6 +383,7 @@ namespace FFmpegSharp.Interop
 
         public int active_thread_type;
 
+        [Obsolete]
         public int thread_safe_callbacks;
 
         [NativeTypeName("int (*)(struct AVCodecContext *, int (*)(struct AVCodecContext *, void *), void *, int *, int, int)")]
@@ -378,8 +413,10 @@ namespace FFmpegSharp.Interop
         public int subtitle_header_size;
 
         [NativeTypeName("uint64_t")]
+        [Obsolete]
         public ulong vbv_delay;
 
+        [Obsolete]
         public int side_data_only_packets;
 
         public int initial_padding;
@@ -415,6 +452,7 @@ namespace FFmpegSharp.Interop
 
         public int seek_preroll;
 
+        [Obsolete]
         public int debug_mv;
 
         [NativeTypeName("uint16_t *")]

@@ -13,6 +13,8 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+
 namespace FFmpegSharp.Interop
 {
     public unsafe partial struct AVStream
@@ -21,6 +23,7 @@ namespace FFmpegSharp.Interop
 
         public int id;
 
+        [Obsolete]
         public AVCodecContext* codec;
 
         public void* priv_data;
@@ -58,6 +61,7 @@ namespace FFmpegSharp.Interop
         public AVRational r_frame_rate;
 
         [NativeTypeName("char *")]
+        [Obsolete]
         public sbyte* recommended_encoder_configuration;
 
         public AVCodecParameters* codecpar;
@@ -91,7 +95,7 @@ namespace FFmpegSharp.Interop
 
         public AVProbeData unused6;
 
-        [NativeTypeName("int64_t [17]")]
+        [NativeTypeName("int64_t[17]")]
         public fixed long unused5[17];
 
         public AVIndexEntry* index_entries;

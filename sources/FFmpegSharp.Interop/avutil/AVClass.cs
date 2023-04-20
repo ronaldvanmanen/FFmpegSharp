@@ -13,6 +13,8 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+
 namespace FFmpegSharp.Interop
 {
     public unsafe partial struct AVClass
@@ -36,6 +38,7 @@ namespace FFmpegSharp.Interop
         public delegate* unmanaged[Cdecl]<void*, void*, void*> child_next;
 
         [NativeTypeName("const struct AVClass *(*)(const struct AVClass *)")]
+        [Obsolete]
         public delegate* unmanaged[Cdecl]<AVClass*, AVClass*> child_class_next;
 
         public AVClassCategory category;

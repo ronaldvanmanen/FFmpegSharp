@@ -50,9 +50,11 @@ namespace FFmpegSharp.Interop
         public static extern void avfilter_link_free(AVFilterLink** link);
 
         [DllImport("avfilter-7.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int avfilter_link_get_channels(AVFilterLink* link);
 
         [DllImport("avfilter-7.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void avfilter_link_set_closed(AVFilterLink* link, int closed);
 
         [DllImport("avfilter-7.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -66,13 +68,16 @@ namespace FFmpegSharp.Interop
         public static extern AVFilter* av_filter_iterate(void** opaque);
 
         [DllImport("avfilter-7.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void avfilter_register_all();
 
         [DllImport("avfilter-7.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int avfilter_register(AVFilter* filter);
 
         [DllImport("avfilter-7.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("const AVFilter *")]
+        [Obsolete]
         public static extern AVFilter* avfilter_next([NativeTypeName("const AVFilter *")] AVFilter* prev);
 
         [DllImport("avfilter-7.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -151,9 +156,11 @@ namespace FFmpegSharp.Interop
         public static extern int av_buffersink_get_frame_flags(AVFilterContext* ctx, AVFrame* frame, int flags);
 
         [DllImport("avfilter-7.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern AVBufferSinkParams* av_buffersink_params_alloc();
 
         [DllImport("avfilter-7.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern AVABufferSinkParams* av_abuffersink_params_alloc();
 
         [DllImport("avfilter-7.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]

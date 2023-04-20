@@ -60,10 +60,10 @@ namespace FFmpegSharp.Interop
         public static extern SwsContext* sws_getContext(int srcW, int srcH, [NativeTypeName("enum AVPixelFormat")] AVPixelFormat srcFormat, int dstW, int dstH, [NativeTypeName("enum AVPixelFormat")] AVPixelFormat dstFormat, int flags, SwsFilter* srcFilter, SwsFilter* dstFilter, [NativeTypeName("const double *")] double* param9);
 
         [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern int sws_scale([NativeTypeName("struct SwsContext *")] SwsContext* c, [NativeTypeName("const uint8_t *const []")] byte** srcSlice, [NativeTypeName("const int []")] int* srcStride, int srcSliceY, int srcSliceH, [NativeTypeName("uint8_t *const []")] byte** dst, [NativeTypeName("const int []")] int* dstStride);
+        public static extern int sws_scale([NativeTypeName("struct SwsContext *")] SwsContext* c, [NativeTypeName("const uint8_t *const[]")] byte** srcSlice, [NativeTypeName("const int[]")] int* srcStride, int srcSliceY, int srcSliceH, [NativeTypeName("uint8_t *const[]")] byte** dst, [NativeTypeName("const int[]")] int* dstStride);
 
         [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern int sws_setColorspaceDetails([NativeTypeName("struct SwsContext *")] SwsContext* c, [NativeTypeName("const int [4]")] int* inv_table, int srcRange, [NativeTypeName("const int [4]")] int* table, int dstRange, int brightness, int contrast, int saturation);
+        public static extern int sws_setColorspaceDetails([NativeTypeName("struct SwsContext *")] SwsContext* c, [NativeTypeName("const int[4]")] int* inv_table, int srcRange, [NativeTypeName("const int[4]")] int* table, int dstRange, int brightness, int contrast, int saturation);
 
         [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern int sws_getColorspaceDetails([NativeTypeName("struct SwsContext *")] SwsContext* c, int** inv_table, int* srcRange, int** table, int* dstRange, int* brightness, int* contrast, int* saturation);
@@ -81,27 +81,35 @@ namespace FFmpegSharp.Interop
         public static extern void sws_normalizeVec(SwsVector* a, double height);
 
         [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern SwsVector* sws_getConstVec(double c, int length);
 
         [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern SwsVector* sws_getIdentityVec();
 
         [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void sws_convVec(SwsVector* a, SwsVector* b);
 
         [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void sws_addVec(SwsVector* a, SwsVector* b);
 
         [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void sws_subVec(SwsVector* a, SwsVector* b);
 
         [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void sws_shiftVec(SwsVector* a, int shift);
 
         [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern SwsVector* sws_cloneVec(SwsVector* a);
 
         [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void sws_printVec2(SwsVector* a, AVClass* log_ctx, int log_level);
 
         [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
