@@ -67,7 +67,7 @@ namespace FFmpegSharp.Extensions.Windows.Controls
                 typeof(MediaControl),
                 new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.None, IsMutedChanged));
 
-        private MediaPlayer _mediaPlayer;
+        private MediaPlayer? _mediaPlayer;
 
         public Uri Source
         {
@@ -151,7 +151,6 @@ namespace FFmpegSharp.Extensions.Windows.Controls
         {
             Loaded += OnLoaded;
             Unloaded += OnUnloaded;
-            _mediaPlayer = null!;
         }
 
         public void Play()
@@ -222,12 +221,20 @@ namespace FFmpegSharp.Extensions.Windows.Controls
 
         private void SetVolume(double volume)
         {
-            _mediaPlayer.Volume = volume;
+            var mediaPlayer = _mediaPlayer;
+            if (mediaPlayer is not null)
+            {
+                mediaPlayer.Volume = volume;
+            }
         }
 
         private void SetIsMuted(bool muted)
         {
-            _mediaPlayer.IsMuted = muted;
+            var mediaPlayer = _mediaPlayer;
+            if (mediaPlayer is not null)
+            {
+                mediaPlayer.IsMuted = muted;
+            }
         }
 
         private void OnLoaded(object sender, RoutedEventArgs eventArgs)
