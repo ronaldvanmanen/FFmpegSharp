@@ -14,17 +14,13 @@
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using FFmpegSharp.Extensions.Framework;
 
 namespace FFmpegSharp
 {
-    internal sealed class ElementaryAudioStreamInfo : IElementaryAudioStreamInfo
+    public sealed class ElementaryAudioStream : ElementaryStream<AVFrame>, IElementaryAudioStream
     {
         private readonly AVCodecContext _codecContext;
-
-        public ElementaryAudioStreamInfo(AVCodecContext codecContext)
-        {
-            _codecContext = codecContext ?? throw new ArgumentNullException(nameof(codecContext));
-        }
 
         public long BitRate => _codecContext.BitRate;
 
@@ -51,5 +47,11 @@ namespace FFmpegSharp
         public int SampleRate => _codecContext.SampleRate;
 
         public AVTimeBase TimeBase => _codecContext.TimeBase;
+
+        internal ElementaryAudioStream(AVCodecContext codecContext, int bufferSize)
+        : base(bufferSize)
+        {
+            _codecContext = codecContext ?? throw new ArgumentNullException(nameof(codecContext));
+        }
     }
 }

@@ -13,21 +13,19 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace FFmpegSharp.Extensions.Framework
+using System;
+using System.Collections.Generic;
+
+namespace FFmpegSharp.Extensions.Linq
 {
-    public sealed partial class MediaDemultiplexer
+    public static class Extensions
     {
-        public sealed class Options
+        public static void ForAll<T>(this IEnumerable<T> items, Action<T> action)
         {
-            public long ProbeSize { get; set; } = 500000;
-
-            public long MaxAnalyzeDuration { get; set; }
-
-            public bool GeneratePts { get; set; } = false;
-
-            public bool FindStreamInfo { get; set; } = false;
-
-            public bool InjectGlobalSideData { get; set; } = false;
+            foreach (var item in items)
+            {
+                action(item);
+            }
         }
     }
 }

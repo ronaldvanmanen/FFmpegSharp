@@ -15,24 +15,14 @@
 
 namespace FFmpegSharp.Extensions.Framework
 {
-    internal sealed class PacketizedElementaryStreamInfo : IPacketizedElementaryStreamInfo
+    public interface IPacketizedElementaryStream
     {
-        private readonly AVStream _stream;
+        ICodecInfo CodecInfo { get; }
 
-        private CodecInfo _codecInfo;
+        AVDiscard Discard { get; set; }
 
-        public PacketizedElementaryStreamInfo(AVStream stream)
-        {
-            _stream = stream ?? throw new System.ArgumentNullException(nameof(stream));
-            _codecInfo = null!;
-        }
+        int Index { get; }
 
-        public ICodecInfo CodecInfo => _codecInfo ??= new CodecInfo(_stream.CodecParameters);
-
-        public AVDiscard Discard => _stream.Discard;
-
-        public int Index => _stream.Index;
-
-        public AVTimeBase TimeBase => _stream.TimeBase;
+        AVTimeBase TimeBase { get; }
     }
 }

@@ -15,7 +15,7 @@
 
 namespace FFmpegSharp
 {
-    public interface IElementaryAudioStreamInfo
+    public interface IElementaryAudioStream
     {
         long BitRate { get; }
 

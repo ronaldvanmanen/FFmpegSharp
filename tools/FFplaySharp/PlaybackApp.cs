@@ -16,6 +16,7 @@
 using System;
 using FFmpegSharp;
 using FFmpegSharp.Extensions.Framework;
+using FFmpegSharp.Extensions.Linq;
 using SDL2Sharp;
 
 namespace FFplaySharp
@@ -24,11 +25,7 @@ namespace FFplaySharp
     {
         private readonly PlaybackOptions _options;
 
-        private MediaStream<AVPacket> _packetizedElementaryAudioStream = null!;
-
         private MediaDemultiplexer _mediaDemultiplexer = null!;
-
-        private MediaStream<AVFrame> _elementaryAudioStream = null!;
 
         private AudioDecoder _audioDecoder = null!;
 
@@ -46,23 +43,16 @@ namespace FFplaySharp
 
         protected override void OnInitialized()
         {
-            _packetizedElementaryAudioStream = new MediaStream<AVPacket>(256);
-
-            _mediaDemultiplexer = new MediaDemultiplexer(_options.InputFile);
+            _mediaDemultiplexer = new MediaDemultiplexer(new Uri(_options.InputFile));
+            _mediaDemultiplexer.OutputStreams.ForAll(e => e.Discard = AVDiscard.All);
             _mediaDemultiplexer.BestAudioOutput!.Discard = AVDiscard.Default;
-            _mediaDemultiplexer.BestAudioOutput.Connect(_packetizedElementaryAudioStream);
             _mediaDemultiplexer.Start();
 
-            _elementaryAudioStream = new MediaStream<AVFrame>(16);
-
             var audioDecoderOptions = new AudioDecoder.Options { Fast = _options.Fast };
-            _audioDecoder = new AudioDecoder(audioDecoderOptions);
-            _audioDecoder.AudioInput.Connect(_packetizedElementaryAudioStream, _mediaDemultiplexer.BestAudioOutput.StreamInfo);
-            _audioDecoder.AudioOutput.Connect(_elementaryAudioStream);
+            _audioDecoder = new AudioDecoder(_mediaDemultiplexer.BestAudioOutput, audioDecoderOptions);
             _audioDecoder.Start();
 
-            _audioRenderer = new AudioRenderer();
-            _audioRenderer.AudioInput.Connect(_elementaryAudioStream, _audioDecoder.AudioOutput.StreamInfo);
+            _audioRenderer = new AudioRenderer(_audioDecoder.OutputStream);
             _audioRenderer.Start();
         }
 

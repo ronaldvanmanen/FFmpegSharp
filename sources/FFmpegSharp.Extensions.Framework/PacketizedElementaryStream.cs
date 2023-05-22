@@ -13,28 +13,30 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Collections.Concurrent;
-using System.Threading;
-
 namespace FFmpegSharp.Extensions.Framework
 {
-    public sealed class MediaStream<T>
+    public sealed class PacketizedElementaryStream : ElementaryStream<AVPacket>, IPacketizedElementaryStream
     {
-        private readonly BlockingCollection<T> _samples;
+        private readonly AVStream _stream;
 
-        public MediaStream(int bufferSize)
+        private CodecInfo _codecInfo = null!;
+
+        public ICodecInfo CodecInfo => _codecInfo ??= new CodecInfo(_stream.CodecParameters);
+
+        public AVDiscard Discard
         {
-            _samples = new BlockingCollection<T>(bufferSize);
+            get => _stream.Discard;
+            set => _stream.Discard = value;
         }
 
-        public void Write(T sample, CancellationToken cancellationToken)
-        {
-            _samples.Add(sample, cancellationToken);
-        }
+        public int Index => _stream.Index;
 
-        public T Read(CancellationToken cancellationToken)
+        public AVTimeBase TimeBase => _stream.TimeBase;
+
+        internal PacketizedElementaryStream(AVStream stream, int bufferSize)
+        : base(bufferSize)
         {
-            return _samples.Take(cancellationToken);
+            _stream = stream ?? throw new System.ArgumentNullException(nameof(stream));
         }
     }
 }

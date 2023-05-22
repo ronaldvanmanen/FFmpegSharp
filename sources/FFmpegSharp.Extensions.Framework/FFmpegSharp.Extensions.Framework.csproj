@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\FFmpegSharp.Extensions.Collections\FFmpegSharp.Extensions.Collections.csproj" />
     <ProjectReference Include="..\FFmpegSharp.Extensions.ComponentModel\FFmpegSharp.Extensions.ComponentModel.csproj" />
+    <ProjectReference Include="..\FFmpegSharp.Extensions.Linq\FFmpegSharp.Extensions.Linq.csproj" />
     <ProjectReference Include="..\FFmpegSharp\FFmpegSharp.csproj" />
   </ItemGroup>
 

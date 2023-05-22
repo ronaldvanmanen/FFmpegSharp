@@ -14,19 +14,17 @@
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
 using FFmpegSharp.Extensions.ComponentModel;
+using FFmpegSharp.Extensions.Linq;
 using System;
 using System.ComponentModel;
+using System.Linq;
 using static System.Math;
 
 namespace FFmpegSharp.Extensions.Framework
 {
     public sealed class MediaPlayer : ObservableObject, IDisposable
     {
-        private readonly MediaStream<AVPacket> _demultiplexedAudioStream;
-
         private readonly MediaDemultiplexer _mediaDemultiplexer;
-
-        private readonly MediaStream<AVFrame> _decodedAudioStream;
 
         private readonly AudioDecoder _audioDecoder;
 
@@ -56,36 +54,20 @@ namespace FFmpegSharp.Extensions.Framework
 
         public MediaPlayer(Uri source)
         {
-            var uri = source.IsFile ? source.LocalPath : source.ToString();
-            var options = new MediaDemultiplexer.Options
-            {
-                FindStreamInfo = true,
-                GeneratePts = false,
-                InjectGlobalSideData = true,
-            };
-
-            _mediaDemultiplexer = new MediaDemultiplexer(uri, options);
-
-            if (_mediaDemultiplexer.BestAudioOutput is null)
-            {
-                throw new NotSupportedException();
-            }
-
-            _demultiplexedAudioStream = new MediaStream<AVPacket>(256);
-            _mediaDemultiplexer.BestAudioOutput.Discard = AVDiscard.Default;
-            _mediaDemultiplexer.BestAudioOutput.Connect(_demultiplexedAudioStream);
+            var mediaDemultiplexerOptions = new MediaDemultiplexer.Options { FindStreamInfo = true, InjectGlobalSideData = true };
+            _mediaDemultiplexer = new MediaDemultiplexer(source, mediaDemultiplexerOptions);
+            _mediaDemultiplexer.OutputStreams.ForAll(e => e.Discard = AVDiscard.All);
+            _mediaDemultiplexer.BestAudioOutput!.Discard = AVDiscard.Default;
             _mediaDemultiplexer.Start();
 
-            _decodedAudioStream = new MediaStream<AVFrame>(16);
-
-            _audioDecoder = new AudioDecoder();
-            _audioDecoder.AudioInput.Connect(_demultiplexedAudioStream, _mediaDemultiplexer.BestAudioOutput.StreamInfo);
-            _audioDecoder.AudioOutput.Connect(_decodedAudioStream);
+            var audioDecoderOptions = new AudioDecoder.Options { Fast = false };
+            _audioDecoder = new AudioDecoder(_mediaDemultiplexer.BestAudioOutput, audioDecoderOptions);
             _audioDecoder.Start();
 
-            _audioRenderer = new AudioRenderer();
-            _audioRenderer.AudioInput.Connect(_decodedAudioStream, _audioDecoder.AudioOutput.StreamInfo);
+            _audioRenderer = new AudioRenderer(_audioDecoder.OutputStream);
             _audioRenderer.Clock.PropertyChanged += OnClockPropertyChanged;
+            _audioRenderer.Start();
+
             _disposed = false;
         }
 

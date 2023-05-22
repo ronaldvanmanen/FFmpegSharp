@@ -22,41 +22,9 @@ namespace FFmpegSharp.Extensions.Framework
 {
     public sealed partial class MediaDemultiplexer : IDisposable
     {
-        public sealed class OutputPort
-        {
-            private readonly MediaDemultiplexer _owner;
-
-            private readonly AVStream _stream;
-
-            private PacketizedElementaryStreamInfo _streamInfo;
-
-            public IPacketizedElementaryStreamInfo StreamInfo => _streamInfo ??= new PacketizedElementaryStreamInfo(_stream);
-
-            public AVDiscard Discard { get => _stream.Discard; set => _stream.Discard = value; }
-
-            public OutputPort(MediaDemultiplexer owner, AVStream stream)
-            {
-                _owner = owner ?? throw new ArgumentNullException(nameof(owner));
-                _stream = stream ?? throw new ArgumentNullException(nameof(stream));
-                _streamInfo = null!;
-            }
-
-            public void Connect(MediaStream<AVPacket> stream)
-            {
-                _owner.OnOutputConnected(this, stream);
-            }
-
-            public void Disconnect()
-            {
-                _owner.OnOutputDisconnected(this);
-            }
-        }
-
         private readonly AVFormatContext _formatContext;
 
-        private readonly List<OutputPort> _outputs;
-
-        private readonly Dictionary<int, MediaStream<AVPacket>> _outputStreams;
+        private readonly List<PacketizedElementaryStream> _outputs;
 
         private CancellationTokenSource _cancellationTokenSource;
 
@@ -68,7 +36,7 @@ namespace FFmpegSharp.Extensions.Framework
 
         public AVRelativeTime EndTime => _formatContext.EndTime;
 
-        public OutputPort? BestAudioOutput
+        public PacketizedElementaryStream? BestAudioOutput
         {
             get
             {
@@ -77,19 +45,19 @@ namespace FFmpegSharp.Extensions.Framework
                 {
                     return _outputs[index];
                 }
-                return _outputs.FirstOrDefault(e => e.StreamInfo.CodecInfo.CodecType == AVMediaType.Audio);
+                return _outputs.FirstOrDefault(e => e.CodecInfo.CodecType == AVMediaType.Audio);
             }
         }
+        public IReadOnlyList<PacketizedElementaryStream> OutputStreams => _outputs;
 
-        public MediaDemultiplexer(string uri)
+        public MediaDemultiplexer(Uri uri)
         : this(uri, null)
         { }
 
-        public MediaDemultiplexer(string uri, Options? options)
+        public MediaDemultiplexer(Uri uri, Options? options)
         {
             _formatContext = CreateFormatContext(uri, options);
-            _outputs = CreateOutputs(this, _formatContext);
-            _outputStreams = new Dictionary<int, MediaStream<AVPacket>>();
+            _outputs = CreateOutputs(_formatContext);
             _cancellationTokenSource = null!;
             _thread = null!;
             _disposed = false;
@@ -103,7 +71,7 @@ namespace FFmpegSharp.Extensions.Framework
                 {
                     _formatContext?.Dispose();
                     _outputs.Clear();
-                    _outputStreams.Clear();
+                    _outputs.Clear();
                     _cancellationTokenSource?.Dispose();
                 }
                 finally
@@ -163,18 +131,19 @@ namespace FFmpegSharp.Extensions.Framework
                         var packetRead = _formatContext.Read(ref packet);
                         if (packetRead)
                         {
-                            if (_outputStreams.TryGetValue(packet.StreamIndex, out var outputStream))
+                            var output = _outputs[packet.StreamIndex];
+                            if (output is not null)
                             {
                                 var outputPacket = new AVPacket();
                                 packet.MoveRef(ref outputPacket);
-                                outputStream.Write(outputPacket, cancellationToken);
+                                output.Write(outputPacket, cancellationToken);
                             }
                         }
                         else
                         {
-                            foreach (var outputStream in _outputStreams.Values)
+                            foreach (var output in _outputs)
                             {
-                                outputStream.Write(AVPacket.Null, cancellationToken);
+                                output.Write(AVPacket.Null, cancellationToken);
                             }
                         }
                     }
@@ -194,7 +163,7 @@ namespace FFmpegSharp.Extensions.Framework
             }
         }
 
-        private static AVFormatContext CreateFormatContext(string uri, Options? options)
+        private static AVFormatContext CreateFormatContext(Uri uri, Options? options)
         {
             var formatContext = new AVFormatContext(uri, CreateFormatContextOptions(options));
 
@@ -239,35 +208,19 @@ namespace FFmpegSharp.Extensions.Framework
             return result;
         }
 
-        private static List<OutputPort> CreateOutputs(MediaDemultiplexer owner, AVFormatContext formatContext)
+        private static List<PacketizedElementaryStream> CreateOutputs(AVFormatContext formatContext)
         {
-            var outputs = new List<OutputPort>();
+            var outputs = new List<PacketizedElementaryStream>();
             foreach (var streamInfo in formatContext.Streams)
             {
-                streamInfo.Discard = AVDiscard.All;
-                var output = CreateOutput(owner, streamInfo);
-                outputs.Add(output);
+                outputs.Add(CreateOutput(streamInfo));
             }
             return outputs;
         }
 
-        private static OutputPort CreateOutput(MediaDemultiplexer owner, AVStream streamInfo)
+        private static PacketizedElementaryStream CreateOutput(AVStream streamInfo)
         {
-            return new OutputPort(owner, streamInfo);
-        }
-
-        private void OnOutputConnected(OutputPort output, MediaStream<AVPacket> outputStream)
-        {
-            ThrowIfDisposed();
-
-            _outputStreams.Add(output.StreamInfo.Index, outputStream);
-        }
-
-        private void OnOutputDisconnected(OutputPort output)
-        {
-            ThrowIfDisposed();
-
-            _outputStreams.Remove(output.StreamInfo.Index);
+            return new PacketizedElementaryStream(streamInfo, 256);
         }
 
         private void ThrowIfDisposed()
