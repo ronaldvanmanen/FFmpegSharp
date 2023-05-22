@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FFmpegSharp.Extensions.Framework\FFmpegSharp.Extensions.Framework.csproj" />
+    <ProjectReference Include="..\FFmpegSharp.Extensions.Windows.Media\FFmpegSharp.Extensions.Windows.Media.csproj" />
   </ItemGroup>
 
 </Project>

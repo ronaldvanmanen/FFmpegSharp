@@ -18,7 +18,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using FFmpegSharp.Extensions.Framework;
+using FFmpegSharp.Extensions.Windows.Media;
 using MediaCommands = FFmpegSharp.Extensions.Windows.Input.MediaCommands;
 
 namespace FFmpegSharp.Extensions.Windows.Controls

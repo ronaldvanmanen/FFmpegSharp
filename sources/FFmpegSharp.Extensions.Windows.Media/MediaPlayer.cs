@@ -14,13 +14,14 @@
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
 using FFmpegSharp.Extensions.ComponentModel;
+using FFmpegSharp.Extensions.Framework;
 using FFmpegSharp.Extensions.Linq;
 using System;
 using System.ComponentModel;
 using System.Linq;
 using static System.Math;
 
-namespace FFmpegSharp.Extensions.Framework
+namespace FFmpegSharp.Extensions.Windows.Media
 {
     public sealed class MediaPlayer : ObservableObject, IDisposable
     {
