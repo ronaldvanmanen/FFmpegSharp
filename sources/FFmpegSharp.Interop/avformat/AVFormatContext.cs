@@ -13,6 +13,8 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+
 namespace FFmpegSharp.Interop
 {
     public unsafe partial struct AVFormatContext
@@ -37,7 +39,8 @@ namespace FFmpegSharp.Interop
 
         public AVStream** streams;
 
-        [NativeTypeName("char [1024]")]
+        [NativeTypeName("char[1024]")]
+        [Obsolete]
         public fixed sbyte filename[1024];
 
         [NativeTypeName("char *")]
@@ -183,6 +186,7 @@ namespace FFmpegSharp.Interop
         public AVCodecID data_codec_id;
 
         [NativeTypeName("int (*)(struct AVFormatContext *, AVIOContext **, const char *, int, const AVIOInterruptCB *, AVDictionary **)")]
+        [Obsolete]
         public delegate* unmanaged[Cdecl]<AVFormatContext*, AVIOContext**, sbyte*, int, AVIOInterruptCB*, AVDictionary**, int> open_cb;
 
         [NativeTypeName("char *")]

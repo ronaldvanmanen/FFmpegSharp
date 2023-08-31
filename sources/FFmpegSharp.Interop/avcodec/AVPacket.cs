@@ -13,6 +13,8 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+
 namespace FFmpegSharp.Interop
 {
     public unsafe partial struct AVPacket
@@ -45,6 +47,7 @@ namespace FFmpegSharp.Interop
         public long pos;
 
         [NativeTypeName("int64_t")]
+        [Obsolete]
         public long convergence_duration;
     }
 }

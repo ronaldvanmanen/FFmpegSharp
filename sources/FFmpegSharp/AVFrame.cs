@@ -28,107 +28,242 @@ namespace FFmpegSharp
 
         public AVTimeStamp BestEffortTimestamp
         {
-            get => new(_handle->best_effort_timestamp);
+            get
+            {
+                ThrowIfDisposed();
 
-            set => _handle->best_effort_timestamp = (long)value;
+                return new(_handle->best_effort_timestamp);
+            }
+            set
+            {
+                ThrowIfDisposed();
+
+                _handle->best_effort_timestamp = (long)value;
+            }
         }
 
         public AVTimeStamp Pts
         {
-            get => new(_handle->pts);
+            get
+            {
+                ThrowIfDisposed();
 
-            set => _handle->pts = (long)value;
+                return new(_handle->pts);
+            }
+            set
+            {
+                ThrowIfDisposed();
+
+                _handle->pts = (long)value;
+            }
         }
 
         public AVTimeStamp PacketPts
         {
-            get => new(_handle->pkt_pts);
+            get
+            {
+                ThrowIfDisposed();
 
-            set => _handle->pkt_pts = (long)value;
+                return new(_handle->pts);
+            }
+            set
+            {
+                ThrowIfDisposed();
+
+                _handle->pts = (long)value;
+            }
         }
 
         public AVTimeStamp PacketDts
         {
-            get => new(_handle->pkt_dts);
+            get
+            {
+                ThrowIfDisposed();
 
-            set => _handle->pkt_dts = (long)value;
+                return new(_handle->pkt_dts);
+            }
+            set
+            {
+                ThrowIfDisposed();
+
+                _handle->pkt_dts = (long)value;
+            }
         }
 
         public long PacketPosition
         {
-            get => _handle->pkt_pos;
+            get
+            {
+                ThrowIfDisposed();
 
-            set => _handle->pkt_pos = value;
+                return _handle->pkt_pos;
+            }
+            set
+            {
+                ThrowIfDisposed();
+
+                _handle->pkt_pos = value;
+            }
         }
 
         public AVRational SampleAspectRatio
         {
-            get => _handle->sample_aspect_ratio;
+            get
+            {
+                ThrowIfDisposed();
 
-            set => _handle->sample_aspect_ratio = value;
+                return _handle->sample_aspect_ratio;
+            }
+            set
+            {
+                ThrowIfDisposed();
+
+                _handle->sample_aspect_ratio = value;
+            }
         }
 
         public int Format
         {
-            get => _handle->format;
+            get
+            {
+                ThrowIfDisposed();
 
-            set => _handle->format = value;
+                return _handle->format;
+            }
+            set
+            {
+                ThrowIfDisposed();
+
+                _handle->format = value;
+            }
         }
 
         public AVSampleFormat SampleFormat
         {
-            get => (AVSampleFormat)_handle->format;
+            get
+            {
+                ThrowIfDisposed();
 
-            set => _handle->format = (int)value;
+                return (AVSampleFormat)_handle->format;
+            }
+            set
+            {
+                ThrowIfDisposed();
+
+                _handle->format = (int)value;
+            }
         }
 
         public AVPixelFormat PixelFormat
         {
-            get => (AVPixelFormat)_handle->format;
+            get
+            {
+                ThrowIfDisposed();
 
-            set => _handle->format = (int)value;
+                return (AVPixelFormat)_handle->format;
+            }
+            set
+            {
+                ThrowIfDisposed();
+
+                _handle->format = (int)value;
+            }
         }
 
         public int Width
         {
-            get => _handle->width;
+            get
+            {
+                ThrowIfDisposed();
 
-            set => _handle->width = value;
+                return _handle->width;
+            }
+            set
+            {
+                ThrowIfDisposed();
+
+                _handle->width = value;
+            }
         }
 
         public int Height
         {
-            get => _handle->height;
+            get
+            {
+                ThrowIfDisposed();
 
-            set => _handle->height = value;
+                return _handle->height;
+            }
+            set
+            {
+                ThrowIfDisposed();
+
+                _handle->height = value;
+            }
         }
 
         public int ChannelCount
         {
-            get => _handle->channels;
+            get
+            {
+                ThrowIfDisposed();
 
-            set => _handle->channels = value;
+                return _handle->channels;
+            }
+            set
+            {
+                ThrowIfDisposed();
+
+                _handle->channels = value;
+            }
         }
 
         public AVChannelLayout ChannelLayout
         {
-            get => (AVChannelLayout)_handle->channel_layout;
+            get
+            {
+                ThrowIfDisposed();
 
-            set => _handle->channel_layout = (ulong)value;
+                return (AVChannelLayout)_handle->channel_layout;
+            }
+            set
+            {
+                ThrowIfDisposed();
+
+                _handle->channel_layout = (ulong)value;
+            }
         }
 
         public int SampleCount
         {
-            get => _handle->nb_samples;
+            get
+            {
+                ThrowIfDisposed();
 
-            set => _handle->nb_samples = value;
+                return _handle->nb_samples;
+            }
+            set
+            {
+                ThrowIfDisposed();
+
+                _handle->nb_samples = value;
+            }
         }
 
         public int SampleRate
         {
-            get => _handle->sample_rate;
+            get
+            {
+                ThrowIfDisposed();
 
-            set => _handle->sample_rate = value;
+                return _handle->sample_rate;
+            }
+            set
+            {
+                ThrowIfDisposed();
+
+                _handle->sample_rate = value;
+            }
         }
 
         public AVFrame()
@@ -170,6 +305,8 @@ namespace FFmpegSharp
 
         public void CopyProps(AVFrame destination)
         {
+            ThrowIfDisposed();
+
             AVError.ThrowOnError(
                 av_frame_copy_props(destination._handle, _handle)
             );
@@ -177,12 +314,24 @@ namespace FFmpegSharp
 
         public void MoveRef(AVFrame destination)
         {
+            ThrowIfDisposed();
+
             av_frame_move_ref(destination._handle, _handle);
         }
 
         public void Unref()
         {
+            ThrowIfDisposed();
+
             av_frame_unref(_handle);
+        }
+
+        private void ThrowIfDisposed()
+        {
+            if (_handle == null)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
         }
 
         public static implicit operator Interop.AVFrame*(AVFrame value)

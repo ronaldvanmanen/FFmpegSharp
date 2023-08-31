@@ -1,0 +1,32 @@
+<!--
+
+  This file is part of FFmpegSharp.
+
+  FFmpegSharp is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  FFmpegSharp is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
+
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DrawingBrush x:Key="UnmuteVolumeIcon">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <DrawingGroup.Children>
+                    <GeometryDrawing Brush="#00FFFFFF" Geometry="M16 16h-16v-16h16v16z" />
+                    <GeometryDrawing Brush="#FFF6F6F6" Geometry="M16 9h-1.931l1.301 1.301-2.069 2.07-2.371-2.371h-.93v5h-2.414l-4-4h-3.586v-7h3.586l4-4h2.414v5h.93l2.371-2.371 2.069 2.069-1.301 1.302h1.931v3z" />
+                    <GeometryDrawing Brush="#FF424242" Geometry="M9 6h2v3h-2v5h-1l-4-4h-3v-5h3l4-4h1v5zm3.611.043l1.345-1.345-.655-.655-1.345 1.345c.261.173.483.395.655.655zm-.655 3.568l1.345 1.346.655-.656-1.345-1.344c-.172.26-.394.482-.655.654zm1.044-2.611c.032.162.05.329.05.5s-.018.338-.05.5h2v-1h-2z" />
+                </DrawingGroup.Children>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+</ResourceDictionary>

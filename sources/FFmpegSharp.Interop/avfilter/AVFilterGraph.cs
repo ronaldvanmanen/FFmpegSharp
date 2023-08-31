@@ -13,6 +13,8 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+
 namespace FFmpegSharp.Interop
 {
     public unsafe partial struct AVFilterGraph
@@ -29,6 +31,7 @@ namespace FFmpegSharp.Interop
         public sbyte* scale_sws_opts;
 
         [NativeTypeName("char *")]
+        [Obsolete]
         public sbyte* resample_lavr_opts;
 
         public int thread_type;

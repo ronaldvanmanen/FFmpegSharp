@@ -255,10 +255,10 @@ namespace FFmpegSharp.Interop
         public static extern long av_add_stable(AVRational ts_tb, [NativeTypeName("int64_t")] long ts, AVRational inc_tb, [NativeTypeName("int64_t")] long inc);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void av_log(void* avcl, int level, [NativeTypeName("const char *")] sbyte* fmt);
+        public static extern void av_log(void* avcl, int level, [NativeTypeName("const char *")] sbyte* fmt, __arglist);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void av_log_once(void* avcl, int initial_level, int subsequent_level, int* state, [NativeTypeName("const char *")] sbyte* fmt);
+        public static extern void av_log_once(void* avcl, int initial_level, int subsequent_level, int* state, [NativeTypeName("const char *")] sbyte* fmt, __arglist);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void av_vlog(void* avcl, int level, [NativeTypeName("const char *")] sbyte* fmt, [NativeTypeName("va_list")] sbyte* vl);
@@ -400,9 +400,11 @@ namespace FFmpegSharp.Interop
         public static extern void av_force_cpu_flags(int flags);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_set_cpu_flags_mask(int mask);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int av_parse_cpu_flags([NativeTypeName("const char *")] sbyte* s);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -548,81 +550,105 @@ namespace FFmpegSharp.Interop
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("int64_t")]
+        [Obsolete]
         public static extern long av_frame_get_best_effort_timestamp([NativeTypeName("const AVFrame *")] AVFrame* frame);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_frame_set_best_effort_timestamp(AVFrame* frame, [NativeTypeName("int64_t")] long val);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("int64_t")]
+        [Obsolete]
         public static extern long av_frame_get_pkt_duration([NativeTypeName("const AVFrame *")] AVFrame* frame);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_frame_set_pkt_duration(AVFrame* frame, [NativeTypeName("int64_t")] long val);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("int64_t")]
+        [Obsolete]
         public static extern long av_frame_get_pkt_pos([NativeTypeName("const AVFrame *")] AVFrame* frame);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_frame_set_pkt_pos(AVFrame* frame, [NativeTypeName("int64_t")] long val);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("int64_t")]
+        [Obsolete]
         public static extern long av_frame_get_channel_layout([NativeTypeName("const AVFrame *")] AVFrame* frame);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_frame_set_channel_layout(AVFrame* frame, [NativeTypeName("int64_t")] long val);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int av_frame_get_channels([NativeTypeName("const AVFrame *")] AVFrame* frame);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_frame_set_channels(AVFrame* frame, int val);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int av_frame_get_sample_rate([NativeTypeName("const AVFrame *")] AVFrame* frame);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_frame_set_sample_rate(AVFrame* frame, int val);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern AVDictionary* av_frame_get_metadata([NativeTypeName("const AVFrame *")] AVFrame* frame);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_frame_set_metadata(AVFrame* frame, AVDictionary* val);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int av_frame_get_decode_error_flags([NativeTypeName("const AVFrame *")] AVFrame* frame);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_frame_set_decode_error_flags(AVFrame* frame, int val);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int av_frame_get_pkt_size([NativeTypeName("const AVFrame *")] AVFrame* frame);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_frame_set_pkt_size(AVFrame* frame, int val);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("int8_t *")]
+        [Obsolete]
         public static extern sbyte* av_frame_get_qp_table(AVFrame* f, int* stride, int* type);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int av_frame_set_qp_table(AVFrame* f, AVBufferRef* buf, int stride, int type);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("enum AVColorSpace")]
+        [Obsolete]
         public static extern AVColorSpace av_frame_get_colorspace([NativeTypeName("const AVFrame *")] AVFrame* frame);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_frame_set_colorspace(AVFrame* frame, [NativeTypeName("enum AVColorSpace")] AVColorSpace val);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("enum AVColorRange")]
+        [Obsolete]
         public static extern AVColorRange av_frame_get_color_range([NativeTypeName("const AVFrame *")] AVFrame* frame);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_frame_set_color_range(AVFrame* frame, [NativeTypeName("enum AVColorRange")] AVColorRange val);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -815,6 +841,7 @@ namespace FFmpegSharp.Interop
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("const AVClass *")]
+        [Obsolete]
         public static extern AVClass* av_opt_child_class_next([NativeTypeName("const AVClass *")] AVClass* parent, [NativeTypeName("const AVClass *")] AVClass* prev);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -1024,16 +1051,16 @@ namespace FFmpegSharp.Interop
         public static extern sbyte* av_get_pix_fmt_string([NativeTypeName("char *")] sbyte* buf, int buf_size, [NativeTypeName("enum AVPixelFormat")] AVPixelFormat pix_fmt);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void av_read_image_line2(void* dst, [NativeTypeName("const uint8_t *[4]")] byte** data, [NativeTypeName("const int [4]")] int* linesize, [NativeTypeName("const AVPixFmtDescriptor *")] AVPixFmtDescriptor* desc, int x, int y, int c, int w, int read_pal_component, int dst_element_size);
+        public static extern void av_read_image_line2(void* dst, [NativeTypeName("const uint8_t *[4]")] byte** data, [NativeTypeName("const int[4]")] int* linesize, [NativeTypeName("const AVPixFmtDescriptor *")] AVPixFmtDescriptor* desc, int x, int y, int c, int w, int read_pal_component, int dst_element_size);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void av_read_image_line([NativeTypeName("uint16_t *")] ushort* dst, [NativeTypeName("const uint8_t *[4]")] byte** data, [NativeTypeName("const int [4]")] int* linesize, [NativeTypeName("const AVPixFmtDescriptor *")] AVPixFmtDescriptor* desc, int x, int y, int c, int w, int read_pal_component);
+        public static extern void av_read_image_line([NativeTypeName("uint16_t *")] ushort* dst, [NativeTypeName("const uint8_t *[4]")] byte** data, [NativeTypeName("const int[4]")] int* linesize, [NativeTypeName("const AVPixFmtDescriptor *")] AVPixFmtDescriptor* desc, int x, int y, int c, int w, int read_pal_component);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void av_write_image_line2([NativeTypeName("const void *")] void* src, [NativeTypeName("uint8_t *[4]")] byte** data, [NativeTypeName("const int [4]")] int* linesize, [NativeTypeName("const AVPixFmtDescriptor *")] AVPixFmtDescriptor* desc, int x, int y, int c, int w, int src_element_size);
+        public static extern void av_write_image_line2([NativeTypeName("const void *")] void* src, [NativeTypeName("uint8_t *[4]")] byte** data, [NativeTypeName("const int[4]")] int* linesize, [NativeTypeName("const AVPixFmtDescriptor *")] AVPixFmtDescriptor* desc, int x, int y, int c, int w, int src_element_size);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void av_write_image_line([NativeTypeName("const uint16_t *")] ushort* src, [NativeTypeName("uint8_t *[4]")] byte** data, [NativeTypeName("const int [4]")] int* linesize, [NativeTypeName("const AVPixFmtDescriptor *")] AVPixFmtDescriptor* desc, int x, int y, int c, int w);
+        public static extern void av_write_image_line([NativeTypeName("const uint16_t *")] ushort* src, [NativeTypeName("uint8_t *[4]")] byte** data, [NativeTypeName("const int[4]")] int* linesize, [NativeTypeName("const AVPixFmtDescriptor *")] AVPixFmtDescriptor* desc, int x, int y, int c, int w);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("enum AVPixelFormat")]

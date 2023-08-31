@@ -15,96 +15,71 @@
 
 using System;
 using System.Threading;
-using FFmpegSharp.Interop;
 using static FFmpegSharp.Interop.FFmpeg;
 
 namespace FFmpegSharp.Extensions.Framework
 {
-    public sealed partial class AudioDecoder
+    public sealed partial class AudioDecoder : IDisposable
     {
-        public sealed class AudioInputPort
-        {
-            private readonly AudioDecoder _owner;
+        private readonly PacketizedElementaryStream _inputStream;
 
-            public AudioInputPort(AudioDecoder owner)
-            {
-                _owner = owner ?? throw new ArgumentNullException(nameof(owner));
-            }
+        private readonly ElementaryAudioStream _outputStream;
 
-            public void Connect(MediaStream<AVPacket> stream, AVStream streamInfo)
-            {
-                _owner.OnInputConnected(stream, streamInfo);
-            }
+        private readonly AVCodec _codec;
 
-            public void Disconnect()
-            {
-                _owner.OnInputDisconnected();
-            }
-        }
-
-        public sealed class AudioOutputPort
-        {
-            private readonly AudioDecoder _owner;
-
-            public AVCodecContext StreamInfo => _owner._codecContext;
-
-            public AudioOutputPort(AudioDecoder owner)
-            {
-                _owner = owner ?? throw new ArgumentNullException(nameof(owner));
-            }
-
-            public void Connect(MediaStream<AVFrame> stream)
-            {
-                _owner.OnOutputConnected(stream);
-            }
-
-            public void Disconnect()
-            {
-                _owner.OnOutputDisconnected();
-            }
-        }
-
-        private readonly AudioInputPort _audioInput;
-
-        private MediaStream<AVPacket> _audioInputStream;
-
-        private readonly AudioOutputPort _audioOutput;
-
-        private MediaStream<AVFrame> _audioOutputStream;
-
-        private readonly Options _options;
-
-        private AVCodec _codec;
-
-        private AVCodecContext _codecContext;
+        private readonly AVCodecContext _codecContext;
 
         private CancellationTokenSource _cancellationTokenSource;
 
         private Thread _thread;
 
-        public AudioInputPort AudioInput => _audioInput;
+        private bool _disposed;
 
-        public AudioOutputPort AudioOutput => _audioOutput;
+        public PacketizedElementaryStream InputStream => _inputStream;
 
-        public AudioDecoder()
-        : this(null)
+        public ElementaryAudioStream OutputStream => _outputStream;
+
+        public AudioDecoder(PacketizedElementaryStream inputStream)
+        : this(inputStream, new Options())
         { }
 
-        public AudioDecoder(Options? options)
+        public AudioDecoder(PacketizedElementaryStream inputStream, Options options)
         {
-            _options = options ?? new Options();
-            _audioInput = new AudioInputPort(this);
-            _audioInputStream = null!;
-            _audioOutput = new AudioOutputPort(this);
-            _audioOutputStream = null!;
-            _codec = null!;
-            _codecContext = null!;
+            _inputStream = inputStream ?? throw new ArgumentNullException(nameof(inputStream));
+
+            _codec = AVCodec.FindDecoder(inputStream.CodecInfo.CodecID) ?? throw new InvalidOperationException();
+            _codecContext = new AVCodecContext(inputStream.CodecInfo.ToCodecParameters());
+            _codecContext.PacketTimeBase = inputStream.TimeBase;
+            _codecContext.Flags2 |= options.Fast ? AVCodecFlags2.Fast : AVCodecFlags2.None;
+            _codecContext.Open(_codec, new AVDictionary
+            {
+                    { "threads", "auto" }
+            });
+
+            _outputStream = new ElementaryAudioStream(_codecContext, 256);
+
             _cancellationTokenSource = null!;
             _thread = null!;
+            _disposed = false;
+        }
+
+        public void Dispose()
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            _cancellationTokenSource?.Dispose();
+            _cancellationTokenSource = null!;
+            _thread = null!;
+            _disposed = true;
         }
 
         public void Start()
         {
+            ThrowIfDisposed();
+
             if (_cancellationTokenSource is not null)
             {
                 return;
@@ -118,15 +93,24 @@ namespace FFmpegSharp.Extensions.Framework
 
         public void Stop()
         {
+            ThrowIfDisposed();
+
             if (_cancellationTokenSource is null)
             {
                 return;
             }
 
-            _cancellationTokenSource.Cancel();
-            _thread.Join();
-            _thread = null!;
-            _cancellationTokenSource = null!;
+            try
+            {
+                _cancellationTokenSource.Cancel();
+                _thread.Join();
+                _cancellationTokenSource.Dispose();
+            }
+            finally
+            {
+                _thread = null!;
+                _cancellationTokenSource = null!;
+            }
         }
 
         private void Decode(object? userState)
@@ -139,7 +123,7 @@ namespace FFmpegSharp.Extensions.Framework
                 {
                     while (!cancellationToken.IsCancellationRequested)
                     {
-                        using var packet = _audioInputStream.Read(cancellationToken);
+                        using var packet = _inputStream.Read(cancellationToken);
 
                         if (_codecContext.TrySend(packet, out var error))
                         {
@@ -165,6 +149,20 @@ namespace FFmpegSharp.Extensions.Framework
 
                         if (_codecContext.TryReceive(ref frame, out var error))
                         {
+                            if (frame.Pts != AVTimeStamp.Undefined)
+                            {
+                                // Adjust presentation timestamp using packet timebase and sample rate:
+                                //
+                                //   pts = pts * packet time base * sample rate)
+                                //
+                                // or
+                                //
+                                //   pts = pts * packet time base / (1 / sample rate)
+                                var packetTimeBase = _codecContext.PacketTimeBase;
+                                var sampleTimeBase = new AVTimeBase(1, frame.SampleRate);
+                                frame.Pts = frame.Pts.Rescale(packetTimeBase, sampleTimeBase);
+                            }
+
                             if (frame.ChannelLayout == 0)
                             {
                                 if (_codecContext.ChannelLayout != 0)
@@ -177,7 +175,7 @@ namespace FFmpegSharp.Extensions.Framework
                                 }
                             }
 
-                            _audioOutputStream.Write(frame, cancellationToken);
+                            _outputStream.Write(frame, cancellationToken);
                         }
                         else
                         {
@@ -201,35 +199,12 @@ namespace FFmpegSharp.Extensions.Framework
             }
         }
 
-        private void OnInputConnected(MediaStream<AVPacket> stream, AVStream streamInfo)
+        private void ThrowIfDisposed()
         {
-            _codec = AVCodec.FindDecoder(streamInfo.CodecParameters.CodecID) ?? throw new InvalidOperationException();
-            _codecContext = new AVCodecContext(streamInfo.CodecParameters);
-            _codecContext.PacketTimeBase = streamInfo.TimeBase;
-            _codecContext.Flags2 |= _options.Fast ? AVCodecFlags2.Fast : AVCodecFlags2.None;
-            _codecContext.Open(_codec, new AVDictionary
+            if (_disposed)
             {
-                { "threads", "auto" }
-            });
-            _audioInputStream = stream;
-        }
-
-        private void OnInputDisconnected()
-        {
-            _codec = null!;
-            _codecContext.Dispose();
-            _codecContext = null!;
-            _audioInputStream = null!;
-        }
-
-        private void OnOutputConnected(MediaStream<AVFrame> stream)
-        {
-            _audioOutputStream = stream ?? throw new ArgumentNullException(nameof(stream));
-        }
-
-        private void OnOutputDisconnected()
-        {
-            _audioOutputStream = null!;
+                throw new ObjectDisposedException(GetType().FullName);
+            }
         }
     }
 }

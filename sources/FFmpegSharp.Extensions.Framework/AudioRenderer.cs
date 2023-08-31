@@ -17,126 +17,152 @@ using System;
 using System.IO;
 using System.Threading;
 using FFmpegSharp.Extensions.Collections;
+using FFmpegSharp.Extensions.ComponentModel;
 using SDL2Sharp;
 using SDL2Sharp.Extensions;
 using static System.Math;
 
 namespace FFmpegSharp.Extensions.Framework
 {
-    public sealed class AudioRenderer
+    public sealed class AudioRenderer : ObservableObject, IPresentationClockSource, IDisposable
     {
-        public sealed class AudioInputPort
-        {
-            private readonly AudioRenderer _owner;
-
-            public AudioInputPort(AudioRenderer owner)
-            {
-                _owner = owner ?? throw new ArgumentNullException(nameof(owner));
-            }
-
-            public void Connect(MediaStream<AVFrame> stream, AVCodecContext streamInfo)
-            {
-                _owner.OnInputConnected(stream, streamInfo);
-            }
-
-            public void Disconnect()
-            {
-                _owner.OnInputDisconnected();
-            }
-        }
-
-        public const int MinVolume = 0;
-
-        public const int MaxVolume = SDL2Sharp.Interop.SDL.SDL_MIX_MAXVOLUME;
-
         private const int MinimumBufferSize = 512;
 
         private const int MaximumCallbacksPerSecond = 30;
 
-        private readonly AudioInputPort _audioInput;
+        private readonly ElementaryAudioStream _audioInputStream;
 
-        private MediaStream<AVFrame> _audioInputStream;
+        private readonly SwrContext _sampleConverter;
 
-        private SwrContext _audioConverter;
+        private readonly AudioDevice _device;
 
-        private AudioDevice _audioDevice;
+        private readonly CircularBuffer<byte> _sampleBuffer;
 
-        private CircularBuffer<byte> _audioBuffer;
+        private readonly AVChannelLayout _channelLayout;
 
-        private AVChannelLayout _audioChannelLayout;
+        private readonly AVSampleFormat _sampleFormat;
 
-        private AVSampleFormat _audioSampleFormat;
+        private readonly int _sampleRate;
 
-        private int _audioSampleRate;
+        private readonly Clock _internalClock;
 
-        private CancellationTokenSource _cancellationTokenSource;
-
-        private int _volume;
+        private double _volume;
 
         private bool _muted;
 
-        public int Volume
+        private CancellationTokenSource _cancellationTokenSource;
+
+        private bool _disposed;
+
+        public IClock Clock => _internalClock;
+
+        public double Volume
         {
             get => _volume;
 
             set
             {
-                if (_volume < MinVolume)
+                if (_volume < 0d)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value), value, $"value cannot be less than {MinVolume}");
+                    throw new ArgumentOutOfRangeException(nameof(value), value, $"value cannot be less than {0d}");
                 }
 
-                if (_volume > MaxVolume)
+                if (_volume > 1d)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value), value, $"value cannot be greater than {MaxVolume}");
+                    throw new ArgumentOutOfRangeException(nameof(value), value, $"value cannot be greater than {1d}");
                 }
 
                 _volume = value;
             }
         }
 
-        public bool Muted
+        public bool IsMuted
         {
             get => _muted;
 
             set => _muted = value;
         }
 
-        public AudioInputPort AudioInput => _audioInput;
-
-        public AudioRenderer()
+        public AudioRenderer(ElementaryAudioStream inputStream)
         {
-            _audioInput = new AudioInputPort(this);
-            _audioInputStream = null!;
-            _audioConverter = null!;
-            _audioDevice = null!;
-            _audioBuffer = null!; ;
+            _audioInputStream = inputStream ?? throw new ArgumentNullException(nameof(inputStream));
+
+            var format = GetAudioFormat(inputStream);
+            var channelLayout = GetAudioChannelLayout(inputStream);
+            var sampleRate = GetAudioSampleRate(inputStream);
+            var sampleCount = (ushort)Max(MinimumBufferSize, 2 << ((int)Log2(sampleRate / MaximumCallbacksPerSecond)));
+            var deviceSpec = new AudioDeviceSpec(
+                sampleRate,
+                format,
+                channelLayout,
+                sampleCount);
+
+            _sampleConverter = new SwrContext();
+            _device = new AudioDevice(deviceSpec, OnAudioDeviceCallback, null!, AudioDeviceAllowedChanges.Channels | AudioDeviceAllowedChanges.Frequency);
+            _channelLayout = GetAVChannelLayout(_device.ObtainedSpec.Channels);
+            _sampleFormat = GetAVSampleFormat(_device.ObtainedSpec.Format);
+            _sampleRate = GetSampleRate(_device.ObtainedSpec.Frequency);
+            _sampleBuffer = new CircularBuffer<byte>((int)(_device.ObtainedSpec.Size * 8), true);
+
+            _internalClock = new Clock();
+
             _cancellationTokenSource = null!;
-            _volume = 0;
+            _volume = 0.5d;
             _muted = false;
+            _disposed = false;
+        }
+
+        public void Dispose()
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            try
+            {
+                _sampleConverter?.Dispose();
+                _device?.Dispose();
+                _cancellationTokenSource?.Dispose();
+            }
+            finally
+            {
+                _disposed = true;
+            }
         }
 
         public void Start()
         {
+            ThrowIfDisposed();
+
             if (_cancellationTokenSource is not null)
             {
                 return;
             }
 
             _cancellationTokenSource = new CancellationTokenSource();
-            _audioDevice.Unpause();
+            _device.Unpause();
         }
 
         public void Stop()
         {
+            ThrowIfDisposed();
+
             if (_cancellationTokenSource is null)
             {
                 return;
             }
 
-            _cancellationTokenSource.Cancel();
-            _audioDevice.Pause();
-            _cancellationTokenSource = null!;
+            try
+            {
+                _cancellationTokenSource.Cancel();
+                _device.Pause();
+                _cancellationTokenSource.Dispose();
+            }
+            finally
+            {
+                _cancellationTokenSource = null!;
+            }
         }
 
         private void OnAudioDeviceCallback(object userdata, Span<byte> stream)
@@ -144,18 +170,21 @@ namespace FFmpegSharp.Extensions.Framework
             try
             {
                 var cancellationToken = _cancellationTokenSource.Token;
-
+                var audioPresentationTimeStamp = AVRelativeTime.Undefined;
                 var audioCallbackTime = AVRelativeTime.Current;
 
-                while (_audioBuffer.Count < stream.Length)
+                while (_sampleBuffer.Count < stream.Length)
                 {
                     using var audioFrame = _audioInputStream.Read(cancellationToken);
                     using var resampledAudioFrame = new AVFrame();
-                    resampledAudioFrame.ChannelLayout = _audioChannelLayout;
-                    resampledAudioFrame.SampleFormat = _audioSampleFormat;
-                    resampledAudioFrame.SampleRate = _audioSampleRate;
-                    _audioConverter.Convert(resampledAudioFrame, audioFrame);
+                    resampledAudioFrame.ChannelLayout = _channelLayout;
+                    resampledAudioFrame.SampleFormat = _sampleFormat;
+                    resampledAudioFrame.SampleRate = _sampleRate;
+                    _sampleConverter.Convert(resampledAudioFrame, audioFrame);
                     audioFrame.CopyProps(resampledAudioFrame);
+
+                    audioPresentationTimeStamp = AVTimeStamp.IsUndefined(audioFrame.Pts) ?
+                        AVRelativeTime.Undefined : audioFrame.Pts * _audioInputStream.TimeBase;
 
                     unsafe
                     {
@@ -170,7 +199,7 @@ namespace FFmpegSharp.Extensions.Framework
 
                         var buffer = new Span<byte>(resampledAudioFrame.Handle->extended_data[0], bufferSize);
 
-                        _audioBuffer.Enqueue(buffer);
+                        _sampleBuffer.Enqueue(buffer);
                     }
 
                     resampledAudioFrame.Unref();
@@ -180,12 +209,18 @@ namespace FFmpegSharp.Extensions.Framework
                 {
                     stream.Fill(0);
                     var mixBuffer = new Span<byte>(new byte[stream.Length]);
-                    _audioBuffer.Dequeue(mixBuffer);
-                    stream.MixAudioFormat(mixBuffer, _audioDevice.ObtainedSpec.Format, _volume);
+                    _sampleBuffer.Dequeue(mixBuffer);
+                    var volume = (int)(_volume * SDL2Sharp.Interop.SDL.SDL_MIX_MAXVOLUME);
+                    stream.MixAudioFormat(mixBuffer, _device.ObtainedSpec.Format, volume);
                 }
                 else
                 {
                     stream.Fill(0);
+                }
+
+                if (!AVRelativeTime.IsUndefined(audioPresentationTimeStamp))
+                {
+                    _internalClock.SetTimeAt(audioPresentationTimeStamp, audioCallbackTime);
                 }
             }
             catch (OperationCanceledException)
@@ -194,36 +229,12 @@ namespace FFmpegSharp.Extensions.Framework
             }
         }
 
-        private void OnInputConnected(MediaStream<AVFrame> stream, AVCodecContext streamInfo)
+        private void ThrowIfDisposed()
         {
-            var audioFormat = GetAudioFormat(streamInfo.SampleFormat);
-            var audioChannelLayout = GetAudioChannelLayout(streamInfo.ChannelLayout != 0 ? streamInfo.ChannelLayout : AVUtil.GetDefaultChannelLayout(streamInfo.ChannelCount));
-            var audioSampleRate = streamInfo.SampleRate;
-            var audioSamples = (ushort)Max(MinimumBufferSize, 2 << ((int)Log2(audioSampleRate / MaximumCallbacksPerSecond)));
-            var audioSpec = new AudioDeviceSpec(
-                audioSampleRate,
-                audioFormat,
-                audioChannelLayout,
-                audioSamples);
-
-            _audioConverter = new SwrContext();
-            _audioDevice = new AudioDevice(audioSpec, OnAudioDeviceCallback, null!, AudioDeviceAllowedChanges.Channels | AudioDeviceAllowedChanges.Frequency);
-            _audioChannelLayout = GetAVChannelLayout(_audioDevice.ObtainedSpec.Channels);
-            _audioSampleFormat = GetAVSampleFormat(_audioDevice.ObtainedSpec.Format);
-            _audioSampleRate = GetSampleRate(_audioDevice.ObtainedSpec.Frequency);
-            _audioBuffer = new CircularBuffer<byte>((int)(_audioDevice.ObtainedSpec.Size * 8), true);
-            _audioInputStream = stream;
-        }
-
-        private void OnInputDisconnected()
-        {
-            _audioConverter.Dispose();
-            _audioDevice.Dispose();
-            _audioChannelLayout = 0;
-            _audioSampleFormat = 0;
-            _audioSampleRate = 0;
-            _audioBuffer = null!;
-            _audioInputStream = null!;
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(GetType().FullName);
+            }
         }
 
         private static int GetSampleRate(int sampleRate)
@@ -265,8 +276,21 @@ namespace FFmpegSharp.Extensions.Framework
             }
         }
 
-        private static AudioChannelLayout GetAudioChannelLayout(AVChannelLayout channelLayout)
+        private static AudioChannelLayout GetAudioChannelLayout(IElementaryAudioStream codecContext)
         {
+            var channelLayout = codecContext.ChannelLayout;
+            if (channelLayout <= 0)
+            {
+                if (codecContext.ChannelCount != 0)
+                {
+                    channelLayout = AVUtil.GetDefaultChannelLayout(codecContext.ChannelCount);
+                }
+                else
+                {
+                    channelLayout = AVChannelLayout.Stereo;
+                }
+            }
+
             switch (channelLayout)
             {
                 case AVChannelLayout.Mono:
@@ -286,9 +310,14 @@ namespace FFmpegSharp.Extensions.Framework
             }
         }
 
-        private static AudioFormat GetAudioFormat(AVSampleFormat sampleFormat)
+        private static int GetAudioSampleRate(IElementaryAudioStream codecContext)
         {
-            var packedSampleFormat = sampleFormat.ToPackedFormat();
+            return codecContext.SampleRate;
+        }
+
+        private static AudioFormat GetAudioFormat(IElementaryAudioStream codecContext)
+        {
+            var packedSampleFormat = codecContext.SampleFormat.ToPackedFormat();
             switch (packedSampleFormat)
             {
                 case AVSampleFormat.Unsigned8:

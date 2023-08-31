@@ -47,7 +47,7 @@ namespace FFmpegSharp.Interop
 
         public AVFilterFormatsConfig outcfg;
 
-        [NativeTypeName("enum (unnamed enum at C:/Users/Ronald/.nuget/packages/ffmpeg/4.4.0-2212156955/lib/native/include/libavfilter/avfilter.h:518:5)")]
+        [NativeTypeName("enum (unnamed enum at C:/Users/Ronald/.nuget/packages/FFmpeg/4.4.1/lib/native/include/libavfilter/avfilter.h:518:5)")]
         public int init_state;
 
         [NativeTypeName("struct AVFilterGraph *")]
@@ -85,7 +85,7 @@ namespace FFmpegSharp.Interop
 
         public AVBufferRef* hw_frames_ctx;
 
-        [NativeTypeName("char [61440]")]
+        [NativeTypeName("char[61440]")]
         public fixed sbyte reserved[61440];
 
         public const int AVLINK_UNINIT = 0;

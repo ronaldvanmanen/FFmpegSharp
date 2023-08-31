@@ -13,6 +13,8 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+
 namespace FFmpegSharp.Interop
 {
     public unsafe partial struct AVFrame
@@ -20,7 +22,7 @@ namespace FFmpegSharp.Interop
         [NativeTypeName("uint8_t *[8]")]
         public _data_e__FixedBuffer data;
 
-        [NativeTypeName("int [8]")]
+        [NativeTypeName("int[8]")]
         public fixed int linesize[8];
 
         [NativeTypeName("uint8_t **")]
@@ -45,6 +47,7 @@ namespace FFmpegSharp.Interop
         public long pts;
 
         [NativeTypeName("int64_t")]
+        [Obsolete]
         public long pkt_pts;
 
         [NativeTypeName("int64_t")]
@@ -58,7 +61,8 @@ namespace FFmpegSharp.Interop
 
         public void* opaque;
 
-        [NativeTypeName("uint64_t [8]")]
+        [NativeTypeName("uint64_t[8]")]
+        [Obsolete]
         public fixed ulong error[8];
 
         public int repeat_pict;
@@ -123,12 +127,16 @@ namespace FFmpegSharp.Interop
         public int pkt_size;
 
         [NativeTypeName("int8_t *")]
+        [Obsolete]
         public sbyte* qscale_table;
 
+        [Obsolete]
         public int qstride;
 
+        [Obsolete]
         public int qscale_type;
 
+        [Obsolete]
         public AVBufferRef* qp_table_buf;
 
         public AVBufferRef* hw_frames_ctx;

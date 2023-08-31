@@ -27,7 +27,7 @@ namespace FFmpegSharp.Extensions.Framework
 
             public bool FindStreamInfo { get; set; } = false;
 
-            public bool InjectGlobalSideData { get; set; } = true;
+            public bool InjectGlobalSideData { get; set; } = false;
         }
     }
 }

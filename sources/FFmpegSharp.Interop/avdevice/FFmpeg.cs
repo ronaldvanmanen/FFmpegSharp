@@ -54,9 +54,11 @@ namespace FFmpegSharp.Interop
         public static extern int avdevice_dev_to_app_control_message([NativeTypeName("struct AVFormatContext *")] AVFormatContext* s, [NativeTypeName("enum AVDevToAppMessageType")] AVDevToAppMessageType type, void* data, [NativeTypeName("size_t")] nuint data_size);
 
         [DllImport("avdevice-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int avdevice_capabilities_create(AVDeviceCapabilitiesQuery** caps, AVFormatContext* s, AVDictionary** device_options);
 
         [DllImport("avdevice-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void avdevice_capabilities_free(AVDeviceCapabilitiesQuery** caps, AVFormatContext* s);
 
         [DllImport("avdevice-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]

@@ -1,4 +1,4 @@
-﻿// This file is part of FFmpegSharp.
+// This file is part of FFmpegSharp.
 //
 // FFmpegSharp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -47,31 +47,6 @@ namespace FFmpegSharp.Interop.UnitTests
             else
             {
                 Assert.Equal(48, sizeof(AVClass));
-            }
-        }
-
-        /// <summary>Provides validation of the <see cref="AVOption" /> struct.</summary>
-        public static unsafe partial class AVOptionTests
-        {
-            /// <summary>Validates that the <see cref="AVOption" /> struct is blittable.</summary>
-            [Fact]
-            public static void IsBlittableTest()
-            {
-                Assert.Equal(sizeof(AVOption), Marshal.SizeOf<AVOption>());
-            }
-
-            /// <summary>Validates that the <see cref="AVOption" /> struct has the right <see cref="LayoutKind" />.</summary>
-            [Fact]
-            public static void IsLayoutSequentialTest()
-            {
-                Assert.True(typeof(AVOption).IsLayoutSequential);
-            }
-
-            /// <summary>Validates that the <see cref="AVOption" /> struct has the correct size.</summary>
-            [Fact]
-            public static void SizeOfTest()
-            {
-                Assert.Equal(64, sizeof(AVOption));
             }
         }
     }
