@@ -13,6 +13,8 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+
 namespace FFmpegSharp.Interop
 {
     public unsafe partial struct AVSubtitleRect
@@ -27,12 +29,13 @@ namespace FFmpegSharp.Interop
 
         public int nb_colors;
 
+        [Obsolete]
         public AVPicture pict;
 
         [NativeTypeName("uint8_t *[4]")]
         public _data_e__FixedBuffer data;
 
-        [NativeTypeName("int [4]")]
+        [NativeTypeName("int[4]")]
         public fixed int linesize[4];
 
         [NativeTypeName("enum AVSubtitleType")]

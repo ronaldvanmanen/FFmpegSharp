@@ -13,16 +13,21 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+
 namespace FFmpegSharp.Interop
 {
     public unsafe partial struct AVPicture
     {
         [NativeTypeName("uint8_t *[8]")]
+        [Obsolete]
         public _data_e__FixedBuffer data;
 
-        [NativeTypeName("int [8]")]
+        [NativeTypeName("int[8]")]
+        [Obsolete]
         public fixed int linesize[8];
 
+        [Obsolete]
         public unsafe partial struct _data_e__FixedBuffer
         {
             public byte* e0;
