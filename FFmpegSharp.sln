@@ -141,9 +141,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFmpegSharp.Extensions.Wind
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFmpegSharp.Extensions.ComponentModel", "sources\FFmpegSharp.Extensions.ComponentModel\FFmpegSharp.Extensions.ComponentModel.csproj", "{B707A3A6-4DAB-472F-9BEF-0BCC8A466306}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFmpegSharp.Extensions.Linq", "sources\FFmpegSharp.Extensions.Linq\FFmpegSharp.Extensions.Linq.csproj", "{0A023F87-3623-4E6A-8C89-A450C9B79E1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFmpegSharp.Extensions.Linq", "sources\FFmpegSharp.Extensions.Linq\FFmpegSharp.Extensions.Linq.csproj", "{0A023F87-3623-4E6A-8C89-A450C9B79E1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFmpegSharp.Extensions.Windows.Media", "sources\FFmpegSharp.Extensions.Windows.Media\FFmpegSharp.Extensions.Windows.Media.csproj", "{4D5D900E-D70F-488D-B624-69D0E88F2B55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFmpegSharp.Extensions.Windows.Media", "sources\FFmpegSharp.Extensions.Windows.Media\FFmpegSharp.Extensions.Windows.Media.csproj", "{4D5D900E-D70F-488D-B624-69D0E88F2B55}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
