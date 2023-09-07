@@ -27,8 +27,6 @@ namespace MediaPlayer
             try
             {
                 SDL.Init(SDL.SDL_INIT_VIDEO | SDL.SDL_INIT_AUDIO | SDL.SDL_INIT_TIMER | SDL.SDL_INIT_EVENTS);
-
-                AVCodec.RegisterAll();
                 AVDevice.RegisterAll();
                 AVFormat.NetworkInit();
 

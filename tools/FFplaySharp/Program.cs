@@ -115,7 +115,6 @@ namespace FFplaySharp
 
         private static void Initialize()
         {
-            AVCodec.RegisterAll();
             AVDevice.RegisterAll();
             AVFormat.NetworkInit();
         }
