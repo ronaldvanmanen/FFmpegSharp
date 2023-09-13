@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SDL2Sharp" Version="0.1.0-alpha.249" />
-    <PackageReference Include="SDL2Sharp.Extensions" Version="0.1.0-alpha.249" />
+    <PackageReference Include="SDL2Sharp" Version="0.1.0" />
+    <PackageReference Include="SDL2Sharp.Extensions" Version="0.1.0" />
   </ItemGroup>
 
   <ItemGroup>
