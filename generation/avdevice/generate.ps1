@@ -1,22 +1,26 @@
 try {
-  $PackageList = (dotnet list ..\..\sources\FFmpegSharp.Interop\FFmpegSharp.Interop.csproj package)
+  $RepoRoot = Join-Path -Path $PSScriptRoot -ChildPath "..\.."
+  
+  Push-Location $PSScriptRoot
+
+  $PackageList = (dotnet list "$RepoRoot\sources\FFmpegSharp.Interop\FFmpegSharp.Interop.csproj" package)
   $PackageName = "FFmpeg"
-  $Package = $PackageList | Select-String -Pattern "^ +> $PackageName +"
-  $PackageVersionFound = $Package -match "^ +> $PackageName +(?<requestedVersion>[^ ]+) +(?<resolvedVersion>[^ ]+)"
-  if (-not $PackageVersionFound)
+  $PackageFound = "$PackageList" -match " +> $PackageName +(?<requestedVersion>[^ ]+) +(?<resolvedVersion>[^ ]+)"
+  if (-not $PackageFound)
   {
-    throw "$PackageName version not found"
+    throw "Package $PackageName not found in top-level packages of project."
   }
-
+  
   $PackageVersion = $Matches.resolvedVersion
-  $PackageDirectory = "$HOME\.nuget\packages\$PackageName\$PackageVersion"
+  $PackageDirectory = "$HOME\.nuget\packages\FFmpeg\$PackageVersion"
 
-  $Settings = Get-Content -Path .\settings.rsp -Raw
+  $Settings = Get-Content -Path ".\settings.rsp" -Raw
   $Settings = $Settings -replace '\$PackageDirectory', $PackageDirectory
-  $TemporarySettingsFile = "settings.rsp.tmp"
-  Set-Content -Path $TemporarySettingsFile -Value $Settings
+  Set-Content -Path ".\settings.rsp.tmp" -Value $Settings
 
-  & dotnet tool run ClangSharpPInvokeGenerator "@$TemporarySettingsFile"
+  & dotnet tool run ClangSharpPInvokeGenerator "@settings.rsp.tmp"
+
+  Pop-Location
 }
 catch {
   Write-Host -Object $_

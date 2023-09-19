@@ -37,9 +37,7 @@ function Generate() {
   $generationDir = Join-Path -Path $RepoRoot -ChildPath "generation"
   $generateRspFiles = Get-ChildItem -Path "$generationDir" -Recurse -Filter "generate.ps1"
   $generateRspFiles | ForEach-Object {
-    Push-Location -Path $_.DirectoryName
-    & ".\$($_.Name)"
-    Pop-Location
+    & "$_"
   }
 }
 

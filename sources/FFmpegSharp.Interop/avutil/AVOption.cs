@@ -30,7 +30,7 @@ namespace FFmpegSharp.Interop
         [NativeTypeName("enum AVOptionType")]
         public AVOptionType type;
 
-        [NativeTypeName("union (anonymous union at C:/Users/Ronald/.nuget/packages/ffmpeg/4.4.0-2212156955/lib/native/include/libavutil/opt.h:267:5)")]
+        [NativeTypeName("__AnonymousRecord_opt_L267_C5")]
         public _default_val_e__Union default_val;
 
         public double min;

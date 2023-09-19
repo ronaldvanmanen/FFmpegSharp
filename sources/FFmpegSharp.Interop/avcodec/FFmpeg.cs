@@ -49,6 +49,7 @@ namespace FFmpegSharp.Interop
         public static extern void av_packet_free(AVPacket** pkt);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_init_packet(AVPacket* pkt);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -64,15 +65,19 @@ namespace FFmpegSharp.Interop
         public static extern int av_packet_from_data(AVPacket* pkt, [NativeTypeName("uint8_t *")] byte* data, int size);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int av_dup_packet(AVPacket* pkt);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int av_copy_packet(AVPacket* dst, [NativeTypeName("const AVPacket *")] AVPacket* src);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int av_copy_packet_side_data(AVPacket* dst, [NativeTypeName("const AVPacket *")] AVPacket* src);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_free_packet(AVPacket* pkt);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -90,9 +95,11 @@ namespace FFmpegSharp.Interop
         public static extern byte* av_packet_get_side_data([NativeTypeName("const AVPacket *")] AVPacket* pkt, [NativeTypeName("enum AVPacketSideDataType")] AVPacketSideDataType type, int* size);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int av_packet_merge_side_data(AVPacket* pkt);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int av_packet_split_side_data(AVPacket* pkt);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -225,45 +232,58 @@ namespace FFmpegSharp.Interop
         public static extern AVCodecDescriptor* avcodec_descriptor_get_by_name([NativeTypeName("const char *")] sbyte* name);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern AVRational av_codec_get_pkt_timebase([NativeTypeName("const AVCodecContext *")] AVCodecContext* avctx);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_codec_set_pkt_timebase(AVCodecContext* avctx, AVRational val);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("const AVCodecDescriptor *")]
+        [Obsolete]
         public static extern AVCodecDescriptor* av_codec_get_codec_descriptor([NativeTypeName("const AVCodecContext *")] AVCodecContext* avctx);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_codec_set_codec_descriptor(AVCodecContext* avctx, [NativeTypeName("const AVCodecDescriptor *")] AVCodecDescriptor* desc);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("unsigned int")]
+        [Obsolete]
         public static extern uint av_codec_get_codec_properties([NativeTypeName("const AVCodecContext *")] AVCodecContext* avctx);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int av_codec_get_lowres([NativeTypeName("const AVCodecContext *")] AVCodecContext* avctx);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_codec_set_lowres(AVCodecContext* avctx, int val);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int av_codec_get_seek_preroll([NativeTypeName("const AVCodecContext *")] AVCodecContext* avctx);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_codec_set_seek_preroll(AVCodecContext* avctx, int val);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("uint16_t *")]
+        [Obsolete]
         public static extern ushort* av_codec_get_chroma_intra_matrix([NativeTypeName("const AVCodecContext *")] AVCodecContext* avctx);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_codec_set_chroma_intra_matrix(AVCodecContext* avctx, [NativeTypeName("uint16_t *")] ushort* val);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int av_codec_get_max_lowres([NativeTypeName("const AVCodec *")] AVCodec* codec);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern AVCodec* av_codec_next([NativeTypeName("const AVCodec *")] AVCodec* c);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -279,9 +299,11 @@ namespace FFmpegSharp.Interop
         public static extern sbyte* avcodec_license();
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void avcodec_register(AVCodec* codec);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void avcodec_register_all();
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -299,6 +321,7 @@ namespace FFmpegSharp.Interop
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("const AVClass *")]
+        [Obsolete]
         public static extern AVClass* avcodec_get_frame_class();
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -306,6 +329,7 @@ namespace FFmpegSharp.Interop
         public static extern AVClass* avcodec_get_subtitle_rect_class();
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int avcodec_copy_context(AVCodecContext* dest, [NativeTypeName("const AVCodecContext *")] AVCodecContext* src);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -333,7 +357,7 @@ namespace FFmpegSharp.Interop
         public static extern void avcodec_align_dimensions(AVCodecContext* s, int* width, int* height);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void avcodec_align_dimensions2(AVCodecContext* s, int* width, int* height, [NativeTypeName("int [8]")] int* linesize_align);
+        public static extern void avcodec_align_dimensions2(AVCodecContext* s, int* width, int* height, [NativeTypeName("int[8]")] int* linesize_align);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern int avcodec_enum_to_chroma_pos(int* xpos, int* ypos, [NativeTypeName("enum AVChromaLocation")] AVChromaLocation pos);
@@ -343,9 +367,11 @@ namespace FFmpegSharp.Interop
         public static extern AVChromaLocation avcodec_chroma_pos_to_enum(int xpos, int ypos);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int avcodec_decode_audio4(AVCodecContext* avctx, AVFrame* frame, int* got_frame_ptr, [NativeTypeName("const AVPacket *")] AVPacket* avpkt);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int avcodec_decode_video2(AVCodecContext* avctx, AVFrame* picture, int* got_picture_ptr, [NativeTypeName("const AVPacket *")] AVPacket* avpkt);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -371,9 +397,11 @@ namespace FFmpegSharp.Interop
         public static extern AVCodecParser* av_parser_iterate(void** opaque);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern AVCodecParser* av_parser_next([NativeTypeName("const AVCodecParser *")] AVCodecParser* c);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_register_codec_parser(AVCodecParser* parser);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -383,45 +411,57 @@ namespace FFmpegSharp.Interop
         public static extern int av_parser_parse2(AVCodecParserContext* s, AVCodecContext* avctx, [NativeTypeName("uint8_t **")] byte** poutbuf, int* poutbuf_size, [NativeTypeName("const uint8_t *")] byte* buf, int buf_size, [NativeTypeName("int64_t")] long pts, [NativeTypeName("int64_t")] long dts, [NativeTypeName("int64_t")] long pos);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int av_parser_change(AVCodecParserContext* s, AVCodecContext* avctx, [NativeTypeName("uint8_t **")] byte** poutbuf, int* poutbuf_size, [NativeTypeName("const uint8_t *")] byte* buf, int buf_size, int keyframe);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void av_parser_close(AVCodecParserContext* s);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int avcodec_encode_audio2(AVCodecContext* avctx, AVPacket* avpkt, [NativeTypeName("const AVFrame *")] AVFrame* frame, int* got_packet_ptr);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int avcodec_encode_video2(AVCodecContext* avctx, AVPacket* avpkt, [NativeTypeName("const AVFrame *")] AVFrame* frame, int* got_packet_ptr);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern int avcodec_encode_subtitle(AVCodecContext* avctx, [NativeTypeName("uint8_t *")] byte* buf, int buf_size, [NativeTypeName("const AVSubtitle *")] AVSubtitle* sub);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int avpicture_alloc(AVPicture* picture, [NativeTypeName("enum AVPixelFormat")] AVPixelFormat pix_fmt, int width, int height);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void avpicture_free(AVPicture* picture);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int avpicture_fill(AVPicture* picture, [NativeTypeName("const uint8_t *")] byte* ptr, [NativeTypeName("enum AVPixelFormat")] AVPixelFormat pix_fmt, int width, int height);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int avpicture_layout([NativeTypeName("const AVPicture *")] AVPicture* src, [NativeTypeName("enum AVPixelFormat")] AVPixelFormat pix_fmt, int width, int height, [NativeTypeName("unsigned char *")] byte* dest, int dest_size);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int avpicture_get_size([NativeTypeName("enum AVPixelFormat")] AVPixelFormat pix_fmt, int width, int height);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_picture_copy(AVPicture* dst, [NativeTypeName("const AVPicture *")] AVPicture* src, [NativeTypeName("enum AVPixelFormat")] AVPixelFormat pix_fmt, int width, int height);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int av_picture_crop(AVPicture* dst, [NativeTypeName("const AVPicture *")] AVPicture* src, [NativeTypeName("enum AVPixelFormat")] AVPixelFormat pix_fmt, int top_band, int left_band);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int av_picture_pad(AVPicture* dst, [NativeTypeName("const AVPicture *")] AVPicture* src, int height, int width, [NativeTypeName("enum AVPixelFormat")] AVPixelFormat pix_fmt, int padtop, int padbottom, int padleft, int padright, int* color);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void avcodec_get_chroma_sub_sample([NativeTypeName("enum AVPixelFormat")] AVPixelFormat pix_fmt, int* h_shift, int* v_shift);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -433,14 +473,17 @@ namespace FFmpegSharp.Interop
         public static extern AVPixelFormat avcodec_find_best_pix_fmt_of_list([NativeTypeName("const enum AVPixelFormat *")] AVPixelFormat* pix_fmt_list, [NativeTypeName("enum AVPixelFormat")] AVPixelFormat src_pix_fmt, int has_alpha, int* loss_ptr);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int avcodec_get_pix_fmt_loss([NativeTypeName("enum AVPixelFormat")] AVPixelFormat dst_pix_fmt, [NativeTypeName("enum AVPixelFormat")] AVPixelFormat src_pix_fmt, int has_alpha);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("enum AVPixelFormat")]
+        [Obsolete]
         public static extern AVPixelFormat avcodec_find_best_pix_fmt_of_2([NativeTypeName("enum AVPixelFormat")] AVPixelFormat dst_pix_fmt1, [NativeTypeName("enum AVPixelFormat")] AVPixelFormat dst_pix_fmt2, [NativeTypeName("enum AVPixelFormat")] AVPixelFormat src_pix_fmt, int has_alpha, int* loss_ptr);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("enum AVPixelFormat")]
+        [Obsolete]
         public static extern AVPixelFormat avcodec_find_best_pix_fmt2([NativeTypeName("enum AVPixelFormat")] AVPixelFormat dst_pix_fmt1, [NativeTypeName("enum AVPixelFormat")] AVPixelFormat dst_pix_fmt2, [NativeTypeName("enum AVPixelFormat")] AVPixelFormat src_pix_fmt, int has_alpha, int* loss_ptr);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -449,6 +492,7 @@ namespace FFmpegSharp.Interop
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
+        [Obsolete]
         public static extern nuint av_get_codec_tag_string([NativeTypeName("char *")] sbyte* buf, [NativeTypeName("size_t")] nuint buf_size, [NativeTypeName("unsigned int")] uint codec_tag);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -491,23 +535,29 @@ namespace FFmpegSharp.Interop
         public static extern int av_get_audio_frame_duration2(AVCodecParameters* par, int frame_bytes);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_register_bitstream_filter(AVBitStreamFilter* bsf);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern AVBitStreamFilterContext* av_bitstream_filter_init([NativeTypeName("const char *")] sbyte* name);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int av_bitstream_filter_filter(AVBitStreamFilterContext* bsfc, AVCodecContext* avctx, [NativeTypeName("const char *")] sbyte* args, [NativeTypeName("uint8_t **")] byte** poutbuf, int* poutbuf_size, [NativeTypeName("const uint8_t *")] byte* buf, int buf_size, int keyframe);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_bitstream_filter_close(AVBitStreamFilterContext* bsf);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("const AVBitStreamFilter *")]
+        [Obsolete]
         public static extern AVBitStreamFilter* av_bitstream_filter_next([NativeTypeName("const AVBitStreamFilter *")] AVBitStreamFilter* f);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("const AVBitStreamFilter *")]
+        [Obsolete]
         public static extern AVBitStreamFilter* av_bsf_next(void** opaque);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -521,12 +571,15 @@ namespace FFmpegSharp.Interop
         public static extern uint av_xiphlacing([NativeTypeName("unsigned char *")] byte* s, [NativeTypeName("unsigned int")] uint v);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern void av_register_hwaccel(AVHWAccel* hwaccel);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern AVHWAccel* av_hwaccel_next([NativeTypeName("const AVHWAccel *")] AVHWAccel* hwaccel);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [Obsolete]
         public static extern int av_lockmgr_register([NativeTypeName("int (*)(void **, enum AVLockOp)")] delegate* unmanaged[Cdecl]<void**, AVLockOp, int> cb);
 
         [DllImport("avcodec-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]

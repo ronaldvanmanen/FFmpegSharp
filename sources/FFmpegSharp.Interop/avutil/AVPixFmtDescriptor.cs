@@ -35,7 +35,7 @@ namespace FFmpegSharp.Interop
         [NativeTypeName("uint64_t")]
         public ulong flags;
 
-        [NativeTypeName("AVComponentDescriptor [4]")]
+        [NativeTypeName("AVComponentDescriptor[4]")]
         public _comp_e__FixedBuffer comp;
 
         [NativeTypeName("const char *")]

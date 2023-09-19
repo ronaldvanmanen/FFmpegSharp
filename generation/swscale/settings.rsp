@@ -2,8 +2,8 @@
 --file
 libswscale.h
 --include-directory
-$PackageDirectory\lib\native\include\libswscale
-$PackageDirectory\lib\native\include
+$PackageDirectory\build\native\include\libswscale
+$PackageDirectory\build\native\include
 --libraryPath
 swscale-5.dll
 --output
@@ -11,5 +11,5 @@ swscale-5.dll
 --test-output
 ..\..\tests\FFmpegSharp.Interop.UnitTests\swscale
 --traverse
-$PackageDirectory\lib\native\include\libswscale\swscale.h
-$PackageDirectory\lib\native\include\libswscale\version.h
+$PackageDirectory\build\native\include\libswscale\swscale.h
+$PackageDirectory\build\native\include\libswscale\version.h

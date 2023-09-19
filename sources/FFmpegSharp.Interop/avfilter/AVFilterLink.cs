@@ -47,7 +47,7 @@ namespace FFmpegSharp.Interop
 
         public AVFilterFormatsConfig outcfg;
 
-        [NativeTypeName("enum (unnamed enum at C:/Users/Ronald/.nuget/packages/FFmpeg/4.4.1/lib/native/include/libavfilter/avfilter.h:518:5)")]
+        [NativeTypeName("__AnonymousEnum_avfilter_L518_C5")]
         public int init_state;
 
         [NativeTypeName("struct AVFilterGraph *")]

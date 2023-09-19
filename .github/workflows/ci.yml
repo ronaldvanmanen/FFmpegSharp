@@ -30,6 +30,11 @@ jobs:
         source-url: https://pkgs.dev.azure.com/ronaldvanmanen/_packaging/ronaldvanmanen/nuget/v3/index.json
       env:
         NUGET_AUTH_TOKEN: ${{ secrets.AZURE_DEVOPS_PAT }}
+    - run: >
+        dotnet nuget update source azure
+        --username GitHub
+        --password ${{ secrets.AZURE_DEVOPS_PAT }}
+        --store-password-in-clear-text
     - run: .\scripts\cibuild.cmd -configuration ${{ matrix.configuration }} -architecture ${{ matrix.architecture }} /p:PlatformTarget=${{ matrix.architecture }}
       shell: cmd
       env: 
@@ -55,6 +60,11 @@ jobs:
         source-url: https://pkgs.dev.azure.com/ronaldvanmanen/_packaging/ronaldvanmanen/nuget/v3/index.json
       env:
         NUGET_AUTH_TOKEN: ${{ secrets.AZURE_DEVOPS_PAT }}
+    - run: >
+        dotnet nuget update source azure
+        --username GitHub
+        --password ${{ secrets.AZURE_DEVOPS_PAT }}
+        --store-password-in-clear-text
     - run: .\scripts\cibuild.cmd -configuration release -architecture x64
       shell: cmd
       env:

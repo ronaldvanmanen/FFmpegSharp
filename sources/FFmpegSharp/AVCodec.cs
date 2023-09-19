@@ -57,11 +57,6 @@ namespace FFmpegSharp
             _handle = handle;
         }
 
-        public static void RegisterAll()
-        {
-            avcodec_register_all();
-        }
-
         public static AVCodec? FindDecoder(AVCodecID id)
         {
             var codec = avcodec_find_decoder((Interop.AVCodecID)id);
