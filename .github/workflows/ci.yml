@@ -13,11 +13,46 @@ on:
       - 'main'
 
 jobs:
-  windows:
+  build-linux:
     runs-on: ${{ matrix.os }}-latest
     strategy:
       matrix:
         architecture: [ x64 ]
+        configuration: [ debug, release ]
+        os: [ ubuntu ]
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '6.0.x'
+        source-url: https://pkgs.dev.azure.com/ronaldvanmanen/_packaging/ronaldvanmanen/nuget/v3/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{ secrets.AZURE_DEVOPS_PAT }}
+    - run: >
+        dotnet nuget update source azure
+        --username GitHub
+        --password ${{ secrets.AZURE_DEVOPS_PAT }}
+        --store-password-in-clear-text
+    - run: ./scripts/cibuild.sh --configuration ${{ matrix.configuration }} --architecture ${{ matrix.architecture }}
+      shell: bash
+      env: 
+        OVERRIDE_RUNTIME_IDENTIFIER: linux-${{ matrix.architecture }}
+    - uses: actions/upload-artifact@v3
+      with:
+        name: ${{ matrix.os }}_${{ matrix.configuration }}_${{ matrix.architecture }}
+        path: |
+          ./artifacts/bin/**/*
+          ./artifacts/log/**/*
+          ./artifacts/pkg/**/*
+          ./artifacts/tst/**/*
+        if-no-files-found: error
+  build-windows:
+    runs-on: ${{ matrix.os }}-latest
+    strategy:
+      matrix:
+        architecture: [ x64, x86 ]
         configuration: [ debug, release ]
         os: [ windows ]
     steps:
@@ -78,10 +113,10 @@ jobs:
           .\artifacts\pkg\**\*
           .\artifacts\tst\**\*
         if-no-files-found: error
-  publish-nightlies-azure:
+  publish-nuget-azure:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'push' }}
-    needs: [ windows, build-nuget ]
+    needs: [ build-linux, build-windows, build-nuget ]
     steps:
     - uses: actions/download-artifact@v3
       with:
@@ -94,10 +129,10 @@ jobs:
       env:
         NUGET_AUTH_TOKEN: ${{ secrets.AZURE_DEVOPS_PAT }}
     - run: dotnet nuget push "./artifacts/pkg/Release/*.nupkg" --api-key AzureDevOps
-  publish-nightlies-github:
+  publish-nuget-github:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'push' }}
-    needs: [ windows, build-nuget ]
+    needs: [ build-linux, build-windows, build-nuget ]
     steps:
     - uses: actions/download-artifact@v3
       with:
