@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <Platforms>AnyCPU</Platforms>
     <Description>Interop bindings for FFmpeg.</Description>
     <PackageTags>FFmpeg</PackageTags>
@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="FFmpeg" Version="4.4.4" />
+    <PackageReference Include="System.Memory" Version="4.5.5" />
   </ItemGroup>
 
 </Project>
