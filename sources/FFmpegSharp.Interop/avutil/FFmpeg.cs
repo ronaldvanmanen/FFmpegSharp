@@ -123,19 +123,6 @@ namespace FFmpegSharp.Interop
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void* av_dynarray2_add(void** tab_ptr, int* nb_ptr, [NativeTypeName("size_t")] UIntPtr elem_size, [NativeTypeName("const uint8_t *")] byte* elem_data);
 
-        public static int av_size_mult([NativeTypeName("size_t")] UIntPtr a, [NativeTypeName("size_t")] UIntPtr b, [NativeTypeName("size_t *")] UIntPtr* r)
-        {
-            UIntPtr t = a * b;
-
-            if ((a | b) >= ((nuint)(1) << (sizeof(UIntPtr) * 4)) && (a) != 0 && t / a != b)
-            {
-                return (-(22));
-            }
-
-            *r = t;
-            return 0;
-        }
-
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void av_max_alloc([NativeTypeName("size_t")] UIntPtr max);
 

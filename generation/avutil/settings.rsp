@@ -50,6 +50,7 @@ av_sat_sub32
 av_sat_sub32_c
 av_sat_sub64
 av_sat_sub64_c
+av_size_mult
 av_x_if_null
 tm
 AV_TIME_BASE_Q
