@@ -310,7 +310,7 @@ namespace FFmpegSharp
             }
         }
 
-        public bool TryGetValue(string key, [MaybeNullWhen(false)] out string value)
+        public bool TryGetValue(string key, out string value)
         {
             ThrowIfDisposed();
 
@@ -323,7 +323,7 @@ namespace FFmpegSharp
             var entry = av_dict_get(_handle, marshaledKey, null, AV_DICT_MATCH_CASE);
             if (entry == null)
             {
-                value = null;
+                value = null!;
                 return false;
             }
             value = new string(entry->value);

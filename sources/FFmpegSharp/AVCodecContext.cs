@@ -193,11 +193,13 @@ namespace FFmpegSharp
         {
             if (!TrySend(packet, out var error))
             {
+#pragma warning disable CS8597 // Thrown value may be null.
                 throw error;
+#pragma warning restore CS8597 // Thrown value may be null.
             }
         }
 
-        public bool TrySend(in AVPacket packet, [NotNullWhen(false)] out AVError? error)
+        public bool TrySend(in AVPacket packet, out AVError? error)
         {
             ThrowIfDisposed();
 
@@ -210,11 +212,13 @@ namespace FFmpegSharp
         {
             if (!TryReceive(ref frame, out var error))
             {
+#pragma warning disable CS8597 // Thrown value may be null.
                 throw error;
+#pragma warning restore CS8597 // Thrown value may be null.
             }
         }
 
-        public bool TryReceive(ref AVFrame frame, [NotNullWhen(false)] out AVError? error)
+        public bool TryReceive(ref AVFrame frame, out AVError? error)
         {
             ThrowIfDisposed();
 

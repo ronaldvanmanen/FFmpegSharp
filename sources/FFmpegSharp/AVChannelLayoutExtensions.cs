@@ -23,7 +23,9 @@ namespace FFmpegSharp
     {
         public static IEnumerable<AVChannels> GetChannels(this AVChannelLayout layout)
         {
-            return Enum.GetValues<AVChannels>().Where(e => ((AVChannels)layout).HasFlag(e));
+            return Enum.GetValues(typeof(AVChannels))
+                .Cast<AVChannels>()
+                .Where(e => ((AVChannels)layout).HasFlag(e));
         }
     }
 }
