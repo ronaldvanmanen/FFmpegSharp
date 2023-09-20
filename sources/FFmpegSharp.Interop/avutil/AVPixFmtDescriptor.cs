@@ -13,9 +13,6 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-using System.Runtime.InteropServices;
-
 namespace FFmpegSharp.Interop
 {
     public unsafe partial struct AVPixFmtDescriptor
@@ -48,15 +45,16 @@ namespace FFmpegSharp.Interop
             public AVComponentDescriptor e2;
             public AVComponentDescriptor e3;
 
-            public ref AVComponentDescriptor this[int index]
+            public unsafe ref AVComponentDescriptor this[int index]
             {
                 get
                 {
-                    return ref AsSpan()[index];
+                    fixed (AVComponentDescriptor* pThis = &e0)
+                    {
+                        return ref pThis[index];
+                    }
                 }
             }
-
-            public Span<AVComponentDescriptor> AsSpan() => MemoryMarshal.CreateSpan(ref e0, 4);
         }
     }
 }

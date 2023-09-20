@@ -46,53 +46,53 @@ namespace FFmpegSharp.Interop
         public static extern sbyte av_get_picture_type_char([NativeTypeName("enum AVPictureType")] AVPictureType pict_type);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern int av_strerror(int errnum, [NativeTypeName("char *")] sbyte* errbuf, [NativeTypeName("size_t")] nuint errbuf_size);
+        public static extern int av_strerror(int errnum, [NativeTypeName("char *")] sbyte* errbuf, [NativeTypeName("size_t")] UIntPtr errbuf_size);
 
         [return: NativeTypeName("char *")]
-        public static sbyte* av_make_error_string([NativeTypeName("char *")] sbyte* errbuf, [NativeTypeName("size_t")] nuint errbuf_size, int errnum)
+        public static sbyte* av_make_error_string([NativeTypeName("char *")] sbyte* errbuf, [NativeTypeName("size_t")] UIntPtr errbuf_size, int errnum)
         {
             _ = av_strerror(errnum, errbuf, errbuf_size);
             return errbuf;
         }
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void* av_malloc([NativeTypeName("size_t")] nuint size);
+        public static extern void* av_malloc([NativeTypeName("size_t")] UIntPtr size);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void* av_mallocz([NativeTypeName("size_t")] nuint size);
+        public static extern void* av_mallocz([NativeTypeName("size_t")] UIntPtr size);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void* av_malloc_array([NativeTypeName("size_t")] nuint nmemb, [NativeTypeName("size_t")] nuint size);
+        public static extern void* av_malloc_array([NativeTypeName("size_t")] UIntPtr nmemb, [NativeTypeName("size_t")] UIntPtr size);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void* av_mallocz_array([NativeTypeName("size_t")] nuint nmemb, [NativeTypeName("size_t")] nuint size);
+        public static extern void* av_mallocz_array([NativeTypeName("size_t")] UIntPtr nmemb, [NativeTypeName("size_t")] UIntPtr size);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void* av_calloc([NativeTypeName("size_t")] nuint nmemb, [NativeTypeName("size_t")] nuint size);
+        public static extern void* av_calloc([NativeTypeName("size_t")] UIntPtr nmemb, [NativeTypeName("size_t")] UIntPtr size);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void* av_realloc(void* ptr, [NativeTypeName("size_t")] nuint size);
+        public static extern void* av_realloc(void* ptr, [NativeTypeName("size_t")] UIntPtr size);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern int av_reallocp(void* ptr, [NativeTypeName("size_t")] nuint size);
+        public static extern int av_reallocp(void* ptr, [NativeTypeName("size_t")] UIntPtr size);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void* av_realloc_f(void* ptr, [NativeTypeName("size_t")] nuint nelem, [NativeTypeName("size_t")] nuint elsize);
+        public static extern void* av_realloc_f(void* ptr, [NativeTypeName("size_t")] UIntPtr nelem, [NativeTypeName("size_t")] UIntPtr elsize);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void* av_realloc_array(void* ptr, [NativeTypeName("size_t")] nuint nmemb, [NativeTypeName("size_t")] nuint size);
+        public static extern void* av_realloc_array(void* ptr, [NativeTypeName("size_t")] UIntPtr nmemb, [NativeTypeName("size_t")] UIntPtr size);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern int av_reallocp_array(void* ptr, [NativeTypeName("size_t")] nuint nmemb, [NativeTypeName("size_t")] nuint size);
+        public static extern int av_reallocp_array(void* ptr, [NativeTypeName("size_t")] UIntPtr nmemb, [NativeTypeName("size_t")] UIntPtr size);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void* av_fast_realloc(void* ptr, [NativeTypeName("unsigned int *")] uint* size, [NativeTypeName("size_t")] nuint min_size);
+        public static extern void* av_fast_realloc(void* ptr, [NativeTypeName("unsigned int *")] uint* size, [NativeTypeName("size_t")] UIntPtr min_size);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void av_fast_malloc(void* ptr, [NativeTypeName("unsigned int *")] uint* size, [NativeTypeName("size_t")] nuint min_size);
+        public static extern void av_fast_malloc(void* ptr, [NativeTypeName("unsigned int *")] uint* size, [NativeTypeName("size_t")] UIntPtr min_size);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void av_fast_mallocz(void* ptr, [NativeTypeName("unsigned int *")] uint* size, [NativeTypeName("size_t")] nuint min_size);
+        public static extern void av_fast_mallocz(void* ptr, [NativeTypeName("unsigned int *")] uint* size, [NativeTypeName("size_t")] UIntPtr min_size);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void av_free(void* ptr);
@@ -106,10 +106,10 @@ namespace FFmpegSharp.Interop
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("char *")]
-        public static extern sbyte* av_strndup([NativeTypeName("const char *")] sbyte* s, [NativeTypeName("size_t")] nuint len);
+        public static extern sbyte* av_strndup([NativeTypeName("const char *")] sbyte* s, [NativeTypeName("size_t")] UIntPtr len);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void* av_memdup([NativeTypeName("const void *")] void* p, [NativeTypeName("size_t")] nuint size);
+        public static extern void* av_memdup([NativeTypeName("const void *")] void* p, [NativeTypeName("size_t")] UIntPtr size);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void av_memcpy_backptr([NativeTypeName("uint8_t *")] byte* dst, int back, int cnt);
@@ -121,13 +121,13 @@ namespace FFmpegSharp.Interop
         public static extern int av_dynarray_add_nofree(void* tab_ptr, int* nb_ptr, void* elem);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void* av_dynarray2_add(void** tab_ptr, int* nb_ptr, [NativeTypeName("size_t")] nuint elem_size, [NativeTypeName("const uint8_t *")] byte* elem_data);
+        public static extern void* av_dynarray2_add(void** tab_ptr, int* nb_ptr, [NativeTypeName("size_t")] UIntPtr elem_size, [NativeTypeName("const uint8_t *")] byte* elem_data);
 
-        public static int av_size_mult([NativeTypeName("size_t")] nuint a, [NativeTypeName("size_t")] nuint b, [NativeTypeName("size_t *")] nuint* r)
+        public static int av_size_mult([NativeTypeName("size_t")] UIntPtr a, [NativeTypeName("size_t")] UIntPtr b, [NativeTypeName("size_t *")] UIntPtr* r)
         {
-            nuint t = a * b;
+            UIntPtr t = a * b;
 
-            if (unchecked((a | b) >= ((nuint)(1) << (sizeof(nuint) * 4)) && (a) != 0) && t / a != b)
+            if ((a | b) >= ((nuint)(1) << (sizeof(UIntPtr) * 4)) && (a) != 0 && t / a != b)
             {
                 return (-(22));
             }
@@ -137,7 +137,7 @@ namespace FFmpegSharp.Interop
         }
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void av_max_alloc([NativeTypeName("size_t")] nuint max);
+        public static extern void av_max_alloc([NativeTypeName("size_t")] UIntPtr max);
 
         public static AVRational av_make_q(int num, int den)
         {
@@ -270,7 +270,7 @@ namespace FFmpegSharp.Interop
         public static extern void av_log_set_level(int level);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void av_log_set_callback([NativeTypeName("void (*)(void *, int, const char *, va_list)")] delegate* unmanaged[Cdecl]<void*, int, sbyte*, sbyte*, void> callback);
+        public static extern void av_log_set_callback([NativeTypeName("void (*)(void *, int, const char *, va_list)")] IntPtr callback);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void av_log_default_callback(void* avcl, int level, [NativeTypeName("const char *")] sbyte* fmt, [NativeTypeName("va_list")] sbyte* vl);
@@ -311,7 +311,7 @@ namespace FFmpegSharp.Interop
         public static extern AVBufferRef* av_buffer_allocz(int size);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern AVBufferRef* av_buffer_create([NativeTypeName("uint8_t *")] byte* data, int size, [NativeTypeName("void (*)(void *, uint8_t *)")] delegate* unmanaged[Cdecl]<void*, byte*, void> free, void* opaque, int flags);
+        public static extern AVBufferRef* av_buffer_create([NativeTypeName("uint8_t *")] byte* data, int size, [NativeTypeName("void (*)(void *, uint8_t *)")] IntPtr free, void* opaque, int flags);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void av_buffer_default_free(void* opaque, [NativeTypeName("uint8_t *")] byte* data);
@@ -341,10 +341,10 @@ namespace FFmpegSharp.Interop
         public static extern int av_buffer_replace(AVBufferRef** dst, AVBufferRef* src);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern AVBufferPool* av_buffer_pool_init(int size, [NativeTypeName("AVBufferRef *(*)(int)")] delegate* unmanaged[Cdecl]<int, AVBufferRef*> alloc);
+        public static extern AVBufferPool* av_buffer_pool_init(int size, [NativeTypeName("AVBufferRef *(*)(int)")] IntPtr alloc);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern AVBufferPool* av_buffer_pool_init2(int size, void* opaque, [NativeTypeName("AVBufferRef *(*)(void *, int)")] delegate* unmanaged[Cdecl]<void*, int, AVBufferRef*> alloc, [NativeTypeName("void (*)(void *)")] delegate* unmanaged[Cdecl]<void*, void> pool_free);
+        public static extern AVBufferPool* av_buffer_pool_init2(int size, void* opaque, [NativeTypeName("AVBufferRef *(*)(void *, int)")] IntPtr alloc, [NativeTypeName("void (*)(void *)")] IntPtr pool_free);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void av_buffer_pool_uninit(AVBufferPool** pool);
@@ -415,7 +415,7 @@ namespace FFmpegSharp.Interop
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("size_t")]
-        public static extern nuint av_cpu_max_align();
+        public static extern UIntPtr av_cpu_max_align();
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern AVDictionaryEntry* av_dict_get([NativeTypeName("const AVDictionary *")] AVDictionary* m, [NativeTypeName("const char *")] sbyte* key, [NativeTypeName("const AVDictionaryEntry *")] AVDictionaryEntry* prev, int flags);
@@ -445,7 +445,7 @@ namespace FFmpegSharp.Interop
         public static extern AVFifoBuffer* av_fifo_alloc([NativeTypeName("unsigned int")] uint size);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern AVFifoBuffer* av_fifo_alloc_array([NativeTypeName("size_t")] nuint nmemb, [NativeTypeName("size_t")] nuint size);
+        public static extern AVFifoBuffer* av_fifo_alloc_array([NativeTypeName("size_t")] UIntPtr nmemb, [NativeTypeName("size_t")] UIntPtr size);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void av_fifo_free(AVFifoBuffer* f);
@@ -463,16 +463,16 @@ namespace FFmpegSharp.Interop
         public static extern int av_fifo_space([NativeTypeName("const AVFifoBuffer *")] AVFifoBuffer* f);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern int av_fifo_generic_peek_at(AVFifoBuffer* f, void* dest, int offset, int buf_size, [NativeTypeName("void (*)(void *, void *, int)")] delegate* unmanaged[Cdecl]<void*, void*, int, void> func);
+        public static extern int av_fifo_generic_peek_at(AVFifoBuffer* f, void* dest, int offset, int buf_size, [NativeTypeName("void (*)(void *, void *, int)")] IntPtr func);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern int av_fifo_generic_peek(AVFifoBuffer* f, void* dest, int buf_size, [NativeTypeName("void (*)(void *, void *, int)")] delegate* unmanaged[Cdecl]<void*, void*, int, void> func);
+        public static extern int av_fifo_generic_peek(AVFifoBuffer* f, void* dest, int buf_size, [NativeTypeName("void (*)(void *, void *, int)")] IntPtr func);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern int av_fifo_generic_read(AVFifoBuffer* f, void* dest, int buf_size, [NativeTypeName("void (*)(void *, void *, int)")] delegate* unmanaged[Cdecl]<void*, void*, int, void> func);
+        public static extern int av_fifo_generic_read(AVFifoBuffer* f, void* dest, int buf_size, [NativeTypeName("void (*)(void *, void *, int)")] IntPtr func);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern int av_fifo_generic_write(AVFifoBuffer* f, void* src, int size, [NativeTypeName("int (*)(void *, void *, int)")] delegate* unmanaged[Cdecl]<void*, void*, int, int> func);
+        public static extern int av_fifo_generic_write(AVFifoBuffer* f, void* src, int size, [NativeTypeName("int (*)(void *, void *, int)")] IntPtr func);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern int av_fifo_realloc2(AVFifoBuffer* f, [NativeTypeName("unsigned int")] uint size);

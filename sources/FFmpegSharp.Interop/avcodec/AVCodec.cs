@@ -13,6 +13,8 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+
 namespace FFmpegSharp.Interop
 {
     public unsafe partial struct AVCodec
@@ -64,37 +66,37 @@ namespace FFmpegSharp.Interop
         public AVCodec* next;
 
         [NativeTypeName("int (*)(struct AVCodecContext *, const struct AVCodecContext *)")]
-        public delegate* unmanaged[Cdecl]<AVCodecContext*, AVCodecContext*, int> update_thread_context;
+        public IntPtr update_thread_context;
 
         [NativeTypeName("const AVCodecDefault *")]
         public AVCodecDefault* defaults;
 
         [NativeTypeName("void (*)(struct AVCodec *)")]
-        public delegate* unmanaged[Cdecl]<AVCodec*, void> init_static_data;
+        public IntPtr init_static_data;
 
         [NativeTypeName("int (*)(struct AVCodecContext *)")]
-        public delegate* unmanaged[Cdecl]<AVCodecContext*, int> init;
+        public IntPtr init;
 
         [NativeTypeName("int (*)(struct AVCodecContext *, uint8_t *, int, const struct AVSubtitle *)")]
-        public delegate* unmanaged[Cdecl]<AVCodecContext*, byte*, int, AVSubtitle*, int> encode_sub;
+        public IntPtr encode_sub;
 
         [NativeTypeName("int (*)(struct AVCodecContext *, struct AVPacket *, const struct AVFrame *, int *)")]
-        public delegate* unmanaged[Cdecl]<AVCodecContext*, AVPacket*, AVFrame*, int*, int> encode2;
+        public IntPtr encode2;
 
         [NativeTypeName("int (*)(struct AVCodecContext *, void *, int *, struct AVPacket *)")]
-        public delegate* unmanaged[Cdecl]<AVCodecContext*, void*, int*, AVPacket*, int> decode;
+        public IntPtr decode;
 
         [NativeTypeName("int (*)(struct AVCodecContext *)")]
-        public delegate* unmanaged[Cdecl]<AVCodecContext*, int> close;
+        public IntPtr close;
 
         [NativeTypeName("int (*)(struct AVCodecContext *, struct AVPacket *)")]
-        public delegate* unmanaged[Cdecl]<AVCodecContext*, AVPacket*, int> receive_packet;
+        public IntPtr receive_packet;
 
         [NativeTypeName("int (*)(struct AVCodecContext *, struct AVFrame *)")]
-        public delegate* unmanaged[Cdecl]<AVCodecContext*, AVFrame*, int> receive_frame;
+        public IntPtr receive_frame;
 
         [NativeTypeName("void (*)(struct AVCodecContext *)")]
-        public delegate* unmanaged[Cdecl]<AVCodecContext*, void> flush;
+        public IntPtr flush;
 
         public int caps_internal;
 

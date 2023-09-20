@@ -43,7 +43,7 @@ namespace FFmpegSharp.Interop
         public void* opaque;
 
         [NativeTypeName("avfilter_execute_func *")]
-        public delegate* unmanaged[Cdecl]<AVFilterContext*, delegate* unmanaged[Cdecl]<AVFilterContext*, void*, int, int, int>, void*, int*, int, int> execute;
+        public IntPtr execute;
 
         [NativeTypeName("char *")]
         public sbyte* aresample_swr_opts;

@@ -174,7 +174,7 @@ namespace FFmpegSharp.Interop
         public void* opaque;
 
         [NativeTypeName("av_format_control_message")]
-        public delegate* unmanaged[Cdecl]<AVFormatContext*, int, void*, nuint, int> control_message_cb;
+        public IntPtr control_message_cb;
 
         [NativeTypeName("int64_t")]
         public long output_ts_offset;
@@ -187,16 +187,16 @@ namespace FFmpegSharp.Interop
 
         [NativeTypeName("int (*)(struct AVFormatContext *, AVIOContext **, const char *, int, const AVIOInterruptCB *, AVDictionary **)")]
         [Obsolete]
-        public delegate* unmanaged[Cdecl]<AVFormatContext*, AVIOContext**, sbyte*, int, AVIOInterruptCB*, AVDictionary**, int> open_cb;
+        public IntPtr open_cb;
 
         [NativeTypeName("char *")]
         public sbyte* protocol_whitelist;
 
         [NativeTypeName("int (*)(struct AVFormatContext *, AVIOContext **, const char *, int, AVDictionary **)")]
-        public delegate* unmanaged[Cdecl]<AVFormatContext*, AVIOContext**, sbyte*, int, AVDictionary**, int> io_open;
+        public IntPtr io_open;
 
         [NativeTypeName("void (*)(struct AVFormatContext *, AVIOContext *)")]
-        public delegate* unmanaged[Cdecl]<AVFormatContext*, AVIOContext*, void> io_close;
+        public IntPtr io_close;
 
         [NativeTypeName("char *")]
         public sbyte* protocol_blacklist;
