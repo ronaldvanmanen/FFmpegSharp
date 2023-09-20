@@ -90,7 +90,7 @@ namespace FFmpegSharp.Extensions.Framework
             var format = GetAudioFormat(inputStream);
             var channelLayout = GetAudioChannelLayout(inputStream);
             var sampleRate = GetAudioSampleRate(inputStream);
-            var sampleCount = (ushort)Max(MinimumBufferSize, 2 << ((int)Log2(sampleRate / MaximumCallbacksPerSecond)));
+            var sampleCount = (ushort)Max(MinimumBufferSize, 2 << ((int)Log(sampleRate / MaximumCallbacksPerSecond, 2)));
             var deviceSpec = new AudioDeviceSpec(
                 sampleRate,
                 format,
