@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SDL2Sharp" Version="0.2.0" />
-    <PackageReference Include="SDL2Sharp.Extensions" Version="0.2.0" />
+    <PackageReference Include="SDL2Sharp" Version="0.2.1" />
+    <PackageReference Include="SDL2Sharp.Extensions" Version="0.2.1" />
   </ItemGroup>
 
   <ItemGroup>
