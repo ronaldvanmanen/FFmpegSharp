@@ -52,7 +52,7 @@ jobs:
     runs-on: ${{ matrix.os }}-latest
     strategy:
       matrix:
-        architecture: [ x64 ]
+        architecture: [ x64, x86 ]
         configuration: [ debug, release ]
         os: [ windows ]
     steps:
