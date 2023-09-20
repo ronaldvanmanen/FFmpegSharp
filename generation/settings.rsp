@@ -1,6 +1,6 @@
 @..\remap.rsp
 --config
-default-codegen
+compatible-codegen
 generate-macro-bindings
 generate-tests-xunit
 multi-file
