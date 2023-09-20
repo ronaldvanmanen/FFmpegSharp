@@ -50,11 +50,11 @@ namespace FFmpegSharp.Extensions.Framework
         }
         public IReadOnlyList<PacketizedElementaryStream> OutputStreams => _outputs;
 
-        public MediaDemultiplexer(Uri uri)
+        public MediaDemultiplexer(string uri)
         : this(uri, null)
         { }
 
-        public MediaDemultiplexer(Uri uri, Options? options)
+        public MediaDemultiplexer(string uri, Options? options)
         {
             _formatContext = CreateFormatContext(uri, options);
             _outputs = CreateOutputs(_formatContext);
@@ -163,7 +163,7 @@ namespace FFmpegSharp.Extensions.Framework
             }
         }
 
-        private static AVFormatContext CreateFormatContext(Uri uri, Options? options)
+        private static AVFormatContext CreateFormatContext(string uri, Options? options)
         {
             var formatContext = new AVFormatContext(uri, CreateFormatContextOptions(options));
 

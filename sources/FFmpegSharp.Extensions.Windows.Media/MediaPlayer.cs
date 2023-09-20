@@ -53,7 +53,7 @@ namespace FFmpegSharp.Extensions.Windows.Media
             set => _audioRenderer.IsMuted = value;
         }
 
-        public MediaPlayer(Uri source)
+        public MediaPlayer(string source)
         {
             var mediaDemultiplexerOptions = new MediaDemultiplexer.Options { FindStreamInfo = true, InjectGlobalSideData = true };
             _mediaDemultiplexer = new MediaDemultiplexer(source, mediaDemultiplexerOptions);

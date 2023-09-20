@@ -43,7 +43,7 @@ namespace FFplaySharp
 
         protected override void OnInitialized()
         {
-            _mediaDemultiplexer = new MediaDemultiplexer(new Uri(_options.InputFile));
+            _mediaDemultiplexer = new MediaDemultiplexer(_options.InputFile);
             _mediaDemultiplexer.OutputStreams.ForAll(e => e.Discard = AVDiscard.All);
             _mediaDemultiplexer.BestAudioOutput!.Discard = AVDiscard.Default;
             _mediaDemultiplexer.Start();

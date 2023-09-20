@@ -63,7 +63,7 @@ namespace FFmpegSharp
         {
             const int errorBufferSize = 128;
             sbyte* errorBuffer = stackalloc sbyte[errorBufferSize];
-            if (av_strerror(errorCode, errorBuffer, errorBufferSize) < 0)
+            if (av_strerror(errorCode, errorBuffer, (UIntPtr)errorBufferSize) < 0)
             {
                 //errbuf_ptr = strerror(AVUNERROR(err));
             }

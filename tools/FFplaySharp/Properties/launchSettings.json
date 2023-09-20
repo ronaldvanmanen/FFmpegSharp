@@ -85,7 +85,7 @@
     },
     "FFplaySharp sample.wav": {
       "commandName": "Project",
-      "commandLineArgs": "sample.wav"
+      "commandLineArgs": "Sample.wav"
     }
   }
 }
