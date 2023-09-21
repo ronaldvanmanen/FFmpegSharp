@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\sources\FFmpegSharp.Interop\FFmpegSharp.Interop.csproj" />
   </ItemGroup>
 
