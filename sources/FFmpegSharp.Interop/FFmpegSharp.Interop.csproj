@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
-    <Platforms>AnyCPU</Platforms>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <Description>Interop bindings for FFmpeg.</Description>
     <PackageTags>FFmpeg</PackageTags>
   </PropertyGroup>
