@@ -13,6 +13,8 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+
 namespace FFmpegSharp.Interop
 {
     public unsafe partial struct AVBitStreamFilter
@@ -29,15 +31,15 @@ namespace FFmpegSharp.Interop
         public int priv_data_size;
 
         [NativeTypeName("int (*)(AVBSFContext *)")]
-        public delegate* unmanaged[Cdecl]<AVBSFContext*, int> init;
+        public IntPtr init;
 
         [NativeTypeName("int (*)(AVBSFContext *, AVPacket *)")]
-        public delegate* unmanaged[Cdecl]<AVBSFContext*, AVPacket*, int> filter;
+        public IntPtr filter;
 
         [NativeTypeName("void (*)(AVBSFContext *)")]
-        public delegate* unmanaged[Cdecl]<AVBSFContext*, void> close;
+        public IntPtr close;
 
         [NativeTypeName("void (*)(AVBSFContext *)")]
-        public delegate* unmanaged[Cdecl]<AVBSFContext*, void> flush;
+        public IntPtr flush;
     }
 }

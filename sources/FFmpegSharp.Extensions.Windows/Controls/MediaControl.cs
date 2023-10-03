@@ -28,7 +28,7 @@ namespace FFmpegSharp.Extensions.Windows.Controls
         public static readonly DependencyProperty SourceProperty =
             DependencyProperty.RegisterAttached(
                 nameof(Source),
-                typeof(Uri),
+                typeof(string),
                 typeof(MediaControl),
                 new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.None, SourcePropertyChanged));
 
@@ -69,9 +69,9 @@ namespace FFmpegSharp.Extensions.Windows.Controls
 
         private MediaPlayer? _mediaPlayer;
 
-        public Uri Source
+        public string Source
         {
-            get => (Uri)GetValue(SourceProperty);
+            get => (string)GetValue(SourceProperty);
 
             set => SetValue(SourceProperty, value);
         }

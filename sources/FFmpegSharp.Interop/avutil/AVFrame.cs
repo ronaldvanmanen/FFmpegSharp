@@ -144,16 +144,16 @@ namespace FFmpegSharp.Interop
         public AVBufferRef* opaque_ref;
 
         [NativeTypeName("size_t")]
-        public nuint crop_top;
+        public UIntPtr crop_top;
 
         [NativeTypeName("size_t")]
-        public nuint crop_bottom;
+        public UIntPtr crop_bottom;
 
         [NativeTypeName("size_t")]
-        public nuint crop_left;
+        public UIntPtr crop_left;
 
         [NativeTypeName("size_t")]
-        public nuint crop_right;
+        public UIntPtr crop_right;
 
         public AVBufferRef* private_ref;
 

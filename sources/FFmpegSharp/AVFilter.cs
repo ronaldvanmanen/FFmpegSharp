@@ -45,7 +45,7 @@ namespace FFmpegSharp
 
         public AVFilterPadCollection Outputs => new(_handle->outputs);
 
-        public bool CanProcessCommand => _handle->process_command != null;
+        public bool CanProcessCommand => _handle->process_command != IntPtr.Zero;
 
         public AVFilter(Interop.AVFilter* handle)
         {

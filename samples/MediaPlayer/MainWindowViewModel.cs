@@ -28,13 +28,13 @@ namespace MediaPlayer
 
         private RelayCommand _exitCommand = null!;
 
-        private Uri _mediaSource = null!;
+        private string _mediaSource = null!;
 
         public ICommand OpenFileCommand => _openFileCommand ??= new RelayCommand(OpenFile);
 
         public ICommand ExitCommand => _exitCommand ??= new RelayCommand(Exit);
 
-        public Uri MediaSource
+        public string MediaSource
         {
             get => _mediaSource;
             set
@@ -59,7 +59,7 @@ namespace MediaPlayer
             var result = openFileDialog.ShowDialog();
             if (result.HasValue && result.Value)
             {
-                MediaSource = new Uri(openFileDialog.FileName);
+                MediaSource = openFileDialog.FileName;
             }
         }
 

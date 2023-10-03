@@ -107,7 +107,7 @@ namespace FFmpegSharp
         {
             get
             {
-                if (_handle->get_device_list == null)
+                if (_handle->get_device_list == IntPtr.Zero)
                 {
                     return null;
                 }

@@ -13,6 +13,8 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+
 namespace FFmpegSharp.Interop
 {
     public unsafe partial struct AVOutputFormat
@@ -52,48 +54,48 @@ namespace FFmpegSharp.Interop
         public int priv_data_size;
 
         [NativeTypeName("int (*)(struct AVFormatContext *)")]
-        public delegate* unmanaged[Cdecl]<AVFormatContext*, int> write_header;
+        public IntPtr write_header;
 
         [NativeTypeName("int (*)(struct AVFormatContext *, AVPacket *)")]
-        public delegate* unmanaged[Cdecl]<AVFormatContext*, AVPacket*, int> write_packet;
+        public IntPtr write_packet;
 
         [NativeTypeName("int (*)(struct AVFormatContext *)")]
-        public delegate* unmanaged[Cdecl]<AVFormatContext*, int> write_trailer;
+        public IntPtr write_trailer;
 
         [NativeTypeName("int (*)(struct AVFormatContext *, AVPacket *, AVPacket *, int)")]
-        public delegate* unmanaged[Cdecl]<AVFormatContext*, AVPacket*, AVPacket*, int, int> interleave_packet;
+        public IntPtr interleave_packet;
 
         [NativeTypeName("int (*)(enum AVCodecID, int)")]
-        public delegate* unmanaged[Cdecl]<AVCodecID, int, int> query_codec;
+        public IntPtr query_codec;
 
         [NativeTypeName("void (*)(struct AVFormatContext *, int, int64_t *, int64_t *)")]
-        public delegate* unmanaged[Cdecl]<AVFormatContext*, int, long*, long*, void> get_output_timestamp;
+        public IntPtr get_output_timestamp;
 
         [NativeTypeName("int (*)(struct AVFormatContext *, int, void *, size_t)")]
-        public delegate* unmanaged[Cdecl]<AVFormatContext*, int, void*, nuint, int> control_message;
+        public IntPtr control_message;
 
         [NativeTypeName("int (*)(struct AVFormatContext *, int, AVFrame **, unsigned int)")]
-        public delegate* unmanaged[Cdecl]<AVFormatContext*, int, AVFrame**, uint, int> write_uncoded_frame;
+        public IntPtr write_uncoded_frame;
 
         [NativeTypeName("int (*)(struct AVFormatContext *, struct AVDeviceInfoList *)")]
-        public delegate* unmanaged[Cdecl]<AVFormatContext*, AVDeviceInfoList*, int> get_device_list;
+        public IntPtr get_device_list;
 
         [NativeTypeName("int (*)(struct AVFormatContext *, struct AVDeviceCapabilitiesQuery *)")]
-        public delegate* unmanaged[Cdecl]<AVFormatContext*, AVDeviceCapabilitiesQuery*, int> create_device_capabilities;
+        public IntPtr create_device_capabilities;
 
         [NativeTypeName("int (*)(struct AVFormatContext *, struct AVDeviceCapabilitiesQuery *)")]
-        public delegate* unmanaged[Cdecl]<AVFormatContext*, AVDeviceCapabilitiesQuery*, int> free_device_capabilities;
+        public IntPtr free_device_capabilities;
 
         [NativeTypeName("enum AVCodecID")]
         public AVCodecID data_codec;
 
         [NativeTypeName("int (*)(struct AVFormatContext *)")]
-        public delegate* unmanaged[Cdecl]<AVFormatContext*, int> init;
+        public IntPtr init;
 
         [NativeTypeName("void (*)(struct AVFormatContext *)")]
-        public delegate* unmanaged[Cdecl]<AVFormatContext*, void> deinit;
+        public IntPtr deinit;
 
         [NativeTypeName("int (*)(struct AVFormatContext *, const AVPacket *)")]
-        public delegate* unmanaged[Cdecl]<AVFormatContext*, AVPacket*, int> check_bitstream;
+        public IntPtr check_bitstream;
     }
 }

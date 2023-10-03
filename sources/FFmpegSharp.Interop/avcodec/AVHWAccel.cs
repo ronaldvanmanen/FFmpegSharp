@@ -13,6 +13,8 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+
 namespace FFmpegSharp.Interop
 {
     public unsafe partial struct AVHWAccel
@@ -32,36 +34,36 @@ namespace FFmpegSharp.Interop
         public int capabilities;
 
         [NativeTypeName("int (*)(AVCodecContext *, AVFrame *)")]
-        public delegate* unmanaged[Cdecl]<AVCodecContext*, AVFrame*, int> alloc_frame;
+        public IntPtr alloc_frame;
 
         [NativeTypeName("int (*)(AVCodecContext *, const uint8_t *, uint32_t)")]
-        public delegate* unmanaged[Cdecl]<AVCodecContext*, byte*, uint, int> start_frame;
+        public IntPtr start_frame;
 
         [NativeTypeName("int (*)(AVCodecContext *, int, const uint8_t *, uint32_t)")]
-        public delegate* unmanaged[Cdecl]<AVCodecContext*, int, byte*, uint, int> decode_params;
+        public IntPtr decode_params;
 
         [NativeTypeName("int (*)(AVCodecContext *, const uint8_t *, uint32_t)")]
-        public delegate* unmanaged[Cdecl]<AVCodecContext*, byte*, uint, int> decode_slice;
+        public IntPtr decode_slice;
 
         [NativeTypeName("int (*)(AVCodecContext *)")]
-        public delegate* unmanaged[Cdecl]<AVCodecContext*, int> end_frame;
+        public IntPtr end_frame;
 
         public int frame_priv_data_size;
 
         [NativeTypeName("void (*)(struct MpegEncContext *)")]
-        public delegate* unmanaged[Cdecl]<MpegEncContext*, void> decode_mb;
+        public IntPtr decode_mb;
 
         [NativeTypeName("int (*)(AVCodecContext *)")]
-        public delegate* unmanaged[Cdecl]<AVCodecContext*, int> init;
+        public IntPtr init;
 
         [NativeTypeName("int (*)(AVCodecContext *)")]
-        public delegate* unmanaged[Cdecl]<AVCodecContext*, int> uninit;
+        public IntPtr uninit;
 
         public int priv_data_size;
 
         public int caps_internal;
 
         [NativeTypeName("int (*)(AVCodecContext *, AVBufferRef *)")]
-        public delegate* unmanaged[Cdecl]<AVCodecContext*, AVBufferRef*, int> frame_params;
+        public IntPtr frame_params;
     }
 }

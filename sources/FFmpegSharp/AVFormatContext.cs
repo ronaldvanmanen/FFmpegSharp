@@ -55,11 +55,11 @@ namespace FFmpegSharp
             }
         }
 
-        public AVFormatContext(Uri uri)
+        public AVFormatContext(string uri)
         : this(uri, null)
         { }
 
-        public AVFormatContext(Uri uri, Options? options)
+        public AVFormatContext(string uri, Options? options)
         {
             if (uri is null)
             {
@@ -77,7 +77,7 @@ namespace FFmpegSharp
 
             fixed (Interop.AVFormatContext** handle = &_handle)
             {
-                using var uriString = new MarshaledString(uri.IsFile ? uri.LocalPath : uri.ToString());
+                using var uriString = new MarshaledString(uri);
                 AVError.ThrowOnError(
                     avformat_open_input(handle, uriString, null, null)
                 );

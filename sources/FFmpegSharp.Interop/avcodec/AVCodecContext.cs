@@ -81,10 +81,10 @@ namespace FFmpegSharp.Interop
         public AVPixelFormat pix_fmt;
 
         [NativeTypeName("void (*)(struct AVCodecContext *, const AVFrame *, int *, int, int, int)")]
-        public delegate* unmanaged[Cdecl]<AVCodecContext*, AVFrame*, int, int, int, int, void> draw_horiz_band;
+        public IntPtr draw_horiz_band;
 
         [NativeTypeName("enum AVPixelFormat (*)(struct AVCodecContext *, const enum AVPixelFormat *)")]
-        public delegate* unmanaged[Cdecl]<AVCodecContext*, AVPixelFormat*, AVPixelFormat> get_format;
+        public IntPtr get_format;
 
         public int max_b_frames;
 
@@ -240,7 +240,7 @@ namespace FFmpegSharp.Interop
         public AVSampleFormat request_sample_fmt;
 
         [NativeTypeName("int (*)(struct AVCodecContext *, AVFrame *, int)")]
-        public delegate* unmanaged[Cdecl]<AVCodecContext*, AVFrame*, int, int> get_buffer2;
+        public IntPtr get_buffer2;
 
         [Obsolete]
         public int refcounted_frames;
@@ -305,7 +305,7 @@ namespace FFmpegSharp.Interop
 
         [NativeTypeName("void (*)(struct AVCodecContext *, void *, int, int)")]
         [Obsolete]
-        public delegate* unmanaged[Cdecl]<AVCodecContext*, void*, int, int, void> rtp_callback;
+        public IntPtr rtp_callback;
 
         [Obsolete]
         public int rtp_payload_size;
@@ -387,10 +387,10 @@ namespace FFmpegSharp.Interop
         public int thread_safe_callbacks;
 
         [NativeTypeName("int (*)(struct AVCodecContext *, int (*)(struct AVCodecContext *, void *), void *, int *, int, int)")]
-        public delegate* unmanaged[Cdecl]<AVCodecContext*, delegate* unmanaged[Cdecl]<AVCodecContext*, void*, int>, void*, int*, int, int, int> execute;
+        public IntPtr execute;
 
         [NativeTypeName("int (*)(struct AVCodecContext *, int (*)(struct AVCodecContext *, void *, int, int), void *, int *, int)")]
-        public delegate* unmanaged[Cdecl]<AVCodecContext*, delegate* unmanaged[Cdecl]<AVCodecContext*, void*, int, int, int>, void*, int*, int, int> execute2;
+        public IntPtr execute2;
 
         public int nsse_weight;
 
@@ -496,6 +496,6 @@ namespace FFmpegSharp.Interop
         public int export_side_data;
 
         [NativeTypeName("int (*)(struct AVCodecContext *, AVPacket *, int)")]
-        public delegate* unmanaged[Cdecl]<AVCodecContext*, AVPacket*, int, int> get_encode_buffer;
+        public IntPtr get_encode_buffer;
     }
 }

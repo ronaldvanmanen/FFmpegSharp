@@ -131,6 +131,7 @@ namespace FFmpegSharp.Extensions.Framework
                         }
                         else
                         {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                             if (error.ErrorCode == AVERROR_EOF)
                             {
                                 return;
@@ -140,6 +141,7 @@ namespace FFmpegSharp.Extensions.Framework
                             {
                                 break;
                             }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                         }
                     };
 
@@ -179,6 +181,7 @@ namespace FFmpegSharp.Extensions.Framework
                         }
                         else
                         {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                             if (error.ErrorCode == AVERROR_EOF)
                             {
                                 _codecContext.FlushBuffers();
@@ -189,6 +192,7 @@ namespace FFmpegSharp.Extensions.Framework
                             {
                                 break;
                             }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                         }
                     }
                 }

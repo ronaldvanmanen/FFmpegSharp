@@ -1,4 +1,4 @@
-﻿// This file is part of FFmpegSharp.
+// This file is part of FFmpegSharp.
 //
 // FFmpegSharp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,18 +14,10 @@
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Runtime.InteropServices;
 
-namespace FFmpegSharp
+namespace FFmpegSharp.Interop
 {
-    public static class AVChannelLayoutExtensions
-    {
-        public static IEnumerable<AVChannels> GetChannels(this AVChannelLayout layout)
-        {
-            return Enum.GetValues(typeof(AVChannels))
-                .Cast<AVChannels>()
-                .Where(e => ((AVChannels)layout).HasFlag(e));
-        }
-    }
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public unsafe delegate int avfilter_execute_func(AVFilterContext* ctx, [NativeTypeName("avfilter_action_func *")] IntPtr func, void* arg, int* ret, int nb_jobs);
 }

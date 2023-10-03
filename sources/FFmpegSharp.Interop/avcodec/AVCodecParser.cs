@@ -25,16 +25,16 @@ namespace FFmpegSharp.Interop
         public int priv_data_size;
 
         [NativeTypeName("int (*)(AVCodecParserContext *)")]
-        public delegate* unmanaged[Cdecl]<AVCodecParserContext*, int> parser_init;
+        public IntPtr parser_init;
 
         [NativeTypeName("int (*)(AVCodecParserContext *, AVCodecContext *, const uint8_t **, int *, const uint8_t *, int)")]
-        public delegate* unmanaged[Cdecl]<AVCodecParserContext*, AVCodecContext*, byte**, int*, byte*, int, int> parser_parse;
+        public IntPtr parser_parse;
 
         [NativeTypeName("void (*)(AVCodecParserContext *)")]
-        public delegate* unmanaged[Cdecl]<AVCodecParserContext*, void> parser_close;
+        public IntPtr parser_close;
 
         [NativeTypeName("int (*)(AVCodecContext *, const uint8_t *, int)")]
-        public delegate* unmanaged[Cdecl]<AVCodecContext*, byte*, int, int> split;
+        public IntPtr split;
 
         [NativeTypeName("struct AVCodecParser *")]
         [Obsolete]

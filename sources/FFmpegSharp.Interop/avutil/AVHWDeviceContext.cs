@@ -13,6 +13,8 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+
 namespace FFmpegSharp.Interop
 {
     public unsafe partial struct AVHWDeviceContext
@@ -28,7 +30,7 @@ namespace FFmpegSharp.Interop
         public void* hwctx;
 
         [NativeTypeName("void (*)(struct AVHWDeviceContext *)")]
-        public delegate* unmanaged[Cdecl]<AVHWDeviceContext*, void> free;
+        public IntPtr free;
 
         public void* user_opaque;
     }

@@ -23,7 +23,7 @@ namespace FFmpegSharp.Interop
         public sbyte* class_name;
 
         [NativeTypeName("const char *(*)(void *)")]
-        public delegate* unmanaged[Cdecl]<void*, sbyte*> item_name;
+        public IntPtr item_name;
 
         [NativeTypeName("const struct AVOption *")]
         public AVOption* option;
@@ -35,21 +35,21 @@ namespace FFmpegSharp.Interop
         public int parent_log_context_offset;
 
         [NativeTypeName("void *(*)(void *, void *)")]
-        public delegate* unmanaged[Cdecl]<void*, void*, void*> child_next;
+        public IntPtr child_next;
 
         [NativeTypeName("const struct AVClass *(*)(const struct AVClass *)")]
         [Obsolete]
-        public delegate* unmanaged[Cdecl]<AVClass*, AVClass*> child_class_next;
+        public IntPtr child_class_next;
 
         public AVClassCategory category;
 
         [NativeTypeName("AVClassCategory (*)(void *)")]
-        public delegate* unmanaged[Cdecl]<void*, AVClassCategory> get_category;
+        public IntPtr get_category;
 
         [NativeTypeName("int (*)(struct AVOptionRanges **, void *, const char *, int)")]
-        public delegate* unmanaged[Cdecl]<AVOptionRanges**, void*, sbyte*, int, int> query_ranges;
+        public IntPtr query_ranges;
 
         [NativeTypeName("const struct AVClass *(*)(void **)")]
-        public delegate* unmanaged[Cdecl]<void**, AVClass*> child_class_iterate;
+        public IntPtr child_class_iterate;
     }
 }

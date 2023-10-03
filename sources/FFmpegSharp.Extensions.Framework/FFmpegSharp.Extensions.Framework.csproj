@@ -1,14 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SDL2Sharp" Version="0.1.0" />
-    <PackageReference Include="SDL2Sharp.Extensions" Version="0.1.0" />
+    <PackageReference Include="SDL2Sharp" Version="0.3.1" />
+    <PackageReference Include="SDL2Sharp.Extensions" Version="0.3.1" />
   </ItemGroup>
 
   <ItemGroup>

@@ -367,7 +367,7 @@ namespace FFplaySharp
 
             foreach (var protocolName in AVIO.OutputProtocolNames)
             {
-                Console.WriteLine($"  {new string(protocolName)}");
+                Console.WriteLine($"  {protocolName}");
             }
         }
 
@@ -453,7 +453,7 @@ namespace FFplaySharp
             Console.WriteLine("Individual channels:");
             Console.WriteLine("NAME           DESCRIPTION");
 
-            foreach (var channel in Enum.GetValues<AVChannels>())
+            foreach (var channel in Enum.GetValues(typeof(AVChannels)).Cast<AVChannels>())
             {
                 var name = channel.GetName();
                 var description = channel.GetDescription();
@@ -474,7 +474,7 @@ namespace FFplaySharp
 
         private static void ShowSampleFormats()
         {
-            var sampleFormats = Enum.GetValues<AVSampleFormat>();
+            var sampleFormats = Enum.GetValues(typeof(AVSampleFormat)).Cast<AVSampleFormat>();
             foreach (var sampleFormat in sampleFormats.OrderBy(e => e))
             {
                 Console.WriteLine("{0}", sampleFormat.AsString());
@@ -607,12 +607,12 @@ namespace FFplaySharp
 
         private static void PrintEncoders(AVCodecID id)
         {
-            Console.Write($"(encoders: {string.Join(' ', AVCodec.All.Where(c => c.Id == id && c.IsEncoder).Select(c => c.Name))})");
+            Console.Write($"(encoders: {string.Join(" ", AVCodec.All.Where(c => c.Id == id && c.IsEncoder).Select(c => c.Name))})");
         }
 
         private static void PrintDecoders(AVCodecID id)
         {
-            Console.Write($"(decoders: {string.Join(' ', AVCodec.All.Where(c => c.Id == id && c.IsDecoder).Select(c => c.Name))})");
+            Console.Write($"(decoders: {string.Join(" ", AVCodec.All.Where(c => c.Id == id && c.IsDecoder).Select(c => c.Name))})");
         }
 
         private static void PrintCodecs(bool encoder)
