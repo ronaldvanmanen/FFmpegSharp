@@ -1,0 +1,129 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch FFplaySharp (CoreCLR)",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder:FFmpegSharp}/artifacts/bin/tools/FFplaySharp/Debug/${input:FFplaySharpCoreClrFramework}/FFplaySharp",
+            "args": [
+                "${input:FFplaySharpArguments}"
+            ],
+            "cwd": "${workspaceFolder:FFmpegSharp}/artifacts/bin/tools/FFplaySharp/Debug/${input:FFplaySharpCoreClrFramework}",
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
+        {
+            "name": "Launch FFplaySharp (CLR)",
+            "type": "clr",
+            "request": "launch",
+            "program": "${workspaceFolder:FFmpegSharp}/artifacts/bin/tools/FFplaySharp/Debug/${input:FFplaySharpClrFramework}/FFplaySharp",
+            "args": [
+                "${input:FFplaySharpArguments}"
+            ],
+            "cwd": "${workspaceFolder:FFmpegSharp}/artifacts/bin/tools/FFplaySharp/Debug/${input:FFplaySharpClrFramework}",
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
+        {
+            "name": "Launch MediaPlayer (CoreCLR)",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder:FFmpegSharp}/artifacts/bin/samples/MediaPlayer/Debug/${input:MediaPlayerCoreClrFramework}/MediaPlayer",
+            "args": [],
+            "cwd": "${workspaceFolder:FFmpegSharp}/artifacts/bin/samples/MediaPlayer/Debug/${input:MediaPlayerCoreClrFramework}",
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
+        {
+            "name": "Launch MediaPlayer (CLR)",
+            "type": "clr",
+            "request": "launch",
+            "program": "${workspaceFolder:FFmpegSharp}/artifacts/bin/samples/MediaPlayer/Debug/${input:MediaPlayerClrFramework}/MediaPlayer",
+            "args": [],
+            "cwd": "${workspaceFolder:FFmpegSharp}/artifacts/bin/samples/MediaPlayer/Debug/${input:MediaPlayerClrFramework}",
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        }
+    ],
+    "inputs": [
+        {
+            "id": "FFplaySharpCoreClrFramework",
+            "description": "Choose which .NET target framework should be used to run FFplaySharp",
+            "default": "net6.0",
+            "type": "pickString",
+            "options": [
+                "net6.0",
+            ]
+        },
+        {
+            "id": "FFplaySharpClrFramework",
+            "description": "Choose which .NET target framework should be used to run FFplaySharp",
+            "default": "net481",
+            "type": "pickString",
+            "options": [
+                "net481",
+                "net48",
+                "net472",
+                "net471",
+                "net47",
+                "net462"
+            ]
+        },
+        {
+            "id": "FFplaySharpArguments",
+            "description": "Choose which argument should be passed to FFplaySharp",
+            "default": "--help",
+            "type": "pickString",
+            "options": [
+                "--help",
+                "--version",
+                "--license",
+                "--build-configuration",
+                "--formats",
+                "--muxers",
+                "--demuxers",
+                "--devices",
+                "--codecs",
+                "--decoders",
+                "--encoders",
+                "--bit-stream-filters",
+                "--protocols",
+                "--filters",
+                "--pixel-formats",
+                "--channel-layouts",
+                "--sample-formats",
+                "--colors",
+                "--sources",
+                "--sinks",
+                "Sample.wav"
+            ]
+        },
+        {
+            "id": "MediaPlayerCoreClrFramework",
+            "description": "Choose which .NET target framework should be used to run FFplaySharp",
+            "default": "net6.0-windows",
+            "type": "pickString",
+            "options": [
+                "net6.0-windows"
+            ]
+        },
+        {
+            "id": "MediaPlayerClrFramework",
+            "description": "Choose which .NET target framework should be used to run FFplaySharp",
+            "default": "net481",
+            "type": "pickString",
+            "options": [
+                "net481",
+                "net48",
+                "net472",
+                "net471",
+                "net47",
+                "net462"
+            ]
+        }
+    ]
+}
