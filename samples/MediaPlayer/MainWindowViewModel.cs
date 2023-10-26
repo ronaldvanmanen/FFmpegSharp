@@ -13,11 +13,13 @@
 // You should have received a copy of the GNU General Public License
 // along with FFmpegSharp.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FFmpegSharp.Extensions.Mime;
 using Microsoft.Win32;
 
 namespace MediaPlayer
@@ -47,11 +49,21 @@ namespace MediaPlayer
 
         private void OpenFile()
         {
+            static string AsPattern(IEnumerable<string> extensions)
+            {
+                return string.Join(";", extensions.Select(e => "*." + e));
+            }
+
+            var mediaFilesExtensions = new SortedSet<string>(FFmpegSharp.AVInputFormat.All.SelectMany(format => format.Extensions));
+            var mediaFilesPattern = AsPattern(mediaFilesExtensions);
+            var videoFilesPattern = AsPattern(mediaFilesExtensions.Where(MediaTypes.IsVideoMediaType));
+            var audioFilesPattern = AsPattern(mediaFilesExtensions.Where(MediaTypes.IsAudioMediaType));
+
             var openFileDialog = new OpenFileDialog
             {
-                Filter = "Media Files (*.asf;*.mkv;*.mov;*.mp4;*.wma;*.wmv;*.flac;*.mp3;*.wav)|*.asf;*.mkv;*.mov;*.mp4;*.wma;*.wmv*.flac;*.mp3;*.wav|"
-                       + "Video Files (*.asf;*.mkv;*.mov;*.mp4;*.wma;*.wmv)|*.asf;*.mkv;*.mov;*.mp4;*.wma;*.wmv|"
-                       + "Audio Files (*.flac;*.mp3;*.wav)|*.flac;*.mp3;*.wav|"
+                Filter = $"Media Files ({mediaFilesPattern})|{mediaFilesPattern}|"
+                       + $"Video Files ({videoFilesPattern})|{videoFilesPattern}|"
+                       + $"Audio Files ({audioFilesPattern})|{audioFilesPattern}|"
                        + "All files (*.*)|*.*",
                 Multiselect = false
             };
