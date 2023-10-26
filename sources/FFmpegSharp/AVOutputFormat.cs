@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using static FFmpegSharp.Interop.FFmpeg;
 
 namespace FFmpegSharp
@@ -91,6 +92,21 @@ namespace FFmpegSharp
 
         public string LongName => new(_handle->long_name);
 
+        public IEnumerable<string> Extensions
+        {
+            get
+            {
+                if (_handle->extensions == null)
+                {
+                    return Enumerable.Empty<string>();
+                }
+
+                var commaSeperatedExtensions = new string(_handle->extensions);
+                var extensions = commaSeperatedExtensions.Split(',');
+                return extensions;
+            }
+        }
+
         public AVClass? PrivateClass
         {
             get
@@ -100,6 +116,21 @@ namespace FFmpegSharp
                     return null;
                 }
                 return new AVClass(_handle->priv_class);
+            }
+        }
+
+        public IEnumerable<string> MimeTypes
+        {
+            get
+            {
+                if (_handle->mime_type == null)
+                {
+                    return Enumerable.Empty<string>();
+                }
+
+                var commaSeparatedMimeTypes = new string(_handle->mime_type);
+                var mimeTypes = commaSeparatedMimeTypes.Split(',');
+                return mimeTypes;
             }
         }
 
