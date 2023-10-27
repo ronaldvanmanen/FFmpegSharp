@@ -571,11 +571,11 @@ namespace FFplaySharp
             Console.WriteLine(" .E = Muxing supported");
             Console.WriteLine(" --");
 
-            var inputFormats = showDemuxers ? AVOutputFormat.All : Empty<AVOutputFormat>();
+            var inputFormats = showDemuxers ? AVInputFormat.All : Empty<AVInputFormat>();
             var inputFormatLookup = inputFormats.ToLookup(inputFormat => inputFormat.Name);
             var inputFormatNames = inputFormats.Select(inputFormat => inputFormat.Name);
 
-            var outputFormats = showMuxers ? AVInputFormat.All : Empty<AVInputFormat>();
+            var outputFormats = showMuxers ? AVOutputFormat.All : Empty<AVOutputFormat>();
             var outputFormatLookup = outputFormats.ToLookup(outputFormat => outputFormat.Name);
             var outputFormatNames = outputFormats.Select(outputFormat => outputFormat.Name);
 
