@@ -151,7 +151,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFmpegSharp.Extensions.Linq
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFmpegSharp.Extensions.Windows.Media", "sources\FFmpegSharp.Extensions.Windows.Media\FFmpegSharp.Extensions.Windows.Media.csproj", "{4D5D900E-D70F-488D-B624-69D0E88F2B55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFmpegSharp.Extensions.Mime", "sources\FFmpegSharp.Extensions.Mime\FFmpegSharp.Extensions.Mime.csproj", "{2E4D20E6-A182-4161-AAAD-AFDA6F9FA2DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFmpegSharp.Extensions.Mime", "sources\FFmpegSharp.Extensions.Mime\FFmpegSharp.Extensions.Mime.csproj", "{2E4D20E6-A182-4161-AAAD-AFDA6F9FA2DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
