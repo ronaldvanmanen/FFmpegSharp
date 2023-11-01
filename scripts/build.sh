@@ -68,7 +68,11 @@ while [[ $# -gt 0 ]]; do
       shift 2
       ;;
     *)
-      properties="$properties $1"
+      if [[ -z "$properties" ]]; then
+        properties="$1"
+      else
+        properties="$properties $1"
+      fi
       shift 1
       ;;
   esac
@@ -208,7 +212,7 @@ if [[ ! -z "$architecture" ]]; then
   DotNetInstallDirectory="$ArtifactsDir/dotnet"
   CreateDirectory "$DotNetInstallDirectory"
 
-  . "$DotNetInstallScript" --channel 6.0 --version latest --install-dir "$DotNetInstallDirectory" --architecture "$architecture"
+  bash "$DotNetInstallScript" --channel 6.0 --version latest --install-dir "$DotNetInstallDirectory" --architecture "$architecture"
 
   PATH="$DotNetInstallDirectory:$PATH:"
 fi
