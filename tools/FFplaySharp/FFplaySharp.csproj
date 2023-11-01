@@ -27,17 +27,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Licenses.Designer.cs">
+    <Compile Update="ResourceStrings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>Licenses.resx</DependentUpon>
+      <DependentUpon>ResourceStrings.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Licenses.resx">
+    <EmbeddedResource Update="ResourceStrings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Licenses.Designer.cs</LastGenOutput>
+      <LastGenOutput>ResourceStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 
