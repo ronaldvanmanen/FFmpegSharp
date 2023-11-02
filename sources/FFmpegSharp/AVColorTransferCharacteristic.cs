@@ -39,13 +39,9 @@ namespace FFmpegSharp
         BT2020_10 = AVCOL_TRC_BT2020_10,
         BT2020_12 = AVCOL_TRC_BT2020_12,
         SMPTE2084 = AVCOL_TRC_SMPTE2084,
-#pragma warning disable CA1069 // Enums values should not be duplicated
         SMPTEST2084 = AVCOL_TRC_SMPTEST2084,
-#pragma warning restore CA1069 // Enums values should not be duplicated
         SMPTE428 = AVCOL_TRC_SMPTE428,
-#pragma warning disable CA1069 // Enums values should not be duplicated
         SMPTEST428_1 = AVCOL_TRC_SMPTEST428_1,
-#pragma warning restore CA1069 // Enums values should not be duplicated
         ARIB_STD_B67 = AVCOL_TRC_ARIB_STD_B67
     }
 }

@@ -31,9 +31,7 @@ namespace FFmpegSharp
         SMPTE170M = AVCOL_SPC_SMPTE170M,
         SMPTE240M = AVCOL_SPC_SMPTE240M,
         YCGCO = AVCOL_SPC_YCGCO,
-#pragma warning disable CA1069 // Enums values should not be duplicated
         YCOCG = AVCOL_SPC_YCOCG,
-#pragma warning restore CA1069 // Enums values should not be duplicated
         BT2020NCL = AVCOL_SPC_BT2020_NCL,
         BT2020CL = AVCOL_SPC_BT2020_CL,
         SMPTE2085 = AVCOL_SPC_SMPTE2085,

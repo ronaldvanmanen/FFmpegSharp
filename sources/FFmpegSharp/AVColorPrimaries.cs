@@ -37,8 +37,6 @@ namespace FFmpegSharp
         SMPTE431 = AVCOL_PRI_SMPTE431,
         SMPTE432 = AVCOL_PRI_SMPTE432,
         EBU3213 = AVCOL_PRI_EBU3213,
-#pragma warning disable CA1069 // Enums values should not be duplicated
         JEDECP22 = AVCOL_PRI_JEDEC_P22
-#pragma warning restore CA1069 // Enums values should not be duplicated
     }
 }
