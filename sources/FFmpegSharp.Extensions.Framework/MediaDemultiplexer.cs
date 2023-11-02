@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using FFmpegSharp.Extensions.ObjectPool;
 
 namespace FFmpegSharp.Extensions.Framework
 {
@@ -124,45 +125,34 @@ namespace FFmpegSharp.Extensions.Framework
         private void Demultiplex(object? userState)
         {
             var cancellationToken = (CancellationToken)userState!;
-            var packet = new AVPacket();
-            try
+            var packetPool = new ObjectPool<AVPacket>(() => new AVPacket());
+            while (!cancellationToken.IsCancellationRequested)
             {
-                while (!cancellationToken.IsCancellationRequested)
+                try
                 {
-                    try
+                    var packet = PooledObject.Allocate(packetPool);
+                    var packetRead = _formatContext.Read(ref packet.Instance);
+                    if (packetRead)
                     {
-                        var packetRead = _formatContext.Read(ref packet);
-                        if (packetRead)
+                        var output = _outputs[packet.Instance.StreamIndex];
+                        if (output is not null)
                         {
-                            var output = _outputs[packet.StreamIndex];
-                            if (output is not null)
-                            {
-                                var outputPacket = new AVPacket();
-                                packet.MoveRef(ref outputPacket);
-                                output.Write(outputPacket, cancellationToken);
-                            }
-                        }
-                        else
-                        {
-                            foreach (var output in _outputs)
-                            {
-                                output.Write(AVPacket.Null, cancellationToken);
-                            }
+                            output.Write(packet, cancellationToken);
                         }
                     }
-                    catch (OperationCanceledException)
+                    else
                     {
-                        return;
-                    }
-                    catch (Exception)
-                    {
-                        return;
+                        packet.Dispose();
                     }
                 }
-            }
-            finally
-            {
-                packet.Dispose();
+                catch (OperationCanceledException)
+                {
+                    return;
+                }
+                catch (Exception)
+                {
+                    return;
+                }
             }
         }
 
@@ -223,7 +213,7 @@ namespace FFmpegSharp.Extensions.Framework
 
         private static PacketizedElementaryStream CreateOutput(AVStream streamInfo)
         {
-            return new PacketizedElementaryStream(streamInfo, 256);
+            return new PacketizedElementaryStream(streamInfo, 16);
         }
 
         private void ThrowIfDisposed()

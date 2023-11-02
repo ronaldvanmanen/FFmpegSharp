@@ -18,6 +18,7 @@
 
 using System;
 using System.Threading;
+using FFmpegSharp.Extensions.ObjectPool;
 using static FFmpegSharp.Interop.FFmpeg;
 
 namespace FFmpegSharp.Extensions.Framework
@@ -59,7 +60,7 @@ namespace FFmpegSharp.Extensions.Framework
                     { "threads", "auto" }
             });
 
-            _outputStream = new ElementaryAudioStream(_codecContext, 256);
+            _outputStream = new ElementaryAudioStream(_codecContext, 16);
 
             _cancellationTokenSource = null!;
             _thread = null!;
@@ -119,7 +120,7 @@ namespace FFmpegSharp.Extensions.Framework
         private void Decode(object? userState)
         {
             var cancellationToken = (CancellationToken)userState!;
-
+            var framePool = new ObjectPool<AVFrame>(() => new AVFrame());
             try
             {
                 while (!cancellationToken.IsCancellationRequested)
@@ -128,7 +129,7 @@ namespace FFmpegSharp.Extensions.Framework
                     {
                         using var packet = _inputStream.Read(cancellationToken);
 
-                        if (_codecContext.TrySend(packet, out var error))
+                        if (_codecContext.TrySend(packet.Instance, out var error))
                         {
                             break;
                         }
@@ -148,11 +149,11 @@ namespace FFmpegSharp.Extensions.Framework
 
                     while (!cancellationToken.IsCancellationRequested)
                     {
-                        var frame = new AVFrame();
+                        var frame = PooledObject.Allocate(framePool);
 
-                        if (_codecContext.TryReceive(ref frame, out var error))
+                        if (_codecContext.TryReceive(ref frame.Instance, out var error))
                         {
-                            if (frame.Pts != AVTimeStamp.Undefined)
+                            if (frame.Instance.Pts != AVTimeStamp.Undefined)
                             {
                                 // Adjust presentation timestamp using packet timebase and sample rate:
                                 //
@@ -162,19 +163,19 @@ namespace FFmpegSharp.Extensions.Framework
                                 //
                                 //   pts = pts * packet time base / (1 / sample rate)
                                 var packetTimeBase = _codecContext.PacketTimeBase;
-                                var sampleTimeBase = new AVTimeBase(1, frame.SampleRate);
-                                frame.Pts = frame.Pts.Rescale(packetTimeBase, sampleTimeBase);
+                                var sampleTimeBase = new AVTimeBase(1, frame.Instance.SampleRate);
+                                frame.Instance.Pts = frame.Instance.Pts.Rescale(packetTimeBase, sampleTimeBase);
                             }
 
-                            if (frame.ChannelLayout == 0)
+                            if (frame.Instance.ChannelLayout == 0)
                             {
                                 if (_codecContext.ChannelLayout != 0)
                                 {
-                                    frame.ChannelLayout = _codecContext.ChannelLayout;
+                                    frame.Instance.ChannelLayout = _codecContext.ChannelLayout;
                                 }
                                 else
                                 {
-                                    frame.ChannelLayout = AVUtil.GetDefaultChannelLayout(frame.ChannelCount);
+                                    frame.Instance.ChannelLayout = AVUtil.GetDefaultChannelLayout(frame.Instance.ChannelCount);
                                 }
                             }
 
@@ -182,15 +183,22 @@ namespace FFmpegSharp.Extensions.Framework
                         }
                         else
                         {
-                            if (error.ErrorCode == AVERROR_EOF)
+                            try
                             {
-                                _codecContext.FlushBuffers();
-                                return;
-                            }
+                                if (error.ErrorCode == AVERROR_EOF)
+                                {
+                                    _codecContext.FlushBuffers();
+                                    return;
+                                }
 
-                            if (error.ErrorCode == AVERROR_EAGAIN)
+                                if (error.ErrorCode == AVERROR_EAGAIN)
+                                {
+                                    break;
+                                }
+                            }
+                            finally
                             {
-                                break;
+                                frame.Dispose();
                             }
                         }
                     }

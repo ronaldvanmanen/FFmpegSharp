@@ -182,11 +182,11 @@ namespace FFmpegSharp.Extensions.Framework
                     resampledAudioFrame.ChannelLayout = _channelLayout;
                     resampledAudioFrame.SampleFormat = _sampleFormat;
                     resampledAudioFrame.SampleRate = _sampleRate;
-                    _sampleConverter.Convert(resampledAudioFrame, audioFrame);
-                    audioFrame.CopyProps(resampledAudioFrame);
+                    _sampleConverter.Convert(resampledAudioFrame, audioFrame.Instance);
+                    audioFrame.Instance.CopyProps(resampledAudioFrame);
 
-                    audioPresentationTimeStamp = AVTimeStamp.IsUndefined(audioFrame.Pts) ?
-                        AVRelativeTime.Undefined : audioFrame.Pts * _audioInputStream.TimeBase;
+                    audioPresentationTimeStamp = AVTimeStamp.IsUndefined(audioFrame.Instance.Pts) ?
+                        AVRelativeTime.Undefined : audioFrame.Instance.Pts * _audioInputStream.TimeBase;
 
                     unsafe
                     {
