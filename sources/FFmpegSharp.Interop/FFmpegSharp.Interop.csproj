@@ -8,11 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Condition="'$(FFmpegFeature)'=='' or '$(FFmpegFeature)'=='no-deps'" Include="FFmpeg" Version="4.4.4" />
-    <PackageReference Condition="'$(FFmpegFeature)'=='all-gpl'" Include="FFmpeg.all-gpl" Version="4.4.4" />
-    <PackageReference Condition="'$(FFmpegFeature)'=='all-gplv3'" Include="FFmpeg.all-gplv3" Version="4.4.4" />
-    <PackageReference Condition="'$(FFmpegFeature)'=='all-lgpl'" Include="FFmpeg.all-lgpl" Version="4.4.4" />
-    <PackageReference Condition="'$(FFmpegFeature)'=='all-lgplv3'" Include="FFmpeg.all-lgplv3" Version="4.4.4" />
+    <PackageReference Include="$(FFmpeg)" Version="4.4.4" />
     <PackageReference Include="System.Memory" Version="4.5.5" />
   </ItemGroup>
 
