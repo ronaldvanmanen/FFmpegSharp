@@ -26,6 +26,8 @@ namespace FFplaySharp
     {
         public string InputFile { get; set; }
 
+        public bool Debug { get; set; }
+
         public bool Fast { get; set; }
 
         public bool GeneratePts { get; set; }

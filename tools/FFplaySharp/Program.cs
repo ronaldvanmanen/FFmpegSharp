@@ -20,9 +20,11 @@ using System;
 using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using FFmpegSharp;
 using Microsoft.Extensions.Logging;
 using static System.Linq.Enumerable;
@@ -503,10 +505,22 @@ namespace FFplaySharp
             }
         }
 
+        private static void WaitForDebugger()
+        {
+            var process = Process.GetCurrentProcess();
+            Console.WriteLine($"Attach debugger to process {process.Id} to continue...");
+            SpinWait.SpinUntil(() => Debugger.IsAttached);
+        }
+
         private static int PlaybackInput(PlaybackOptions options)
         {
             try
             {
+                if (options.Debug)
+                {
+                    WaitForDebugger();
+                }
+
                 var app = new PlaybackApp(options);
                 options.CancellationToken.Register(app.Quit);
                 return app.Run();

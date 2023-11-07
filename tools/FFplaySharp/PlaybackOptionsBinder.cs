@@ -28,6 +28,9 @@ namespace FFplaySharp
         private readonly Argument<string> _inputArgument =
             new("input", "input file");
 
+        private readonly Option<bool> _debugOption =
+            new("--debug", "Wait for debugger to attach");
+
         private readonly Option<bool> _fastOption =
             new("--fast", "Non-spec compliant optimizations");
 
@@ -43,6 +46,7 @@ namespace FFplaySharp
             var inputFile = bindingContext.ParseResult.GetValueForArgument(_inputArgument);
             var boundValue = new PlaybackOptions(inputFile)
             {
+                Debug = bindingContext.ParseResult.GetValueForOption(_debugOption),
                 Fast = bindingContext.ParseResult.GetValueForOption(_fastOption),
                 FindStreamInfo = bindingContext.ParseResult.GetValueForOption(_findStreamInfoOption),
                 GeneratePts = bindingContext.ParseResult.GetValueForOption(_generatePtsOption),
@@ -55,6 +59,7 @@ namespace FFplaySharp
         protected internal override void AddOptionsAndArguments(Command command)
         {
             command.AddArgument(_inputArgument);
+            command.AddOption(_debugOption);
             command.AddOption(_fastOption);
             command.AddOption(_generatePtsOption);
             command.AddOption(_findStreamInfoOption);
