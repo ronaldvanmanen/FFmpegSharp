@@ -153,6 +153,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFmpegSharp.Extensions.Wind
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFmpegSharp.Extensions.Mime", "sources\FFmpegSharp.Extensions.Mime\FFmpegSharp.Extensions.Mime.csproj", "{2E4D20E6-A182-4161-AAAD-AFDA6F9FA2DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFmpegSharp.Extensions.ObjectPool", "sources\FFmpegSharp.Extensions.ObjectPool\FFmpegSharp.Extensions.ObjectPool.csproj", "{5ACF8E14-B5BE-4B84-8586-E0553BE015A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -207,6 +209,10 @@ Global
 		{2E4D20E6-A182-4161-AAAD-AFDA6F9FA2DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E4D20E6-A182-4161-AAAD-AFDA6F9FA2DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E4D20E6-A182-4161-AAAD-AFDA6F9FA2DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5ACF8E14-B5BE-4B84-8586-E0553BE015A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ACF8E14-B5BE-4B84-8586-E0553BE015A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5ACF8E14-B5BE-4B84-8586-E0553BE015A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5ACF8E14-B5BE-4B84-8586-E0553BE015A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -233,6 +239,7 @@ Global
 		{0A023F87-3623-4E6A-8C89-A450C9B79E1E} = {39FC87FE-AABB-4285-AEDE-92C45C2EB77D}
 		{4D5D900E-D70F-488D-B624-69D0E88F2B55} = {39FC87FE-AABB-4285-AEDE-92C45C2EB77D}
 		{2E4D20E6-A182-4161-AAAD-AFDA6F9FA2DE} = {39FC87FE-AABB-4285-AEDE-92C45C2EB77D}
+		{5ACF8E14-B5BE-4B84-8586-E0553BE015A9} = {39FC87FE-AABB-4285-AEDE-92C45C2EB77D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2DE946DB-0256-49EC-A290-9C2E96A609D9}

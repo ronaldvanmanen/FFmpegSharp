@@ -16,32 +16,35 @@
 // License along with FFmpegSharp; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
-namespace FFmpegSharp.Extensions.Framework
+using System;
+using System.Collections.Concurrent;
+
+namespace FFmpegSharp.Extensions.ObjectPool
 {
-    public sealed class PacketizedElementaryStream
-    : ElementaryStream<AVPacket>
-    , IPacketizedElementaryStream
+    public sealed class ObjectPool<T> where T : class
     {
-        private readonly AVStream _stream;
+        private readonly ConcurrentBag<T> _instances;
 
-        private CodecInfo _codecInfo = null!;
+        private readonly Func<T> _factory;
 
-        public ICodecInfo CodecInfo => _codecInfo ??= new CodecInfo(_stream.CodecParameters);
-
-        public AVDiscard Discard
+        public ObjectPool(Func<T> factory)
         {
-            get => _stream.Discard;
-            set => _stream.Discard = value;
+            _factory = factory ?? throw new ArgumentNullException(nameof(factory));
+            _instances = new ConcurrentBag<T>();
         }
 
-        public int Index => _stream.Index;
-
-        public AVTimeBase TimeBase => _stream.TimeBase;
-
-        internal PacketizedElementaryStream(AVStream stream, int bufferSize)
-        : base(bufferSize)
+        public T Allocate()
         {
-            _stream = stream ?? throw new System.ArgumentNullException(nameof(stream));
+            if (!_instances.TryTake(out var instance))
+            {
+                instance = _factory();
+            }
+            return instance;
+        }
+
+        public void Free(T instance)
+        {
+            _instances.Add(instance);
         }
     }
 }

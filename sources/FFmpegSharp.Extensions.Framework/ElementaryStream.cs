@@ -18,24 +18,25 @@
 
 using System.Collections.Concurrent;
 using System.Threading;
+using FFmpegSharp.Extensions.ObjectPool;
 
 namespace FFmpegSharp.Extensions.Framework
 {
-    public abstract class ElementaryStream<T>
+    public abstract class ElementaryStream<T> where T : class
     {
-        private readonly BlockingCollection<T> _samples;
+        private readonly BlockingCollection<PooledObject<T>> _samples;
 
         public ElementaryStream(int bufferSize)
         {
-            _samples = new BlockingCollection<T>(bufferSize);
+            _samples = new BlockingCollection<PooledObject<T>>(bufferSize);
         }
 
-        public void Write(T sample, CancellationToken cancellationToken)
+        public void Write(PooledObject<T> sample, CancellationToken cancellationToken)
         {
             _samples.Add(sample, cancellationToken);
         }
 
-        public T Read(CancellationToken cancellationToken)
+        public PooledObject<T> Read(CancellationToken cancellationToken)
         {
             return _samples.Take(cancellationToken);
         }
