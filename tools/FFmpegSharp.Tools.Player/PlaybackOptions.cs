@@ -17,14 +17,28 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
 using System;
+using System.Threading;
+using Microsoft.Extensions.Logging;
 
-namespace FFplaySharp
+namespace FFmpegSharp.Tools.Player
 {
-    internal static class ServiceProviderExtensions
+    internal sealed class PlaybackOptions
     {
-        public static T? GetService<T>(this IServiceProvider serviceProvider)
+        public string InputFile { get; set; }
+
+        public bool Fast { get; set; }
+
+        public bool GeneratePts { get; set; }
+
+        public bool FindStreamInfo { get; set; }
+
+        public CancellationToken CancellationToken { get; set; } = CancellationToken.None;
+
+        public ILogger Logger { get; set; } = null!;
+
+        public PlaybackOptions(string inputFile)
         {
-            return (T?)serviceProvider.GetService(typeof(T));
+            InputFile = inputFile ?? throw new ArgumentNullException(nameof(inputFile));
         }
     }
 }

@@ -19,9 +19,10 @@
 using System.CommandLine;
 using System.CommandLine.Binding;
 using System.Threading;
+using FFmpegSharp.Tools.Shared;
 using Microsoft.Extensions.Logging;
 
-namespace FFplaySharp
+namespace FFmpegSharp.Tools.Player
 {
     internal sealed class PlaybackOptionsBinder : CompositeBinderBase<PlaybackOptions>
     {
@@ -47,7 +48,7 @@ namespace FFplaySharp
                 FindStreamInfo = bindingContext.ParseResult.GetValueForOption(_findStreamInfoOption),
                 GeneratePts = bindingContext.ParseResult.GetValueForOption(_generatePtsOption),
                 CancellationToken = bindingContext.GetService<CancellationToken>(),
-                Logger = loggerFactory.CreateLogger("FFplaySharp")
+                Logger = loggerFactory.CreateLogger("FFmpegSharp.Tools.Player")
             };
             return boundValue;
         }

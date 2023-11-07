@@ -16,15 +16,26 @@
 // License along with FFmpegSharp; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
-using System.CommandLine;
+using System;
+using System.Runtime.Serialization;
 
-namespace FFplaySharp
+namespace FFmpegSharp.Tools.Transcoder
 {
-    internal static class CommandExtensions
+    [Serializable]
+    internal sealed class TranscodeException : Exception
     {
-        public static void AddComposite<T>(this Command command, CompositeBinderBase<T> composite)
-        {
-            composite.AddOptionsAndArguments(command);
-        }
+        public TranscodeException() { }
+
+        public TranscodeException(string message)
+        : base(message)
+        { }
+
+        public TranscodeException(string message, Exception inner)
+        : base(message, inner)
+        { }
+
+        private TranscodeException(SerializationInfo info, StreamingContext context)
+        : base(info, context)
+        { }
     }
 }

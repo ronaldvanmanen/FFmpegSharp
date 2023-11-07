@@ -5,26 +5,50 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch FFplaySharp (CoreCLR)",
+            "name": "Launch FFmpegSharp.Tools.Player (CoreCLR)",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder:FFmpegSharp}/artifacts/bin/tools/FFplaySharp/Debug/${input:FFplaySharpCoreClrFramework}/FFplaySharp",
+            "program": "${workspaceFolder:FFmpegSharp}/artifacts/bin/tools/FFmpegSharp.Tools.Player/Debug/${input:FFmpegSharpToolsCoreClrFramework}/FFmpegSharp.Tools.Player",
             "args": [
-                "${input:FFplaySharpArguments}"
+                "${input:FFmpegSharpToolsArguments}"
             ],
-            "cwd": "${workspaceFolder:FFmpegSharp}/artifacts/bin/tools/FFplaySharp/Debug/${input:FFplaySharpCoreClrFramework}",
+            "cwd": "${workspaceFolder:FFmpegSharp}/artifacts/bin/tools/FFmpegSharp.Tools.Player/Debug/${input:FFmpegSharpToolsCoreClrFramework}",
             "stopAtEntry": false,
             "console": "internalConsole"
         },
         {
-            "name": "Launch FFplaySharp (CLR)",
+            "name": "Launch FFmpegSharp.Tools.Player (CLR)",
             "type": "clr",
             "request": "launch",
-            "program": "${workspaceFolder:FFmpegSharp}/artifacts/bin/tools/FFplaySharp/Debug/${input:FFplaySharpClrFramework}/FFplaySharp",
+            "program": "${workspaceFolder:FFmpegSharp}/artifacts/bin/tools/FFmpegSharp.Tools.Player/Debug/${input:FFmpegSharpToolsClrFramework}/FFmpegSharp.Tools.Player",
             "args": [
-                "${input:FFplaySharpArguments}"
+                "${input:FFmpegSharpToolsArguments}"
             ],
-            "cwd": "${workspaceFolder:FFmpegSharp}/artifacts/bin/tools/FFplaySharp/Debug/${input:FFplaySharpClrFramework}",
+            "cwd": "${workspaceFolder:FFmpegSharp}/artifacts/bin/tools/FFmpegSharp.Tools.Player/Debug/${input:FFmpegSharpToolsClrFramework}",
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
+        {
+            "name": "Launch FFmpegSharp.Tools.Transcoder (CoreCLR)",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder:FFmpegSharp}/artifacts/bin/tools/FFmpegSharp.Tools.Transcoder/Debug/${input:FFmpegSharpToolsCoreClrFramework}/FFmpegSharp.Tools.Transcoder",
+            "args": [
+                "${input:FFmpegSharpToolsArguments}"
+            ],
+            "cwd": "${workspaceFolder:FFmpegSharp}/artifacts/bin/tools/FFmpegSharp.Tools.Transcoder/Debug/${input:FFmpegSharpToolsCoreClrFramework}",
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
+        {
+            "name": "Launch FFmpegSharp.Tools.Transcoder (CLR)",
+            "type": "clr",
+            "request": "launch",
+            "program": "${workspaceFolder:FFmpegSharp}/artifacts/bin/tools/FFmpegSharp.Tools.Transcoder/Debug/${input:FFmpegSharpToolsClrFramework}/FFmpegSharp.Tools.Transcoder",
+            "args": [
+                "${input:FFmpegSharpToolsArguments}"
+            ],
+            "cwd": "${workspaceFolder:FFmpegSharp}/artifacts/bin/tools/FFmpegSharp.Tools.Transcoder/Debug/${input:FFmpegSharpToolsClrFramework}",
             "stopAtEntry": false,
             "console": "internalConsole"
         },
@@ -51,8 +75,8 @@
     ],
     "inputs": [
         {
-            "id": "FFplaySharpCoreClrFramework",
-            "description": "Choose which .NET target framework should be used to run FFplaySharp",
+            "id": "FFmpegSharpToolsCoreClrFramework",
+            "description": "Choose which .NET target framework should be used to run the tool",
             "default": "net6.0",
             "type": "pickString",
             "options": [
@@ -60,8 +84,8 @@
             ]
         },
         {
-            "id": "FFplaySharpClrFramework",
-            "description": "Choose which .NET target framework should be used to run FFplaySharp",
+            "id": "FFmpegSharpToolsClrFramework",
+            "description": "Choose which .NET target framework should be used to run the tool",
             "default": "net481",
             "type": "pickString",
             "options": [
@@ -74,8 +98,8 @@
             ]
         },
         {
-            "id": "FFplaySharpArguments",
-            "description": "Choose which argument should be passed to FFplaySharp",
+            "id": "FFmpegSharpToolsArguments",
+            "description": "Choose which argument should be passed to the tool",
             "default": "--help",
             "type": "pickString",
             "options": [
@@ -104,7 +128,7 @@
         },
         {
             "id": "MediaPlayerCoreClrFramework",
-            "description": "Choose which .NET target framework should be used to run FFplaySharp",
+            "description": "Choose which .NET target framework should be used to run the MediaPlayer",
             "default": "net6.0-windows",
             "type": "pickString",
             "options": [
@@ -113,7 +137,7 @@
         },
         {
             "id": "MediaPlayerClrFramework",
-            "description": "Choose which .NET target framework should be used to run FFplaySharp",
+            "description": "Choose which .NET target framework should be used to run the MediaPlayer",
             "default": "net481",
             "type": "pickString",
             "options": [

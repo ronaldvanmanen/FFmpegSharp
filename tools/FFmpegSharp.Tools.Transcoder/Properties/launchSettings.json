@@ -1,0 +1,84 @@
+{
+  "profiles": {
+    "Show Help": {
+      "commandName": "Project",
+      "commandLineArgs": "--help"
+    },
+    "Show Version": {
+      "commandName": "Project",
+      "commandLineArgs": "--version"
+    },
+    "Show License": {
+      "commandName": "Project",
+      "commandLineArgs": "--license"
+    },
+    "Show Build Configuration": {
+      "commandName": "Project",
+      "commandLineArgs": "--build-configuration"
+    },
+    "Show Formats": {
+      "commandName": "Project",
+      "commandLineArgs": "--formats"
+    },
+    "Show Muxers": {
+      "commandName": "Project",
+      "commandLineArgs": "--muxers"
+    },
+    "Show Demuxers": {
+      "commandName": "Project",
+      "commandLineArgs": "--demuxers"
+    },
+    "Show Devices": {
+      "commandName": "Project",
+      "commandLineArgs": "--devices"
+    },
+    "Show Codecs": {
+      "commandName": "Project",
+      "commandLineArgs": "--codecs"
+    },
+    "Show Decoders": {
+      "commandName": "Project",
+      "commandLineArgs": "--decoders"
+    },
+    "Show Encoders": {
+      "commandName": "Project",
+      "commandLineArgs": "--encoders"
+    },
+    "Show Bit Stream Filters": {
+      "commandName": "Project",
+      "commandLineArgs": "--bit-stream-filters"
+    },
+    "Show Protocols": {
+      "commandName": "Project",
+      "commandLineArgs": "--protocols"
+    },
+    "Show Filters": {
+      "commandName": "Project",
+      "commandLineArgs": "--filters"
+    },
+    "Show Pixel Formats": {
+      "commandName": "Project",
+      "commandLineArgs": "--pixel-formats"
+    },
+    "Show Channel Layouts": {
+      "commandName": "Project",
+      "commandLineArgs": "--channel-layouts"
+    },
+    "Show Sample Formats": {
+      "commandName": "Project",
+      "commandLineArgs": "--sample-formats"
+    },
+    "Show Colors": {
+      "commandName": "Project",
+      "commandLineArgs": "--colors"
+    },
+    "Show Sources <device>": {
+      "commandName": "Project",
+      "commandLineArgs": "--sources"
+    },
+    "Show Sinks <device>": {
+      "commandName": "Project",
+      "commandLineArgs": "--sinks"
+    }
+  }
+}

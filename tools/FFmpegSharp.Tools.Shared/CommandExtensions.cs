@@ -17,29 +17,14 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
 using System.CommandLine;
-using System;
-using System.CommandLine.Binding;
-using System.CommandLine.Invocation;
 
-namespace FFplaySharp
+namespace FFmpegSharp.Tools.Shared
 {
-    internal static class InvocationContextExtensions
+    public static class CommandExtensions
     {
-        public static T? GetValueFor<T>(this InvocationContext context, IValueDescriptor<T> symbol)
+        public static void AddComposite<T>(this Command command, CompositeBinderBase<T> composite)
         {
-            if (symbol is IValueSource valueSource &&
-                valueSource.TryGetValue(symbol, context.BindingContext, out var boundValue) &&
-                boundValue is T value)
-            {
-                return value;
-            }
-
-            return symbol switch
-            {
-                Argument<T> argument => context.ParseResult.GetValueForArgument(argument),
-                Option<T> option => context.ParseResult.GetValueForOption(option),
-                _ => throw new NotSupportedException()
-            };
+            composite.AddOptionsAndArguments(command);
         }
     }
 }

@@ -19,200 +19,156 @@
 using System;
 using System.CommandLine;
 using System.CommandLine.Builder;
-using System.CommandLine.Parsing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using FFmpegSharp;
-using Microsoft.Extensions.Logging;
 using static System.Linq.Enumerable;
 
-namespace FFplaySharp
+namespace FFmpegSharp.Tools.Shared
 {
-    internal static class Program
+    public static class CommandLineBuilderExtensions
     {
-        private static readonly ILogger _logger;
-
-        static Program()
+        public static CommandLineBuilder AddGlobalOption(
+            this CommandLineBuilder builder,
+            string name,
+            string? description,
+            Action callback)
         {
-            var loggerFactory = LoggerFactory.Create(
-                builder => builder.AddConsole());
-            _logger = loggerFactory.CreateLogger("FFplaySharp");
-        }
-
-        static int Main(string[] args)
-        {
-            try
+            var option = new Option<bool>(name, description);
+            builder.Command.AddGlobalOption(option);
+            builder.AddMiddleware(async (context, next) =>
             {
-                Initialize();
-                var exitCode = Run(args);
-                return exitCode;
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, "An error occured while running FFplaySharp.");
-
-                return -1;
-            }
-            finally
-            {
-                Deinitialize();
-            }
-        }
-
-        private static int Run(string[] args)
-        {
-            var rootCommand = new RootCommand("Simple media player based on FFplay");
-
-            var commandLineBuilder = new CommandLineBuilder(rootCommand)
-                .UseHelp()
-                .UseEnvironmentVariableDirective()
-                .UseParseDirective()
-                .UseSuggestDirective()
-                .RegisterWithDotnetSuggest()
-                .UseTypoCorrections()
-                .UseParseErrorReporting()
-                .UseExceptionHandler()
-                .CancelOnProcessTermination()
-                .UseShowVersionOption()
-                .UseShowLicenseOption()
-                .UseShowBuildConfigurationOption()
-                .UseShowFormatsOption()
-                .UseShowMuxersOption()
-                .UseShowDemuxersOption()
-                .UseShowDevicesOption()
-                .UseShowCodecsOption()
-                .UseShowDecodersOption()
-                .UseShowEncodersOption()
-                .UseShowBitStreamFiltersOption()
-                .UseShowProtocolsOption()
-                .UseShowFiltersOption()
-                .UseShowPixelFormatsOption()
-                .UseShowStandardChannelLayoutsOption()
-                .UseShowSampleFormatsOption()
-                .UseShowColorsOption()
-                .UseShowSourcesOption()
-                .UseShowSinksOption();
-
-            var optionsBinder = new PlaybackOptionsBinder();
-            commandLineBuilder.Command.AddComposite(optionsBinder);
-            rootCommand.SetHandler(context =>
-            {
-                var options = context.GetValueFor(optionsBinder);
-                if (options is null)
+                if (null != context.ParseResult.FindResultFor(option))
                 {
-                    _logger.LogError("Required argument(s) and/or option(s) missing.");
-                    context.ExitCode = -1;
-                    return;
+                    callback();
                 }
                 else
                 {
-                    var exitCode = PlaybackInput(options);
-                    context.ExitCode = exitCode;
-                    return;
+                    await next(context);
                 }
             });
-
-            return commandLineBuilder.Build().Invoke(args);
+            return builder;
         }
 
-        private static void Initialize()
+        public static CommandLineBuilder AddGlobalOption(
+            this CommandLineBuilder builder,
+            string name,
+            string? argumentHelpName,
+            string? description,
+            string[] completions,
+            Action<string> callback)
         {
-            AVDevice.RegisterAll();
-            AVFormat.NetworkInit();
+            // Note: The list of completions will be shown in the help text of
+            // this option instead of the ArgumentHelpName when the latter is
+            // set to null. For example --sinks <sdl|sdl2|...>.
+            var option = new Option<string>(name, description);
+            option.Arity = ArgumentArity.ExactlyOne;
+            option.ArgumentHelpName = argumentHelpName;
+            option.AddCompletions(completions);
+
+            builder.Command.AddGlobalOption(option);
+            builder.AddMiddleware(async (context, next) =>
+            {
+                var parseResult = context.ParseResult.FindResultFor(option);
+                if (parseResult != null && parseResult.Tokens.Any())
+                {
+                    callback(parseResult.Tokens.Select(e => e.Value).First());
+                }
+                else
+                {
+                    await next(context);
+                }
+            });
+            return builder;
         }
 
-        private static void Deinitialize()
-        {
-            AVFormat.NetworkDeinit();
-        }
 
-        private static CommandLineBuilder UseShowVersionOption(this CommandLineBuilder builder)
+        public static CommandLineBuilder UseShowVersionOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--version", "Show version", ShowVersion);
         }
 
-        private static CommandLineBuilder UseShowLicenseOption(this CommandLineBuilder builder)
+        public static CommandLineBuilder UseShowLicenseOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--license", "Show license", ShowLicense);
         }
 
-        private static CommandLineBuilder UseShowBuildConfigurationOption(this CommandLineBuilder builder)
+        public static CommandLineBuilder UseShowBuildConfigurationOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--build-configuration", "Show build configuration", ShowBuildConfiguration);
         }
 
-        private static CommandLineBuilder UseShowFormatsOption(this CommandLineBuilder builder)
+        public static CommandLineBuilder UseShowFormatsOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--formats", "Show available formats", ShowFormats);
         }
 
-        private static CommandLineBuilder UseShowMuxersOption(this CommandLineBuilder builder)
+        public static CommandLineBuilder UseShowMuxersOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--muxers", "Show available muxers", ShowMuxers);
         }
 
-        private static CommandLineBuilder UseShowDemuxersOption(this CommandLineBuilder builder)
+        public static CommandLineBuilder UseShowDemuxersOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--demuxers", "Show available demuxers", ShowDemuxers);
         }
 
-        private static CommandLineBuilder UseShowDevicesOption(this CommandLineBuilder builder)
+        public static CommandLineBuilder UseShowDevicesOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--devices", "Show available devices", ShowDevices);
         }
 
-        private static CommandLineBuilder UseShowCodecsOption(this CommandLineBuilder builder)
+        public static CommandLineBuilder UseShowCodecsOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--codecs", "Show available codecs", ShowCodecs);
         }
 
-        private static CommandLineBuilder UseShowDecodersOption(this CommandLineBuilder builder)
+        public static CommandLineBuilder UseShowDecodersOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--decoders", "Show available decoders", ShowDecoders);
         }
 
-        private static CommandLineBuilder UseShowEncodersOption(this CommandLineBuilder builder)
+        public static CommandLineBuilder UseShowEncodersOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--encoders", "Show available encoders", ShowEncoders);
         }
 
-        private static CommandLineBuilder UseShowBitStreamFiltersOption(this CommandLineBuilder builder)
+        public static CommandLineBuilder UseShowBitStreamFiltersOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--bit-stream-filters", "Show available bit stream filters", ShowBitStreamFilters);
         }
 
-        private static CommandLineBuilder UseShowProtocolsOption(this CommandLineBuilder builder)
+        public static CommandLineBuilder UseShowProtocolsOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--protocols", "Show available protocols", ShowProtocols);
         }
 
-        private static CommandLineBuilder UseShowFiltersOption(this CommandLineBuilder builder)
+        public static CommandLineBuilder UseShowFiltersOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--filters", "Show available filters", ShowFilters);
         }
 
-        private static CommandLineBuilder UseShowPixelFormatsOption(this CommandLineBuilder builder)
+        public static CommandLineBuilder UseShowPixelFormatsOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--pixel-formats", "Show available pixel formats", ShowPixelFormats);
         }
 
-        private static CommandLineBuilder UseShowStandardChannelLayoutsOption(this CommandLineBuilder builder)
+        public static CommandLineBuilder UseShowStandardChannelLayoutsOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--channel-layouts", "Show standard channel layouts", () => ShowStandardChannelLayouts());
         }
 
-        private static CommandLineBuilder UseShowSampleFormatsOption(this CommandLineBuilder builder)
+        public static CommandLineBuilder UseShowSampleFormatsOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--sample-formats", "Show available audio sample formats", ShowSampleFormats);
         }
 
-        private static CommandLineBuilder UseShowColorsOption(this CommandLineBuilder builder)
+        public static CommandLineBuilder UseShowColorsOption(this CommandLineBuilder builder)
         {
             return builder.AddGlobalOption("--colors", "Show available color names", ShowColors);
         }
 
-        private static CommandLineBuilder UseShowSourcesOption(this CommandLineBuilder builder)
+        public static CommandLineBuilder UseShowSourcesOption(this CommandLineBuilder builder)
         {
             var completions = AVInputFormat.All.Where(e => e.IsDevice)
                 .SelectMany(e => e.Name.Split(','))
@@ -220,7 +176,7 @@ namespace FFplaySharp
             return builder.AddGlobalOption("--sources", "device name", "List sources of the input device", completions, ShowSources);
         }
 
-        private static CommandLineBuilder UseShowSinksOption(this CommandLineBuilder builder)
+        public static CommandLineBuilder UseShowSinksOption(this CommandLineBuilder builder)
         {
             var completions = AVOutputFormat.All.Where(e => e.IsDevice)
                 .SelectMany(e => e.Name.Split(','))
@@ -239,7 +195,21 @@ namespace FFplaySharp
         {
             var commandLineArgs = Environment.GetCommandLineArgs();
             var programName = Path.GetFileNameWithoutExtension(commandLineArgs[0]);
-            Console.WriteLine(ResourceStrings.License, programName);
+            Console.WriteLine("""
+                {0} is free software; you can redistribute it and/or
+                modify it under the terms of the GNU Lesser General Public
+                License as published by the Free Software Foundation; either
+                version 2.1 of the License, or (at your option) any later version.
+
+                {0} is distributed in the hope that it will be useful,
+                but WITHOUT ANY WARRANTY; without even the implied warranty of
+                MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+                Lesser General Public License for more details.
+
+                You should have received a copy of the GNU Lesser General Public
+                License along with {0}; if not, write to the Free Software
+                Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+                """, programName);
         }
 
         private static void ShowBuildConfiguration()
@@ -500,22 +470,6 @@ namespace FFplaySharp
             foreach (var device in devices)
             {
                 PrintDeviceSinks(device);
-            }
-        }
-
-        private static int PlaybackInput(PlaybackOptions options)
-        {
-            try
-            {
-                var app = new PlaybackApp(options);
-                options.CancellationToken.Register(app.Quit);
-                return app.Run();
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, "An error occured while running FFplaySharp.");
-
-                return -1;
             }
         }
 

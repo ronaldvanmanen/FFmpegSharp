@@ -19,7 +19,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace FFplaySharp
+namespace FFmpegSharp.Tools.Player
 {
     [Serializable]
     internal sealed class PlaybackException : Exception

@@ -1,89 +1,86 @@
 {
   "profiles": {
-    "FFplaySharp": {
-      "commandName": "Project"
-    },
-    "FFplaySharp --help": {
+    "Show Help": {
       "commandName": "Project",
       "commandLineArgs": "--help"
     },
-    "FFplaySharp --version": {
+    "Show Version": {
       "commandName": "Project",
       "commandLineArgs": "--version"
     },
-    "FFplaySharp --license": {
+    "Show License": {
       "commandName": "Project",
       "commandLineArgs": "--license"
     },
-    "FFplaySharp --build-configuration": {
+    "Show Build Configuration": {
       "commandName": "Project",
       "commandLineArgs": "--build-configuration"
     },
-    "FFplaySharp --formats": {
+    "Show Formats": {
       "commandName": "Project",
       "commandLineArgs": "--formats"
     },
-    "FFplaySharp --muxers": {
+    "Show Muxers": {
       "commandName": "Project",
       "commandLineArgs": "--muxers"
     },
-    "FFplaySharp --demuxers": {
+    "Show Demuxers": {
       "commandName": "Project",
       "commandLineArgs": "--demuxers"
     },
-    "FFplaySharp --devices": {
+    "Show Devices": {
       "commandName": "Project",
       "commandLineArgs": "--devices"
     },
-    "FFplaySharp --codecs": {
+    "Show Codecs": {
       "commandName": "Project",
       "commandLineArgs": "--codecs"
     },
-    "FFplaySharp --decoders": {
+    "Show Decoders": {
       "commandName": "Project",
       "commandLineArgs": "--decoders"
     },
-    "FFplaySharp --encoders": {
+    "Show Encoders": {
       "commandName": "Project",
       "commandLineArgs": "--encoders"
     },
-    "FFplaySharp --bit-stream-filters": {
+    "Show Bit Stream Filters": {
       "commandName": "Project",
       "commandLineArgs": "--bit-stream-filters"
     },
-    "FFplaySharp --protocols": {
+    "Show Protocols": {
       "commandName": "Project",
       "commandLineArgs": "--protocols"
     },
-    "FFplaySharp --filters": {
+    "Show Filters": {
       "commandName": "Project",
       "commandLineArgs": "--filters"
     },
-    "FFplaySharp --pixel-formats": {
+    "Show Pixel Formats": {
       "commandName": "Project",
       "commandLineArgs": "--pixel-formats"
     },
-    "FFplaySharp --channel-layouts": {
+    "Show Channel Layouts": {
       "commandName": "Project",
       "commandLineArgs": "--channel-layouts"
     },
-    "FFplaySharp --sample-formats": {
+    "Show Sample Formats": {
       "commandName": "Project",
       "commandLineArgs": "--sample-formats"
     },
-    "FFplaySharp --colors": {
+    "Show Colors": {
       "commandName": "Project",
       "commandLineArgs": "--colors"
     },
-    "FFplaySharp --sources <device>": {
+    "Show Sources <device>": {
       "commandName": "Project",
       "commandLineArgs": "--sources"
     },
-    "FFplaySharp --sinks <device>": {
+    "Show Sinks <device>": {
       "commandName": "Project",
       "commandLineArgs": "--sinks"
     },
-    "FFplaySharp sample.wav": {
+    "Play Sample.wav": {
       "commandName": "Project",
       "commandLineArgs": "Sample.wav"
     }

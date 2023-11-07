@@ -17,12 +17,11 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
 using System;
-using FFmpegSharp;
 using FFmpegSharp.Extensions.Framework;
 using FFmpegSharp.Extensions.Linq;
 using SDL2Sharp;
 
-namespace FFplaySharp
+namespace FFmpegSharp.Tools.Player
 {
     internal sealed class PlaybackApp : Application
     {
