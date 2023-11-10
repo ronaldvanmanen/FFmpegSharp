@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FFmpegSharp.Extensions.ObjectPool\FFmpegSharp.Extensions.ObjectPool.csproj" />
     <ProjectReference Include="..\FFmpegSharp.Interop\FFmpegSharp.Interop.csproj" />
   </ItemGroup>
 
