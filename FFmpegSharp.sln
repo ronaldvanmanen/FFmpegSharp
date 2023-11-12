@@ -133,6 +133,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListFormats", "samples\List
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListMuxers", "samples\ListMuxers\ListMuxers.csproj", "{2FE0C5BA-14A6-4229-A9A6-F5C10FB39773}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListDemuxers", "samples\ListDemuxers\ListDemuxers.csproj", "{C559F0E5-481A-4D94-853C-2B88817847E6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -159,6 +161,10 @@ Global
 		{2FE0C5BA-14A6-4229-A9A6-F5C10FB39773}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FE0C5BA-14A6-4229-A9A6-F5C10FB39773}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FE0C5BA-14A6-4229-A9A6-F5C10FB39773}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C559F0E5-481A-4D94-853C-2B88817847E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C559F0E5-481A-4D94-853C-2B88817847E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C559F0E5-481A-4D94-853C-2B88817847E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C559F0E5-481A-4D94-853C-2B88817847E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -178,6 +184,7 @@ Global
 		{2945F278-2D26-43E6-89E6-768056FE6F88} = {39FC87FE-AABB-4285-AEDE-92C45C2EB77D}
 		{FFAF612B-A9FE-4F7D-858F-86861C7A8C45} = {C041BE4A-319C-4A4B-9DD7-91A59C7FCC16}
 		{2FE0C5BA-14A6-4229-A9A6-F5C10FB39773} = {C041BE4A-319C-4A4B-9DD7-91A59C7FCC16}
+		{C559F0E5-481A-4D94-853C-2B88817847E6} = {C041BE4A-319C-4A4B-9DD7-91A59C7FCC16}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2DE946DB-0256-49EC-A290-9C2E96A609D9}
