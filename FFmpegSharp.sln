@@ -143,7 +143,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListDecoders", "samples\Lis
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListEncoders", "samples\ListEncoders\ListEncoders.csproj", "{90AA34DA-9EAC-4792-8F17-8E035E5004D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListBitStreamFilters", "samples\ListBitStreamFilters\ListBitStreamFilters.csproj", "{CED8CAD3-DD07-4548-AB69-A11458D4EB5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListBitStreamFilters", "samples\ListBitStreamFilters\ListBitStreamFilters.csproj", "{CED8CAD3-DD07-4548-AB69-A11458D4EB5F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListProtocols", "samples\ListProtocols\ListProtocols.csproj", "{3F8E6576-8A7C-4DAE-A989-3230ADE90442}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -195,6 +197,10 @@ Global
 		{CED8CAD3-DD07-4548-AB69-A11458D4EB5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CED8CAD3-DD07-4548-AB69-A11458D4EB5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CED8CAD3-DD07-4548-AB69-A11458D4EB5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F8E6576-8A7C-4DAE-A989-3230ADE90442}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F8E6576-8A7C-4DAE-A989-3230ADE90442}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F8E6576-8A7C-4DAE-A989-3230ADE90442}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F8E6576-8A7C-4DAE-A989-3230ADE90442}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -220,6 +226,7 @@ Global
 		{03CC338A-7554-4526-9DD8-16C6CB8EB2CF} = {C041BE4A-319C-4A4B-9DD7-91A59C7FCC16}
 		{90AA34DA-9EAC-4792-8F17-8E035E5004D1} = {C041BE4A-319C-4A4B-9DD7-91A59C7FCC16}
 		{CED8CAD3-DD07-4548-AB69-A11458D4EB5F} = {C041BE4A-319C-4A4B-9DD7-91A59C7FCC16}
+		{3F8E6576-8A7C-4DAE-A989-3230ADE90442} = {C041BE4A-319C-4A4B-9DD7-91A59C7FCC16}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2DE946DB-0256-49EC-A290-9C2E96A609D9}
