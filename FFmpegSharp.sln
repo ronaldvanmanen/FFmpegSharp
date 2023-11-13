@@ -145,11 +145,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListEncoders", "samples\Lis
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListBitStreamFilters", "samples\ListBitStreamFilters\ListBitStreamFilters.csproj", "{CED8CAD3-DD07-4548-AB69-A11458D4EB5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListProtocols", "samples\ListProtocols\ListProtocols.csproj", "{3F8E6576-8A7C-4DAE-A989-3230ADE90442}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListProtocols", "samples\ListProtocols\ListProtocols.csproj", "{3F8E6576-8A7C-4DAE-A989-3230ADE90442}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListFilters", "samples\ListFilters\ListFilters.csproj", "{57930B34-7F12-4E8A-9CC0-56593FC4D354}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListFilters", "samples\ListFilters\ListFilters.csproj", "{57930B34-7F12-4E8A-9CC0-56593FC4D354}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListPixelFormats", "samples\ListPixelFormats\ListPixelFormats.csproj", "{7A9A10DD-E728-4282-896A-2BD4D315F8CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListPixelFormats", "samples\ListPixelFormats\ListPixelFormats.csproj", "{7A9A10DD-E728-4282-896A-2BD4D315F8CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListStandardChannelLayouts", "samples\ListStandardChannelLayouts\ListStandardChannelLayouts.csproj", "{C57A34DA-86B9-4E44-ABF0-3CADC8FF9753}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -213,6 +215,10 @@ Global
 		{7A9A10DD-E728-4282-896A-2BD4D315F8CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A9A10DD-E728-4282-896A-2BD4D315F8CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A9A10DD-E728-4282-896A-2BD4D315F8CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C57A34DA-86B9-4E44-ABF0-3CADC8FF9753}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C57A34DA-86B9-4E44-ABF0-3CADC8FF9753}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C57A34DA-86B9-4E44-ABF0-3CADC8FF9753}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C57A34DA-86B9-4E44-ABF0-3CADC8FF9753}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -241,6 +247,7 @@ Global
 		{3F8E6576-8A7C-4DAE-A989-3230ADE90442} = {C041BE4A-319C-4A4B-9DD7-91A59C7FCC16}
 		{57930B34-7F12-4E8A-9CC0-56593FC4D354} = {C041BE4A-319C-4A4B-9DD7-91A59C7FCC16}
 		{7A9A10DD-E728-4282-896A-2BD4D315F8CB} = {C041BE4A-319C-4A4B-9DD7-91A59C7FCC16}
+		{C57A34DA-86B9-4E44-ABF0-3CADC8FF9753} = {C041BE4A-319C-4A4B-9DD7-91A59C7FCC16}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2DE946DB-0256-49EC-A290-9C2E96A609D9}
