@@ -131,11 +131,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{C041
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListFormats", "samples\ListFormats\ListFormats.csproj", "{FFAF612B-A9FE-4F7D-858F-86861C7A8C45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListMuxers", "samples\ListMuxers\ListMuxers.csproj", "{2FE0C5BA-14A6-4229-A9A6-F5C10FB39773}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListMuxers", "samples\ListMuxers\ListMuxers.csproj", "{2FE0C5BA-14A6-4229-A9A6-F5C10FB39773}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListDemuxers", "samples\ListDemuxers\ListDemuxers.csproj", "{C559F0E5-481A-4D94-853C-2B88817847E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListDemuxers", "samples\ListDemuxers\ListDemuxers.csproj", "{C559F0E5-481A-4D94-853C-2B88817847E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListDevices", "samples\ListDevices\ListDevices.csproj", "{8E2AD2EE-C90C-4E03-B560-F73EC9CD1FE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListDevices", "samples\ListDevices\ListDevices.csproj", "{8E2AD2EE-C90C-4E03-B560-F73EC9CD1FE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListCodecs", "samples\ListCodecs\ListCodecs.csproj", "{3D94F7EE-082B-4CD8-B374-DC390A4703BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -171,6 +173,10 @@ Global
 		{8E2AD2EE-C90C-4E03-B560-F73EC9CD1FE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E2AD2EE-C90C-4E03-B560-F73EC9CD1FE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E2AD2EE-C90C-4E03-B560-F73EC9CD1FE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D94F7EE-082B-4CD8-B374-DC390A4703BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D94F7EE-082B-4CD8-B374-DC390A4703BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D94F7EE-082B-4CD8-B374-DC390A4703BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D94F7EE-082B-4CD8-B374-DC390A4703BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -192,6 +198,7 @@ Global
 		{2FE0C5BA-14A6-4229-A9A6-F5C10FB39773} = {C041BE4A-319C-4A4B-9DD7-91A59C7FCC16}
 		{C559F0E5-481A-4D94-853C-2B88817847E6} = {C041BE4A-319C-4A4B-9DD7-91A59C7FCC16}
 		{8E2AD2EE-C90C-4E03-B560-F73EC9CD1FE8} = {C041BE4A-319C-4A4B-9DD7-91A59C7FCC16}
+		{3D94F7EE-082B-4CD8-B374-DC390A4703BA} = {C041BE4A-319C-4A4B-9DD7-91A59C7FCC16}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2DE946DB-0256-49EC-A290-9C2E96A609D9}
