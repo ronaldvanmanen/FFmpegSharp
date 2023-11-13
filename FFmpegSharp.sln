@@ -137,11 +137,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListDemuxers", "samples\Lis
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListDevices", "samples\ListDevices\ListDevices.csproj", "{8E2AD2EE-C90C-4E03-B560-F73EC9CD1FE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListCodecs", "samples\ListCodecs\ListCodecs.csproj", "{3D94F7EE-082B-4CD8-B374-DC390A4703BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListCodecs", "samples\ListCodecs\ListCodecs.csproj", "{3D94F7EE-082B-4CD8-B374-DC390A4703BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListDecoders", "samples\ListDecoders\ListDecoders.csproj", "{03CC338A-7554-4526-9DD8-16C6CB8EB2CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListDecoders", "samples\ListDecoders\ListDecoders.csproj", "{03CC338A-7554-4526-9DD8-16C6CB8EB2CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListEncoders", "samples\ListEncoders\ListEncoders.csproj", "{90AA34DA-9EAC-4792-8F17-8E035E5004D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListEncoders", "samples\ListEncoders\ListEncoders.csproj", "{90AA34DA-9EAC-4792-8F17-8E035E5004D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListBitStreamFilters", "samples\ListBitStreamFilters\ListBitStreamFilters.csproj", "{CED8CAD3-DD07-4548-AB69-A11458D4EB5F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -189,6 +191,10 @@ Global
 		{90AA34DA-9EAC-4792-8F17-8E035E5004D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90AA34DA-9EAC-4792-8F17-8E035E5004D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90AA34DA-9EAC-4792-8F17-8E035E5004D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CED8CAD3-DD07-4548-AB69-A11458D4EB5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CED8CAD3-DD07-4548-AB69-A11458D4EB5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CED8CAD3-DD07-4548-AB69-A11458D4EB5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CED8CAD3-DD07-4548-AB69-A11458D4EB5F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -213,6 +219,7 @@ Global
 		{3D94F7EE-082B-4CD8-B374-DC390A4703BA} = {C041BE4A-319C-4A4B-9DD7-91A59C7FCC16}
 		{03CC338A-7554-4526-9DD8-16C6CB8EB2CF} = {C041BE4A-319C-4A4B-9DD7-91A59C7FCC16}
 		{90AA34DA-9EAC-4792-8F17-8E035E5004D1} = {C041BE4A-319C-4A4B-9DD7-91A59C7FCC16}
+		{CED8CAD3-DD07-4548-AB69-A11458D4EB5F} = {C041BE4A-319C-4A4B-9DD7-91A59C7FCC16}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2DE946DB-0256-49EC-A290-9C2E96A609D9}
