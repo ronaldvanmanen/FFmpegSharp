@@ -159,6 +159,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListColors", "samples\ListC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListSources", "samples\ListSources\ListSources.csproj", "{0CDF7710-8B33-45E3-A142-50E83253CFA0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListSinks", "samples\ListSinks\ListSinks.csproj", "{9C2DB2A9-E826-4B08-BE68-B89613C1C817}"
+EndProject
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -237,6 +240,10 @@ Global
 		{0CDF7710-8B33-45E3-A142-50E83253CFA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CDF7710-8B33-45E3-A142-50E83253CFA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0CDF7710-8B33-45E3-A142-50E83253CFA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C2DB2A9-E826-4B08-BE68-B89613C1C817}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C2DB2A9-E826-4B08-BE68-B89613C1C817}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C2DB2A9-E826-4B08-BE68-B89613C1C817}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C2DB2A9-E826-4B08-BE68-B89613C1C817}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -269,6 +276,7 @@ Global
 		{523A6070-49EA-4D0A-8C14-08C2274C84DE} = {C041BE4A-319C-4A4B-9DD7-91A59C7FCC16}
 		{3459A97D-F12E-489C-8481-CF7BDF183B6F} = {C041BE4A-319C-4A4B-9DD7-91A59C7FCC16}
 		{0CDF7710-8B33-45E3-A142-50E83253CFA0} = {C041BE4A-319C-4A4B-9DD7-91A59C7FCC16}
+		{9C2DB2A9-E826-4B08-BE68-B89613C1C817} = {C041BE4A-319C-4A4B-9DD7-91A59C7FCC16}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2DE946DB-0256-49EC-A290-9C2E96A609D9}
