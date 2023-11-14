@@ -17,29 +17,53 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
 using System;
+using System.CommandLine.Builder;
+using System.CommandLine;
 using System.Linq;
 using FFmpegSharp;
+using System.CommandLine.Parsing;
 
 AVDevice.RegisterAll();
 
-var outputDevices = AVDevice.OutputDevices.Where(e => e.Name.Equals(args[0]));
-foreach (var outputDevice in outputDevices)
-{
-    Console.WriteLine("Auto-detected sources for {0}:", outputDevice.Name);
+var rootCommand = new RootCommand("List all available sinks of an output device.");
 
-    var outputSinks = outputDevice.OutputSinks;
-    if (outputSinks == null)
+var commandLineBuilder = new CommandLineBuilder(rootCommand)
+    .UseHelp()
+    .UseEnvironmentVariableDirective()
+    .UseParseDirective()
+    .UseSuggestDirective()
+    .RegisterWithDotnetSuggest()
+    .UseTypoCorrections()
+    .UseParseErrorReporting()
+    .UseExceptionHandler();
+
+var deviceNameArgument = new Argument<string>("device-name", "The name of the output device to list the sinks of.");
+deviceNameArgument.AddCompletions(_ => AVDevice.OutputDevices.SelectMany(e => e.Name.Split(',')));
+commandLineBuilder.Command.AddArgument(deviceNameArgument);
+
+rootCommand.SetHandler(deviceName =>
+{
+    var outputDevices = AVDevice.OutputDevices.Where(e => e.Name.Contains(deviceName));
+    foreach (var outputDevice in outputDevices)
     {
-        Console.WriteLine("Cannot list sinks. Not implemented.");
-    }
-    else
-    {
-        for (var outputSinkIndex = 0; outputSinkIndex < outputSinks.Count; ++outputSinkIndex)
+        Console.WriteLine("Auto-detected sources for {0}:", outputDevice.Name);
+
+        var outputSinks = outputDevice.OutputSinks;
+        if (outputSinks == null)
         {
-            Console.WriteLine("{0} {1} [{2}]",
-                outputSinks.DefaultDeviceIndex == outputSinkIndex ? "*" : " ",
-                outputSinks[outputSinkIndex].Name,
-                outputSinks[outputSinkIndex].Description);
+            Console.WriteLine("Cannot list sinks. Not implemented.");
+        }
+        else
+        {
+            for (var outputSinkIndex = 0; outputSinkIndex < outputSinks.Count; ++outputSinkIndex)
+            {
+                Console.WriteLine("{0} {1} [{2}]",
+                    outputSinks.DefaultDeviceIndex == outputSinkIndex ? "*" : " ",
+                    outputSinks[outputSinkIndex].Name,
+                    outputSinks[outputSinkIndex].Description);
+            }
         }
     }
-}
+}, deviceNameArgument);
+
+return commandLineBuilder.Build().Invoke(args);
