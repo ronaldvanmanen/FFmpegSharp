@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>net6.0;net461;net462;net47;net471;net472;net48;net481</TargetFrameworks>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\sources\FFmpegSharp\FFmpegSharp.csproj" />
+  </ItemGroup>
+
+</Project>
