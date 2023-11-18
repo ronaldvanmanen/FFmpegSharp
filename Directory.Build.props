@@ -12,8 +12,14 @@
 
   <!-- Default settings that are used by other settings -->
   <PropertyGroup>
+    <!--
+      FIX: Certain MSBuild configuration causes _wpftmp build output directories to not be deleted
+      after each build. This can be solved by removing the '_*_wpftmp' suffix from MSBuildProjectName.
+      See: https://github.com/dotnet/wpf/issues/2930
+    -->
+    <BaseArtifactsName>$([System.Text.RegularExpressions.Regex]::Replace("$(MSBuildProjectName)", "_[^_]+_wpftmp$", ""))</BaseArtifactsName>
     <BaseArtifactsPath>$(MSBuildThisFileDirectory)artifacts/</BaseArtifactsPath>
-    <BaseArtifactsPathSuffix>$(FFmpegSharpProjectCategory)/$(MSBuildProjectName)</BaseArtifactsPathSuffix>
+    <BaseArtifactsPathSuffix>$(FFmpegSharpProjectCategory)/$(BaseArtifactsName)</BaseArtifactsPathSuffix>
     <RepositoryUrl>https://github.com/ronaldvanmanen/FFmpegSharp</RepositoryUrl>
     <FFmpeg Condition="'$(FFmpeg)' == ''">FFmpeg</FFmpeg>
   </PropertyGroup>
