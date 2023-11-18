@@ -101,6 +101,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "generation", "generation", 
 		generation\libswscale.h = generation\libswscale.h
 		generation\header.txt = generation\header.txt
 	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Player", "samples\Player\Player.csproj", "{A09A8063-B157-4F09-94CF-B57486106FC0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{B8261C55-2266-4E13-92B1-89F1AA192BD9}"
 EndProject
@@ -188,6 +189,10 @@ Global
 		{9C2DB2A9-E826-4B08-BE68-B89613C1C817}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A6FF421A-3B38-49A8-B657-178AD728E459}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A6FF421A-3B38-49A8-B657-178AD728E459}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A09A8063-B157-4F09-94CF-B57486106FC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A09A8063-B157-4F09-94CF-B57486106FC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A09A8063-B157-4F09-94CF-B57486106FC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A09A8063-B157-4F09-94CF-B57486106FC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -214,6 +219,7 @@ Global
 		{0CDF7710-8B33-45E3-A142-50E83253CFA0} = {C041BE4A-319C-4A4B-9DD7-91A59C7FCC16}
 		{9C2DB2A9-E826-4B08-BE68-B89613C1C817} = {C041BE4A-319C-4A4B-9DD7-91A59C7FCC16}
 		{A6FF421A-3B38-49A8-B657-178AD728E459} = {B8261C55-2266-4E13-92B1-89F1AA192BD9}
+		{A09A8063-B157-4F09-94CF-B57486106FC0} = {C041BE4A-319C-4A4B-9DD7-91A59C7FCC16}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2DE946DB-0256-49EC-A290-9C2E96A609D9}
