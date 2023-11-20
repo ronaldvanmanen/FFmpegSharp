@@ -46,5 +46,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
             </MenuItem>
         </Menu>
 
+        <local:MediaControl x:Name="MediaControl" Grid.Row="1" Source="{Binding FileName}"/>
     </Grid>
 </Window>

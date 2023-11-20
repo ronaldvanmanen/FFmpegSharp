@@ -29,9 +29,22 @@ namespace Player
 {
     public sealed class MainWindowViewModel : ObservableObject
     {
+        private string _fileName = null!;
+
         private RelayCommand _openFileCommand = null!;
 
         private RelayCommand _exitCommand = null!;
+
+        public string FileName
+        {
+            get => _fileName;
+            set
+            {
+                OnPropertyChanging(nameof(FileName));
+                _fileName = value;
+                OnPropertyChanged(nameof(FileName));
+            }
+        }
 
         public ICommand OpenFileCommand => _openFileCommand ??= new RelayCommand(OpenFile);
 
@@ -61,6 +74,7 @@ namespace Player
             var result = openFileDialog.ShowDialog();
             if (result.HasValue && result.Value)
             {
+                FileName = openFileDialog.FileName;
             }
         }
 
