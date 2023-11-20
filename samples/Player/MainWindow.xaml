@@ -40,6 +40,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
         <Menu Grid.Row="0">
             <MenuItem Header="_File">
+                <MenuItem Header="Open..." Command="{Binding OpenFileCommand}" />
+                <Separator/>
                 <MenuItem Header="E_xit" Command="{Binding ExitCommand}" />
             </MenuItem>
         </Menu>
