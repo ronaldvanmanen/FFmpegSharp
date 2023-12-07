@@ -24,7 +24,7 @@ using FFmpegSharp;
 
 namespace Player
 {
-    public static class MediaTypes
+    internal static class MediaTypes
     {
         private static readonly Dictionary<string, SortedSet<string>> _mediaTypeToExtensions = new();
 

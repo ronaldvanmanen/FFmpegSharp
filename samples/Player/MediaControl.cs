@@ -21,7 +21,7 @@ using System.Windows.Controls;
 
 namespace Player
 {
-    public sealed class MediaControl : Control
+    internal sealed class MediaControl : Control
     {
         public static readonly DependencyProperty SourceProperty =
             DependencyProperty.RegisterAttached(
