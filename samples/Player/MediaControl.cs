@@ -31,7 +31,11 @@ namespace Player
                 nameof(Source),
                 typeof(string),
                 typeof(MediaControl),
-                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.None, SourcePropertyChanged));
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.None, SourceChanged));
+
+        private MediaPlayer _mediaPlayer = null!;
+
+        private VideoHwndHost _videoHwndHost = null!;
 
         public string Source
         {
@@ -39,8 +43,6 @@ namespace Player
 
             set => SetValue(SourceProperty, value);
         }
-
-        private VideoHwndHost _videoHwndHost = null!;
 
         static MediaControl()
         {
@@ -54,8 +56,22 @@ namespace Player
             _videoHwndHost = (VideoHwndHost)GetTemplateChild(PART_VideoHwndHost);
         }
 
-        private static void SourcePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs eventArgs)
+        private void SourceChanged()
         {
+            if (_mediaPlayer is not null)
+            {
+                _mediaPlayer.Dispose();
+            }
+
+            _mediaPlayer = new MediaPlayer(Source, _videoHwndHost.Handle);
+        }
+
+        private static void SourceChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs eventArgs)
+        {
+            if (dependencyObject is MediaControl mediaControl)
+            {
+                mediaControl.SourceChanged();
+            }
         }
     }
 }
