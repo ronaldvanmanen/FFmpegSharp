@@ -15,4 +15,10 @@
     <ProjectReference Include="..\..\sources\FFmpegSharp\FFmpegSharp.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="Themes\Generic.xaml">
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+  </ItemGroup>
+
 </Project>
