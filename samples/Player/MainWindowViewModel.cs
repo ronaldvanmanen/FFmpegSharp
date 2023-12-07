@@ -27,7 +27,7 @@ using Microsoft.Win32;
 
 namespace Player
 {
-    public sealed class MainWindowViewModel : ObservableObject
+    internal sealed class MainWindowViewModel : ObservableObject
     {
         private string _fileName = null!;
 
