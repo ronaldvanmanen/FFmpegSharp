@@ -21,8 +21,11 @@ using System.Windows.Controls;
 
 namespace Player
 {
+    [TemplatePart(Name = PART_VideoHwndHost, Type = typeof(VideoHwndHost))]
     internal sealed class MediaControl : Control
     {
+        private const string PART_VideoHwndHost = "PART_VideoHwndHost";
+
         public static readonly DependencyProperty SourceProperty =
             DependencyProperty.RegisterAttached(
                 nameof(Source),
@@ -37,9 +40,18 @@ namespace Player
             set => SetValue(SourceProperty, value);
         }
 
+        private VideoHwndHost _videoHwndHost = null!;
+
         static MediaControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MediaControl), new FrameworkPropertyMetadata(typeof(MediaControl)));
+        }
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            _videoHwndHost = (VideoHwndHost)GetTemplateChild(PART_VideoHwndHost);
         }
 
         private static void SourcePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs eventArgs)
