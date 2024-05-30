@@ -30,7 +30,7 @@ namespace FFmpegSharp
         public int Denominator => _value.den;
 
         public AVRational(int numerator, int denominator)
-        : this(av_make_q(numerator, denominator))
+        : this(new Interop.AVRational { num = numerator, den = denominator })
         { }
 
         public AVRational(Interop.AVRational value)
@@ -45,12 +45,28 @@ namespace FFmpegSharp
 
         public bool Equals(AVRational other)
         {
-            return av_cmp_q(_value, other._value) == 0;
+            return CompareTo(other) == 0;
         }
 
         public int CompareTo(AVRational other)
         {
-            return av_cmp_q(_value, other._value);
+            var tmp = Numerator * (long)other.Denominator - other.Numerator * (long)Denominator;
+            if (tmp != 0)
+            {
+                return (int)((tmp ^ Denominator ^ other.Denominator) >> 63) | 1;
+            }
+            else if (other.Denominator != 0 && Denominator != 0)
+            {
+                return 0;
+            }
+            else if (Numerator != 0 && other.Numerator != 0)
+            {
+                return (Numerator >> 31) - (other.Numerator >> 31);
+            }
+            else
+            {
+                return int.MinValue;
+            }
         }
 
         public override int GetHashCode()
@@ -145,7 +161,7 @@ namespace FFmpegSharp
 
         public static explicit operator double(AVRational value)
         {
-            return av_q2d(value._value);
+            return value.Numerator / (double)value.Denominator;
         }
     }
 }

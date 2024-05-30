@@ -16,6 +16,8 @@
 // License along with FFmpegSharp; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
+using System.Runtime.CompilerServices;
+
 namespace FFmpegSharp.Interop
 {
     public partial struct AVIndexEntry
@@ -31,11 +33,13 @@ namespace FFmpegSharp.Interop
         [NativeTypeName("int : 2")]
         public int flags
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return _bitfield & 0x3;
+                return (_bitfield << 30) >> 30;
             }
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 _bitfield = (_bitfield & ~0x3) | (value & 0x3);
@@ -45,11 +49,13 @@ namespace FFmpegSharp.Interop
         [NativeTypeName("int : 30")]
         public int size
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return (_bitfield >> 2) & 0x3FFFFFFF;
+                return (_bitfield << 0) >> 2;
             }
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 _bitfield = (_bitfield & ~(0x3FFFFFFF << 2)) | ((value & 0x3FFFFFFF) << 2);

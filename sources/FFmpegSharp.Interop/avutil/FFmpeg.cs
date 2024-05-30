@@ -129,17 +129,6 @@ namespace FFmpegSharp.Interop
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void av_max_alloc([NativeTypeName("size_t")] UIntPtr max);
 
-        public static AVRational av_make_q(int num, int den)
-        {
-            AVRational r = new AVRational
-            {
-                num = num,
-                den = den,
-            };
-
-            return r;
-        }
-
         public static int av_cmp_q(AVRational a, AVRational b)
         {
             long tmp = a.num * (long)(b.den) - b.num * (long)(a.den);
@@ -160,11 +149,6 @@ namespace FFmpegSharp.Interop
             {
                 return (-2147483647 - 1);
             }
-        }
-
-        public static double av_q2d(AVRational a)
-        {
-            return a.num / (double)(a.den);
         }
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -245,12 +229,6 @@ namespace FFmpegSharp.Interop
         public static extern long av_add_stable(AVRational ts_tb, [NativeTypeName("int64_t")] long ts, AVRational inc_tb, [NativeTypeName("int64_t")] long inc);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void av_log(void* avcl, int level, [NativeTypeName("const char *")] sbyte* fmt, __arglist);
-
-        [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void av_log_once(void* avcl, int initial_level, int subsequent_level, int* state, [NativeTypeName("const char *")] sbyte* fmt, __arglist);
-
-        [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void av_vlog(void* avcl, int level, [NativeTypeName("const char *")] sbyte* fmt, [NativeTypeName("va_list")] sbyte* vl);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -283,9 +261,6 @@ namespace FFmpegSharp.Interop
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern int av_log_get_flags();
-
-        [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern FILE* av_fopen_utf8([NativeTypeName("const char *")] sbyte* path, [NativeTypeName("const char *")] sbyte* mode);
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern AVRational av_get_time_base_q();
@@ -960,14 +935,6 @@ namespace FFmpegSharp.Interop
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern int av_find_info_tag([NativeTypeName("char *")] sbyte* arg, int arg_size, [NativeTypeName("const char *")] sbyte* tag1, [NativeTypeName("const char *")] sbyte* info);
-
-        [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        [return: NativeTypeName("char *")]
-        public static extern sbyte* av_small_strptime([NativeTypeName("const char *")] sbyte* p, [NativeTypeName("const char *")] sbyte* fmt, [NativeTypeName("struct tm *")] tm* dt);
-
-        [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        [return: NativeTypeName("time_t")]
-        public static extern long av_timegm();
 
         [DllImport("avutil-56.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern int av_get_bits_per_pixel([NativeTypeName("const AVPixFmtDescriptor *")] AVPixFmtDescriptor* pixdesc);

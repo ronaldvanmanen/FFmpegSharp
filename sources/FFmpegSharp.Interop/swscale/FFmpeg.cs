@@ -23,118 +23,118 @@ namespace FFmpegSharp.Interop
 {
     public static unsafe partial class FFmpeg
     {
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("unsigned int")]
         public static extern uint swscale_version();
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("const char *")]
         public static extern sbyte* swscale_configuration();
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("const char *")]
         public static extern sbyte* swscale_license();
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("const int *")]
         public static extern int* sws_getCoefficients(int colorspace);
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern int sws_isSupportedInput([NativeTypeName("enum AVPixelFormat")] AVPixelFormat pix_fmt);
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern int sws_isSupportedOutput([NativeTypeName("enum AVPixelFormat")] AVPixelFormat pix_fmt);
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern int sws_isSupportedEndiannessConversion([NativeTypeName("enum AVPixelFormat")] AVPixelFormat pix_fmt);
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("struct SwsContext *")]
         public static extern SwsContext* sws_alloc_context();
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern int sws_init_context([NativeTypeName("struct SwsContext *")] SwsContext* sws_context, SwsFilter* srcFilter, SwsFilter* dstFilter);
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void sws_freeContext([NativeTypeName("struct SwsContext *")] SwsContext* swsContext);
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("struct SwsContext *")]
         public static extern SwsContext* sws_getContext(int srcW, int srcH, [NativeTypeName("enum AVPixelFormat")] AVPixelFormat srcFormat, int dstW, int dstH, [NativeTypeName("enum AVPixelFormat")] AVPixelFormat dstFormat, int flags, SwsFilter* srcFilter, SwsFilter* dstFilter, [NativeTypeName("const double *")] double* param9);
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern int sws_scale([NativeTypeName("struct SwsContext *")] SwsContext* c, [NativeTypeName("const uint8_t *const[]")] byte** srcSlice, [NativeTypeName("const int[]")] int* srcStride, int srcSliceY, int srcSliceH, [NativeTypeName("uint8_t *const[]")] byte** dst, [NativeTypeName("const int[]")] int* dstStride);
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern int sws_setColorspaceDetails([NativeTypeName("struct SwsContext *")] SwsContext* c, [NativeTypeName("const int[4]")] int* inv_table, int srcRange, [NativeTypeName("const int[4]")] int* table, int dstRange, int brightness, int contrast, int saturation);
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern int sws_getColorspaceDetails([NativeTypeName("struct SwsContext *")] SwsContext* c, int** inv_table, int* srcRange, int** table, int* dstRange, int* brightness, int* contrast, int* saturation);
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern SwsVector* sws_allocVec(int length);
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern SwsVector* sws_getGaussianVec(double variance, double quality);
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void sws_scaleVec(SwsVector* a, double scalar);
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void sws_normalizeVec(SwsVector* a, double height);
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [Obsolete]
         public static extern SwsVector* sws_getConstVec(double c, int length);
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [Obsolete]
         public static extern SwsVector* sws_getIdentityVec();
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [Obsolete]
         public static extern void sws_convVec(SwsVector* a, SwsVector* b);
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [Obsolete]
         public static extern void sws_addVec(SwsVector* a, SwsVector* b);
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [Obsolete]
         public static extern void sws_subVec(SwsVector* a, SwsVector* b);
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [Obsolete]
         public static extern void sws_shiftVec(SwsVector* a, int shift);
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [Obsolete]
         public static extern SwsVector* sws_cloneVec(SwsVector* a);
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [Obsolete]
         public static extern void sws_printVec2(SwsVector* a, AVClass* log_ctx, int log_level);
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void sws_freeVec(SwsVector* a);
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern SwsFilter* sws_getDefaultFilter(float lumaGBlur, float chromaGBlur, float lumaSharpen, float chromaSharpen, float chromaHShift, float chromaVShift, int verbose);
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void sws_freeFilter(SwsFilter* filter);
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("struct SwsContext *")]
         public static extern SwsContext* sws_getCachedContext([NativeTypeName("struct SwsContext *")] SwsContext* context, int srcW, int srcH, [NativeTypeName("enum AVPixelFormat")] AVPixelFormat srcFormat, int dstW, int dstH, [NativeTypeName("enum AVPixelFormat")] AVPixelFormat dstFormat, int flags, SwsFilter* srcFilter, SwsFilter* dstFilter, [NativeTypeName("const double *")] double* param10);
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void sws_convertPalette8ToPacked32([NativeTypeName("const uint8_t *")] byte* src, [NativeTypeName("uint8_t *")] byte* dst, int num_pixels, [NativeTypeName("const uint8_t *")] byte* palette);
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void sws_convertPalette8ToPacked24([NativeTypeName("const uint8_t *")] byte* src, [NativeTypeName("uint8_t *")] byte* dst, int num_pixels, [NativeTypeName("const uint8_t *")] byte* palette);
 
-        [DllImport("swscale-5.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport("swscale-3.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: NativeTypeName("const AVClass *")]
         public static extern AVClass* sws_get_class();
 

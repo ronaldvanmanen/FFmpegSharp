@@ -16,6 +16,8 @@
 // License along with FFmpegSharp; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
+using System.Runtime.CompilerServices;
+
 namespace FFmpegSharp.Interop
 {
     public unsafe partial struct AVPixFmtDescriptor
@@ -50,6 +52,7 @@ namespace FFmpegSharp.Interop
 
             public unsafe ref AVComponentDescriptor this[int index]
             {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get
                 {
                     fixed (AVComponentDescriptor* pThis = &e0)
