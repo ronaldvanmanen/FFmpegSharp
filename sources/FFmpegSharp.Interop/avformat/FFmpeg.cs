@@ -118,9 +118,6 @@ namespace FFmpegSharp.Interop
         public static extern int avio_feof(AVIOContext* s);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern int avio_printf(AVIOContext* s, [NativeTypeName("const char *")] sbyte* fmt, __arglist);
-
-        [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void avio_print_string_array(AVIOContext* s, [NativeTypeName("const char *[]")] sbyte** strings);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -498,13 +495,7 @@ namespace FFmpegSharp.Interop
         public static extern int av_get_output_timestamp([NativeTypeName("struct AVFormatContext *")] AVFormatContext* s, int stream, [NativeTypeName("int64_t *")] long* dts, [NativeTypeName("int64_t *")] long* wall);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void av_hex_dump(FILE* f, [NativeTypeName("const uint8_t *")] byte* buf, int size);
-
-        [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void av_hex_dump_log(void* avcl, int level, [NativeTypeName("const uint8_t *")] byte* buf, int size);
-
-        [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void av_pkt_dump2(FILE* f, [NativeTypeName("const AVPacket *")] AVPacket* pkt, int dump_payload, [NativeTypeName("const AVStream *")] AVStream* st);
 
         [DllImport("avformat-58.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void av_pkt_dump_log2(void* avcl, int level, [NativeTypeName("const AVPacket *")] AVPacket* pkt, int dump_payload, [NativeTypeName("const AVStream *")] AVStream* st);

@@ -17,6 +17,7 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
 using System;
+using System.Runtime.CompilerServices;
 
 namespace FFmpegSharp.Interop
 {
@@ -44,6 +45,7 @@ namespace FFmpegSharp.Interop
 
             public ref byte* this[int index]
             {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 get
                 {
                     fixed (byte** pThis = &e0)

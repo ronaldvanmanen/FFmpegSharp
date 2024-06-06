@@ -21,16 +21,16 @@ namespace FFmpegSharp.Interop
     [NativeTypeName("int")]
     public enum AVDevToAppMessageType : uint
     {
-        AV_DEV_TO_APP_NONE = (unchecked(('E') | (('N') << 8) | (('O') << 16) | ((uint)('N') << 24))),
-        AV_DEV_TO_APP_CREATE_WINDOW_BUFFER = (unchecked(('E') | (('R') << 8) | (('C') << 16) | ((uint)('B') << 24))),
-        AV_DEV_TO_APP_PREPARE_WINDOW_BUFFER = (unchecked(('E') | (('R') << 8) | (('P') << 16) | ((uint)('B') << 24))),
-        AV_DEV_TO_APP_DISPLAY_WINDOW_BUFFER = (unchecked(('S') | (('I') << 8) | (('D') << 16) | ((uint)('B') << 24))),
-        AV_DEV_TO_APP_DESTROY_WINDOW_BUFFER = (unchecked(('S') | (('E') << 8) | (('D') << 16) | ((uint)('B') << 24))),
-        AV_DEV_TO_APP_BUFFER_OVERFLOW = (unchecked(('L') | (('F') << 8) | (('O') << 16) | ((uint)('B') << 24))),
-        AV_DEV_TO_APP_BUFFER_UNDERFLOW = (unchecked(('L') | (('F') << 8) | (('U') << 16) | ((uint)('B') << 24))),
-        AV_DEV_TO_APP_BUFFER_READABLE = (unchecked((' ') | (('D') << 8) | (('R') << 16) | ((uint)('B') << 24))),
-        AV_DEV_TO_APP_BUFFER_WRITABLE = (unchecked((' ') | (('R') << 8) | (('W') << 16) | ((uint)('B') << 24))),
-        AV_DEV_TO_APP_MUTE_STATE_CHANGED = (unchecked(('T') | (('U') << 8) | (('M') << 16) | ((uint)('C') << 24))),
-        AV_DEV_TO_APP_VOLUME_LEVEL_CHANGED = (unchecked(('L') | (('O') << 8) | (('V') << 16) | ((uint)('C') << 24))),
+        AV_DEV_TO_APP_NONE = (unchecked(((sbyte)('E')) | (((sbyte)('N')) << 8) | (((sbyte)('O')) << 16) | ((uint)('N') << 24))),
+        AV_DEV_TO_APP_CREATE_WINDOW_BUFFER = (unchecked(((sbyte)('E')) | (((sbyte)('R')) << 8) | (((sbyte)('C')) << 16) | ((uint)('B') << 24))),
+        AV_DEV_TO_APP_PREPARE_WINDOW_BUFFER = (unchecked(((sbyte)('E')) | (((sbyte)('R')) << 8) | (((sbyte)('P')) << 16) | ((uint)('B') << 24))),
+        AV_DEV_TO_APP_DISPLAY_WINDOW_BUFFER = (unchecked(((sbyte)('S')) | (((sbyte)('I')) << 8) | (((sbyte)('D')) << 16) | ((uint)('B') << 24))),
+        AV_DEV_TO_APP_DESTROY_WINDOW_BUFFER = (unchecked(((sbyte)('S')) | (((sbyte)('E')) << 8) | (((sbyte)('D')) << 16) | ((uint)('B') << 24))),
+        AV_DEV_TO_APP_BUFFER_OVERFLOW = (unchecked(((sbyte)('L')) | (((sbyte)('F')) << 8) | (((sbyte)('O')) << 16) | ((uint)('B') << 24))),
+        AV_DEV_TO_APP_BUFFER_UNDERFLOW = (unchecked(((sbyte)('L')) | (((sbyte)('F')) << 8) | (((sbyte)('U')) << 16) | ((uint)('B') << 24))),
+        AV_DEV_TO_APP_BUFFER_READABLE = (unchecked(((sbyte)(' ')) | (((sbyte)('D')) << 8) | (((sbyte)('R')) << 16) | ((uint)('B') << 24))),
+        AV_DEV_TO_APP_BUFFER_WRITABLE = (unchecked(((sbyte)(' ')) | (((sbyte)('R')) << 8) | (((sbyte)('W')) << 16) | ((uint)('B') << 24))),
+        AV_DEV_TO_APP_MUTE_STATE_CHANGED = (unchecked(((sbyte)('T')) | (((sbyte)('U')) << 8) | (((sbyte)('M')) << 16) | ((uint)('C') << 24))),
+        AV_DEV_TO_APP_VOLUME_LEVEL_CHANGED = (unchecked(((sbyte)('L')) | (((sbyte)('O')) << 8) | (((sbyte)('V')) << 16) | ((uint)('C') << 24))),
     }
 }

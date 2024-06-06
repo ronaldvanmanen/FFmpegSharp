@@ -5,6 +5,20 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Launch Nuke Build",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/Build/bin/Debug/Build.exe",
+            "args": [
+                "--target", "${input:NukeBuildTargets}",
+                "--architecture", "${input:NukeBuildArchitecture}",
+                "--configuration", "${input:NukeBuildConfiguration}"
+            ],
+            "cwd": "${workspaceFolder}/build/Build/bin/Debug",
+            "stopAtEntry": false,
+            "console": "integratedTerminal"
+        },
+        {
             "name": "Launch FFplaySharp (CoreCLR)",
             "type": "coreclr",
             "request": "launch",
@@ -50,6 +64,41 @@
         }
     ],
     "inputs": [
+        {
+            "id": "NukeBuildTargets",
+            "description": "Choose which target to build",
+            "default": "",
+            "type": "pickString",
+            "options": [
+                "Clean",
+                "Setup",
+                "Restore",
+                "Generate",
+                "Compile",
+                "Test",
+                "Pack",
+            ]
+        },
+        {
+            "id": "NukeBuildConfiguration",
+            "description": "Choose which configuration to build for",
+            "default": "x64",
+            "type": "pickString",
+            "options": [
+                "Debug",
+                "Release"
+            ]
+        },
+        {
+            "id": "NukeBuildArchitecture",
+            "description": "Choose which architecture to build for",
+            "default": "x64",
+            "type": "pickString",
+            "options": [
+                "x86",
+                "x64"
+            ]
+        },
         {
             "id": "FFplaySharpCoreClrFramework",
             "description": "Choose which .NET target framework should be used to run FFplaySharp",
