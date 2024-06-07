@@ -20,11 +20,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".root", ".root", "{64D0A5D2
 		.editorconfig = .editorconfig
 		Directory.Build.props = Directory.Build.props
 		Directory.Build.targets = Directory.Build.targets
-		generate.cmd = generate.cmd
 		GitVersion.yml = GitVersion.yml
 		LICENSE = LICENSE
 		nuget.config = nuget.config
 		README.md = README.md
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		build.cmd = build.cmd
+		build.ps1 = build.ps1
+		build.sh = build.sh
+		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFmpegSharp.Interop", "sources\FFmpegSharp.Interop\FFmpegSharp.Interop.csproj", "{CBF2A3BB-13F0-433C-A7E0-1B005412ED9A}"
