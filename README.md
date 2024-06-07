@@ -2,7 +2,9 @@
 
 FFmpegSharp provides FFmpeg bindings written in C#.
 
-[![.NET](https://github.com/ronaldvanmanen/FFmpegSharp/actions/workflows/ci.yml/badge.svg)](https://github.com/ronaldvanmanen/FFmpegSharp/actions/workflows/ci.yml)
+[![release](https://github.com/ronaldvanmanen/FFmpegSharp/actions/workflows/release.yml/badge.svg)](https://github.com/ronaldvanmanen/FFmpegSharp/actions/workflows/release.yml)
+[![test-ubuntu](https://github.com/ronaldvanmanen/FFmpegSharp/actions/workflows/test-ubuntu.yml/badge.svg)](https://github.com/ronaldvanmanen/FFmpegSharp/actions/workflows/test-ubuntu.yml)
+[![test-windows](https://github.com/ronaldvanmanen/FFmpegSharp/actions/workflows/test-windows.yml/badge.svg)](https://github.com/ronaldvanmanen/FFmpegSharp/actions/workflows/test-windows.yml)
 
 ## Table of Contents
 
@@ -23,7 +25,7 @@ See [LICENSE](LICENSE) in the project root for license information.
 
 ### Languages and Frameworks
 
-FFmpegSharp uses C# as its primary development language and .NET 6 as its primary target framework.
+FFmpegSharp uses C# as its primary development language and .NET Standard 2.0 as its primary target framework.
 
 ### Building
 
