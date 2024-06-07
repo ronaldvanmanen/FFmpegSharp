@@ -38,6 +38,26 @@
             "stopAtEntry": false,
             "console": "internalConsole"
         },
+        {
+            "name": "Launch WPF Sample (.NET 6+)",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder:FFmpegSharp}/artifacts/bin/samples/${input:WindowsSample}/${input:Configuration}/${input:WindowsCoreClrFramework}/${input:WindowsSample}",
+            "args": [],
+            "cwd": "${workspaceFolder:FFmpegSharp}/artifacts/bin/samples/${input:WindowsSample}/${input:Configuration}/${input:WindowsCoreClrFramework}",
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
+        {
+            "name": "Launch WPF Sample (.NET Framework 4.x)",
+            "type": "clr",
+            "request": "launch",
+            "program": "${workspaceFolder:FFmpegSharp}/artifacts/bin/samples/${input:WindowsSample}/${input:Configuration}/${input:ClrFramework}/${input:WindowsSample}",
+            "args": [],
+            "cwd": "${workspaceFolder:FFmpegSharp}/artifacts/bin/samples/${input:WindowsSample}/${input:Configuration}/${input:ClrFramework}",
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
     ],
     "inputs": [
         {
@@ -86,6 +106,17 @@
             ]
         },
         {
+            "id": "WindowsCoreClrFramework",
+            "description": "Choose which .NET target framework should be used to run a sample",
+            "default": "net8.0-windows",
+            "type": "pickString",
+            "options": [
+                "net8.0-windows",
+                "net7.0-windows",
+                "net6.0-windows"
+            ]
+        },
+        {
             "id": "NukeBuildTargets",
             "description": "Choose which target to build",
             "default": "",
@@ -124,5 +155,14 @@
                 "ListStandardChannelLayouts"
             ]
         },
+        {
+            "id": "WindowsSample",
+            "description": "Choose which sample should be run",
+            "default": "Player",
+            "type": "pickString",
+            "options": [
+                "Player"
+            ]
+        }
     ]
 }
