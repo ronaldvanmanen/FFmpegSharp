@@ -1,0 +1,148 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "nuke: setup",
+            "type": "shell",
+            "command": "./build.sh",
+            "args": ["setup"],
+            "windows": {
+              "command": ".\\build.cmd"
+            },
+            "group": "build",
+            "presentation": {
+              "reveal": "always",
+              "panel": "new"
+            }
+        },
+        {
+            "label": "nuke: restore",
+            "type": "shell",
+            "command": "./build.sh",
+            "args": ["restore"],
+            "windows": {
+              "command": ".\\build.cmd"
+            },
+            "group": "build",
+            "presentation": {
+              "reveal": "always",
+              "panel": "new"
+            }
+        },
+        {
+            "label": "nuke: generate",
+            "type": "shell",
+            "command": "./build.sh",
+            "args": ["generate"],
+            "windows": {
+              "command": ".\\build.cmd"
+            },
+            "group": "build",
+            "presentation": {
+              "reveal": "always",
+              "panel": "new"
+            }
+        },
+        {
+            "label": "nuke: compile",
+            "type": "shell",
+            "command": "./build.sh",
+            "args": ["compile"],
+            "windows": {
+              "command": ".\\build.cmd"
+            },
+            "group": "build",
+            "presentation": {
+              "reveal": "always",
+              "panel": "new"
+            }
+        },
+        {
+            "label": "nuke: test",
+            "type": "shell",
+            "command": "./build.sh",
+            "args": [
+              "--configuration",
+              "${input:NukeConfiguration}",
+              "--architecture",
+              "${input:NukeArchitecture}"
+            ],  
+            "windows": {
+              "command": ".\\build.cmd"
+            },
+            "group": "build",
+            "presentation": {
+              "reveal": "always",
+              "panel": "new"
+            }
+        },
+        {
+            "label": "nuke: pack",
+            "type": "shell",
+            "command": "./build.sh",
+            "args": ["pack"],
+            "windows": {
+              "command": ".\\build.cmd"
+            },
+            "group": "build",
+            "presentation": {
+              "reveal": "always",
+              "panel": "new"
+            }
+        },
+        {
+            "label": "nuke: release",
+            "type": "shell",
+            "command": "./build.sh",
+            "args": ["release"],
+            "windows": {
+              "command": ".\\build.cmd"
+            },
+            "group": "build",
+            "presentation": {
+              "reveal": "always",
+              "panel": "new"
+            }
+        },
+    ],
+    "inputs": [
+        {
+            "id": "NukeTarget",
+            "description": "Choose which target to build",
+            "default": "",
+            "type": "pickString",
+            "options": [
+                "Clean",
+                "Setup",
+                "Restore",
+                "Generate",
+                "Compile",
+                "Test",
+                "Pack",
+            ]
+        },
+        {
+            "id": "NukeConfiguration",
+            "description": "Choose which configuration to build for",
+            "default": "Debug",
+            "type": "pickString",
+            "options": [
+                "Debug",
+                "Release"
+            ]
+        },
+        {
+            "id": "NukeArchitecture",
+            "description": "Choose which architecture to build for",
+            "default": "x64",
+            "type": "pickString",
+            "options": [
+                "x86",
+                "x64"
+            ]
+        },
+    ]
+}
