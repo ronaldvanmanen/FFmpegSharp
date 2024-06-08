@@ -11,59 +11,80 @@
             "program": "${workspaceFolder}/build/Build/bin/Debug/Build.exe",
             "args": [
                 "--target", "${input:NukeBuildTargets}",
-                "--architecture", "${input:NukeBuildArchitecture}",
-                "--configuration", "${input:NukeBuildConfiguration}"
+                "--architecture", "${input:Architecture}",
+                "--configuration", "${input:Configuration}"
             ],
             "cwd": "${workspaceFolder}/build/Build/bin/Debug",
             "stopAtEntry": false,
             "console": "integratedTerminal"
         },
         {
-            "name": "Launch FFplaySharp (CoreCLR)",
+            "name": "Launch Console Sample (.NET 6+)",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder:FFmpegSharp}/artifacts/bin/tools/FFplaySharp/Debug/${input:FFplaySharpCoreClrFramework}/FFplaySharp",
-            "args": [
-                "${input:FFplaySharpArguments}"
-            ],
-            "cwd": "${workspaceFolder:FFmpegSharp}/artifacts/bin/tools/FFplaySharp/Debug/${input:FFplaySharpCoreClrFramework}",
+            "program": "${workspaceFolder:FFmpegSharp}/artifacts/bin/samples/${input:ConsoleSample}/${input:Configuration}/${input:CoreClrFramework}/${input:ConsoleSample}",
+            "args": [],
+            "cwd": "${workspaceFolder:FFmpegSharp}/artifacts/bin/samples/${input:ConsoleSample}/${input:Configuration}/${input:CoreClrFramework}",
             "stopAtEntry": false,
             "console": "internalConsole"
         },
         {
-            "name": "Launch FFplaySharp (CLR)",
+            "name": "Launch Console Sample (.NET Framework 4.x)",
             "type": "clr",
             "request": "launch",
-            "program": "${workspaceFolder:FFmpegSharp}/artifacts/bin/tools/FFplaySharp/Debug/${input:FFplaySharpClrFramework}/FFplaySharp",
-            "args": [
-                "${input:FFplaySharpArguments}"
-            ],
-            "cwd": "${workspaceFolder:FFmpegSharp}/artifacts/bin/tools/FFplaySharp/Debug/${input:FFplaySharpClrFramework}",
+            "program": "${workspaceFolder:FFmpegSharp}/artifacts/bin/samples/${input:ConsoleSample}/${input:Configuration}/${input:ClrFramework}/${input:ConsoleSample}",
+            "args": [],
+            "cwd": "${workspaceFolder:FFmpegSharp}/artifacts/bin/samples/${input:ConsoleSample}/${input:Configuration}/${input:ClrFramework}",
             "stopAtEntry": false,
             "console": "internalConsole"
         },
-        {
-            "name": "Launch MediaPlayer (CoreCLR)",
-            "type": "coreclr",
-            "request": "launch",
-            "program": "${workspaceFolder:FFmpegSharp}/artifacts/bin/samples/MediaPlayer/Debug/${input:MediaPlayerCoreClrFramework}/MediaPlayer",
-            "args": [],
-            "cwd": "${workspaceFolder:FFmpegSharp}/artifacts/bin/samples/MediaPlayer/Debug/${input:MediaPlayerCoreClrFramework}",
-            "stopAtEntry": false,
-            "console": "internalConsole"
-        },
-        {
-            "name": "Launch MediaPlayer (CLR)",
-            "type": "clr",
-            "request": "launch",
-            "program": "${workspaceFolder:FFmpegSharp}/artifacts/bin/samples/MediaPlayer/Debug/${input:MediaPlayerClrFramework}/MediaPlayer",
-            "args": [],
-            "cwd": "${workspaceFolder:FFmpegSharp}/artifacts/bin/samples/MediaPlayer/Debug/${input:MediaPlayerClrFramework}",
-            "stopAtEntry": false,
-            "console": "internalConsole"
-        }
     ],
     "inputs": [
+        {
+            "id": "Configuration",
+            "description": "Choose which configuration should be used.",
+            "default": "Debug",
+            "type": "pickString",
+            "options": [
+                "Debug",
+                "Release"
+            ]
+        },
+        {
+            "id": "Architecture",
+            "description": "Choose which architecture should be used.",
+            "default": "x64",
+            "type": "pickString",
+            "options": [
+                "x86",
+                "x64"
+            ]
+        },
+        {
+            "id": "ClrFramework",
+            "description": "Choose which .NET target framework should be used.",
+            "default": "net481",
+            "type": "pickString",
+            "options": [
+                "net481",
+                "net48",
+                "net472",
+                "net471",
+                "net47",
+                "net462"
+            ]
+        },
+        {
+            "id": "CoreClrFramework",
+            "description": "Choose which .NET target framework should be used.",
+            "default": "net8.0",
+            "type": "pickString",
+            "options": [
+                "net8.0",
+                "net7.0",
+                "net6.0",
+            ]
+        },
         {
             "id": "NukeBuildTargets",
             "description": "Choose which target to build",
@@ -80,99 +101,28 @@
             ]
         },
         {
-            "id": "NukeBuildConfiguration",
-            "description": "Choose which configuration to build for",
-            "default": "x64",
+            "id": "ConsoleSample",
+            "description": "Choose which sample should be run",
+            "default": "Player",
             "type": "pickString",
             "options": [
-                "Debug",
-                "Release"
+                "ListBitStreamFilters",
+                "ListCodecs",
+                "ListColors",
+                "ListDecoders",
+                "ListDemuxers",
+                "ListDevices",
+                "ListEncoders",
+                "ListFilters",
+                "ListFormats",
+                "ListMuxers",
+                "ListPixelFormats",
+                "ListProtocols",
+                "ListSampleFormats",
+                "ListSinks",
+                "ListSources",
+                "ListStandardChannelLayouts"
             ]
         },
-        {
-            "id": "NukeBuildArchitecture",
-            "description": "Choose which architecture to build for",
-            "default": "x64",
-            "type": "pickString",
-            "options": [
-                "x86",
-                "x64"
-            ]
-        },
-        {
-            "id": "FFplaySharpCoreClrFramework",
-            "description": "Choose which .NET target framework should be used to run FFplaySharp",
-            "default": "net6.0",
-            "type": "pickString",
-            "options": [
-                "net6.0",
-            ]
-        },
-        {
-            "id": "FFplaySharpClrFramework",
-            "description": "Choose which .NET target framework should be used to run FFplaySharp",
-            "default": "net481",
-            "type": "pickString",
-            "options": [
-                "net481",
-                "net48",
-                "net472",
-                "net471",
-                "net47",
-                "net462"
-            ]
-        },
-        {
-            "id": "FFplaySharpArguments",
-            "description": "Choose which argument should be passed to FFplaySharp",
-            "default": "--help",
-            "type": "pickString",
-            "options": [
-                "--help",
-                "--version",
-                "--license",
-                "--build-configuration",
-                "--formats",
-                "--muxers",
-                "--demuxers",
-                "--devices",
-                "--codecs",
-                "--decoders",
-                "--encoders",
-                "--bit-stream-filters",
-                "--protocols",
-                "--filters",
-                "--pixel-formats",
-                "--channel-layouts",
-                "--sample-formats",
-                "--colors",
-                "--sources",
-                "--sinks",
-                "Sample.wav"
-            ]
-        },
-        {
-            "id": "MediaPlayerCoreClrFramework",
-            "description": "Choose which .NET target framework should be used to run FFplaySharp",
-            "default": "net6.0-windows",
-            "type": "pickString",
-            "options": [
-                "net6.0-windows"
-            ]
-        },
-        {
-            "id": "MediaPlayerClrFramework",
-            "description": "Choose which .NET target framework should be used to run FFplaySharp",
-            "default": "net481",
-            "type": "pickString",
-            "options": [
-                "net481",
-                "net48",
-                "net472",
-                "net471",
-                "net47",
-                "net462"
-            ]
-        }
     ]
 }
