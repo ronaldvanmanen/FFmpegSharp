@@ -5,6 +5,20 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "nuke: clean",
+            "type": "shell",
+            "command": "./build.sh",
+            "args": ["clean"],
+            "windows": {
+              "command": ".\\build.cmd"
+            },
+            "group": "build",
+            "presentation": {
+              "reveal": "always",
+              "panel": "new"
+            }
+        },
+        {
             "label": "nuke: setup",
             "type": "shell",
             "command": "./build.sh",
