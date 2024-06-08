@@ -15,7 +15,8 @@
             "group": "build",
             "presentation": {
               "reveal": "always",
-              "panel": "new"
+              "panel": "shared",
+              "group": "nuke"
             }
         },
         {
@@ -29,7 +30,8 @@
             "group": "build",
             "presentation": {
               "reveal": "always",
-              "panel": "new"
+              "panel": "shared",
+              "group": "nuke"
             }
         },
         {
@@ -43,7 +45,8 @@
             "group": "build",
             "presentation": {
               "reveal": "always",
-              "panel": "new"
+              "panel": "shared",
+              "group": "nuke"
             }
         },
         {
@@ -57,7 +60,8 @@
             "group": "build",
             "presentation": {
               "reveal": "always",
-              "panel": "new"
+              "panel": "shared",
+              "group": "nuke"
             }
         },
         {
@@ -71,7 +75,8 @@
             "group": "build",
             "presentation": {
               "reveal": "always",
-              "panel": "new"
+              "panel": "shared",
+              "group": "nuke"
             }
         },
         {
@@ -90,7 +95,8 @@
             "group": "build",
             "presentation": {
               "reveal": "always",
-              "panel": "new"
+              "panel": "shared",
+              "group": "nuke"
             }
         },
         {
@@ -104,7 +110,8 @@
             "group": "build",
             "presentation": {
               "reveal": "always",
-              "panel": "new"
+              "panel": "shared",
+              "group": "nuke"
             }
         },
         {
@@ -118,7 +125,8 @@
             "group": "build",
             "presentation": {
               "reveal": "always",
-              "panel": "new"
+              "panel": "shared",
+              "group": "nuke"
             }
         },
     ],
